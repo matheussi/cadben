@@ -1,0 +1,458 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{89A863B4-E3E7-48C0-ACB8-6B39DA14DC6B}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>cadben.www</RootNamespace>
+    <AssemblyName>www</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AjaxControlToolkit, Version=4.1.60623.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\AjaxControlToolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="Boleto.Net, Version=2.0.0.0, Culture=neutral, PublicKeyToken=53630c3583b7ed5c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dlls\Boleto.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentNHibernate, Version=1.4.0.0, Culture=neutral, PublicKeyToken=8aa435e3cb308880, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dlls\FluentNHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections, Version=4.0.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Iesi.Collections.4.0.0.4000\lib\net40\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.9.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dlls\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp.pdfa, Version=5.5.9.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dlls\itextsharp.pdfa.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp.xtra, Version=5.5.9.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dlls\itextsharp.xtra.dll</HintPath>
+    </Reference>
+    <Reference Include="LC.Framework.BusinessLayer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dlls\LC.Framework.BusinessLayer.dll</HintPath>
+    </Reference>
+    <Reference Include="LC.Framework.DataUtil, Version=1.0.0.0, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dlls\LC.Framework.DataUtil.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MySql.Data, Version=6.5.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dlls\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dlls\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NextWay.Framework.PhantomV2, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dlls\NextWay.Framework.PhantomV2.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate, Version=4.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHibernate.4.1.1.4000\lib\net40\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Themes\padrao\animate.css" />
+    <Content Include="App_Themes\padrao\bootstrap\bootstrap.min.css" />
+    <Content Include="App_Themes\padrao\bootstrap\font-awesome.min.css" />
+    <Content Include="App_Themes\padrao\font-plus.css" />
+    <Content Include="App_Themes\padrao\fonts\fontawesome-webfont.svg" />
+    <Content Include="App_Themes\padrao\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="App_Themes\padrao\img\bg.png" />
+    <Content Include="App_Themes\padrao\img\bgContent.png" />
+    <Content Include="App_Themes\padrao\img\bgFooter.png" />
+    <Content Include="App_Themes\padrao\img\bgFx.png" />
+    <Content Include="App_Themes\padrao\img\bgGradWhite.png" />
+    <Content Include="App_Themes\padrao\img\bgInputLogin.png" />
+    <Content Include="App_Themes\padrao\img\bgMenu.jpg" />
+    <Content Include="App_Themes\padrao\img\bgMenuHover.jpg" />
+    <Content Include="App_Themes\padrao\img\bgTopo.gif" />
+    <Content Include="App_Themes\padrao\img\bgTopo.jpg" />
+    <Content Include="App_Themes\padrao\img\btnEntrar.png" />
+    <Content Include="App_Themes\padrao\img\btnSuporte.png" />
+    <Content Include="App_Themes\padrao\img\bulletMenu.png" />
+    <Content Include="App_Themes\padrao\img\bulletMenuBottom.png" />
+    <Content Include="App_Themes\padrao\img\calendar.png" />
+    <Content Include="App_Themes\padrao\img\IconEdit.png" />
+    <Content Include="App_Themes\padrao\img\LinkLogin.png" />
+    <Content Include="App_Themes\padrao\img\logo.png" />
+    <Content Include="App_Themes\padrao\img\LogoLink.png" />
+    <Content Include="App_Themes\padrao\img\LogoLink2.png" />
+    <Content Include="App_Themes\padrao\img\LogoLogin.png" />
+    <Content Include="App_Themes\padrao\img\sepMenu.gif" />
+    <Content Include="App_Themes\padrao\img\Sistole.png" />
+    <Content Include="App_Themes\padrao\img\SmartLogin.png" />
+    <Content Include="App_Themes\padrao\img\Sombra.png" />
+    <Content Include="App_Themes\padrao\img\x.gif" />
+    <Content Include="App_Themes\padrao\jquery-jvectormap-1.2.2.css" />
+    <Content Include="App_Themes\padrao\main.css" />
+    <Content Include="App_Themes\padrao\morris.css" />
+    <Content Include="App_Themes\padrao\padrao.css" />
+    <Content Include="App_Themes\padrao\style.css" />
+    <Content Include="App_Themes\padrao\todos.css" />
+    <Content Include="css\bootstrap-responsive.min.css" />
+    <Content Include="css\bootstrap.min.css" />
+    <Content Include="css\keyboard.css" />
+    <Content Include="css\style.css" />
+    <Content Include="css\typica-login.css" />
+    <Content Include="css\uploadify.css" />
+    <Content Include="default.aspx" />
+    <Content Include="dlls\AjaxControlToolkit.dll" />
+    <Content Include="dlls\Boleto.Net.dll" />
+    <Content Include="dlls\CKEditor.NET.dll" />
+    <Content Include="dlls\Excel.4.5.dll" />
+    <Content Include="dlls\FluentNHibernate.dll" />
+    <Content Include="dlls\ICSharpCode.SharpZipLib.dll" />
+    <Content Include="dlls\itextsharp.dll" />
+    <Content Include="dlls\itextsharp.pdfa.dll" />
+    <Content Include="dlls\itextsharp.xtra.dll" />
+    <Content Include="dlls\LC.Framework.BusinessLayer.dll" />
+    <Content Include="dlls\LC.Framework.DataUtil.dll" />
+    <Content Include="dlls\LinqKit.dll" />
+    <Content Include="dlls\MySql.Data.dll" />
+    <Content Include="dlls\Newtonsoft.Json.dll" />
+    <Content Include="dlls\NextWay.Framework.PhantomV2.dll" />
+    <Content Include="dlls\NHibernate.dll" />
+    <Content Include="dlls\Pdfizer.dll" />
+    <Content Include="Images\active.png" />
+    <Content Include="Images\bgBotaoAnexo.jpg" />
+    <Content Include="Images\cadeado.png" />
+    <Content Include="Images\cadeado_aberto.png" />
+    <Content Include="Images\cancelar_upload.png" />
+    <Content Include="Images\change.gif" />
+    <Content Include="Images\CLUBEAZUL.png" />
+    <Content Include="Images\clubevoce.png" />
+    <Content Include="Images\delete.png" />
+    <Content Include="Images\detail2.png" />
+    <Content Include="Images\edit.png" />
+    <Content Include="Images\endereco.png" />
+    <Content Include="Images\excel.png" />
+    <Content Include="Images\icon-novo.gif" />
+    <Content Include="Images\loading45.gif" />
+    <Content Include="Images\mail.gif" />
+    <Content Include="Images\new.png" />
+    <Content Include="Images\print.png" />
+    <Content Include="Images\search.png" />
+    <Content Include="Images\seta_baixa.png" />
+    <Content Include="Images\tick.png" />
+    <Content Include="Images\unactive.png" />
+    <Content Include="login.aspx" />
+    <Content Include="master\contratante\contratantes.aspx" />
+    <Content Include="Scripts\application.js" />
+    <Content Include="Scripts\backstretch.min.js" />
+    <Content Include="Scripts\bootsrap\affix.js" />
+    <Content Include="Scripts\bootsrap\alert.js" />
+    <Content Include="Scripts\bootsrap\application.js" />
+    <Content Include="Scripts\bootsrap\bootstrap.js" />
+    <Content Include="Scripts\bootsrap\bootstrap.min.js" />
+    <Content Include="Scripts\bootsrap\button.js" />
+    <Content Include="Scripts\bootsrap\carousel.js" />
+    <Content Include="Scripts\bootsrap\collapse.js" />
+    <Content Include="Scripts\bootsrap\customizer.js" />
+    <Content Include="Scripts\bootsrap\dropdown.js" />
+    <Content Include="Scripts\bootsrap\filesaver.js" />
+    <Content Include="Scripts\bootsrap\holder.js" />
+    <Content Include="Scripts\bootsrap\ie8-responsive-file-warning.js" />
+    <Content Include="Scripts\bootsrap\jszip.js" />
+    <Content Include="Scripts\bootsrap\less.js" />
+    <Content Include="Scripts\bootsrap\modal.js" />
+    <Content Include="Scripts\bootsrap\popover.js" />
+    <Content Include="Scripts\bootsrap\raw-files.js" />
+    <Content Include="Scripts\bootsrap\scrollspy.js" />
+    <Content Include="Scripts\bootsrap\tab.js" />
+    <Content Include="Scripts\bootsrap\tests\index.html" />
+    <Content Include="Scripts\bootsrap\tests\unit\affix.js" />
+    <Content Include="Scripts\bootsrap\tests\unit\alert.js" />
+    <Content Include="Scripts\bootsrap\tests\unit\button.js" />
+    <Content Include="Scripts\bootsrap\tests\unit\carousel.js" />
+    <Content Include="Scripts\bootsrap\tests\unit\collapse.js" />
+    <Content Include="Scripts\bootsrap\tests\unit\dropdown.js" />
+    <Content Include="Scripts\bootsrap\tests\unit\modal.js" />
+    <Content Include="Scripts\bootsrap\tests\unit\phantom.js" />
+    <Content Include="Scripts\bootsrap\tests\unit\popover.js" />
+    <Content Include="Scripts\bootsrap\tests\unit\scrollspy.js" />
+    <Content Include="Scripts\bootsrap\tests\unit\tab.js" />
+    <Content Include="Scripts\bootsrap\tests\unit\tooltip.js" />
+    <Content Include="Scripts\bootsrap\tests\unit\transition.js" />
+    <Content Include="Scripts\bootsrap\tests\vendor\jquery.js" />
+    <Content Include="Scripts\bootsrap\tests\vendor\qunit.css" />
+    <Content Include="Scripts\bootsrap\tests\vendor\qunit.js" />
+    <Content Include="Scripts\bootsrap\tooltip.js" />
+    <Content Include="Scripts\bootsrap\transition.js" />
+    <Content Include="Scripts\bootsrap\uglify.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\common.js" />
+    <Content Include="Scripts\highcharts\adapters\mootools-adapter.js" />
+    <Content Include="Scripts\highcharts\adapters\mootools-adapter.src.js" />
+    <Content Include="Scripts\highcharts\adapters\prototype-adapter.js" />
+    <Content Include="Scripts\highcharts\adapters\prototype-adapter.src.js" />
+    <Content Include="Scripts\highcharts\canvg.js" />
+    <Content Include="Scripts\highcharts\highcharts-more.js" />
+    <Content Include="Scripts\highcharts\highcharts.js" />
+    <Content Include="Scripts\highcharts\highcharts.src.js" />
+    <Content Include="Scripts\highcharts\html2canvas.js" />
+    <Content Include="Scripts\highcharts\modules\canvas-tools.js" />
+    <Content Include="Scripts\highcharts\modules\canvas-tools.src.js" />
+    <Content Include="Scripts\highcharts\modules\data.js" />
+    <Content Include="Scripts\highcharts\modules\data.src.js" />
+    <Content Include="Scripts\highcharts\modules\exporting.js" />
+    <Content Include="Scripts\highcharts\modules\exporting.src.js" />
+    <Content Include="Scripts\highcharts\modules\funnel.js" />
+    <Content Include="Scripts\highcharts\modules\funnel.src.js" />
+    <Content Include="Scripts\highcharts\old\adapters\mootools-adapter.js" />
+    <Content Include="Scripts\highcharts\old\adapters\mootools-adapter.src.js" />
+    <Content Include="Scripts\highcharts\old\adapters\prototype-adapter.js" />
+    <Content Include="Scripts\highcharts\old\adapters\prototype-adapter.src.js" />
+    <Content Include="Scripts\highcharts\old\highcharts-more.js" />
+    <Content Include="Scripts\highcharts\old\highcharts.js" />
+    <Content Include="Scripts\highcharts\old\highcharts.src.js" />
+    <Content Include="Scripts\highcharts\old\modules\canvas-tools.js" />
+    <Content Include="Scripts\highcharts\old\modules\canvas-tools.src.js" />
+    <Content Include="Scripts\highcharts\old\modules\data.js" />
+    <Content Include="Scripts\highcharts\old\modules\data.src.js" />
+    <Content Include="Scripts\highcharts\old\modules\exporting.js" />
+    <Content Include="Scripts\highcharts\old\modules\exporting.src.js" />
+    <Content Include="Scripts\highcharts\old\themes\dark-blue.js" />
+    <Content Include="Scripts\highcharts\old\themes\dark-green.js" />
+    <Content Include="Scripts\highcharts\old\themes\gray.js" />
+    <Content Include="Scripts\highcharts\old\themes\grid.js" />
+    <Content Include="Scripts\highcharts\old\themes\skies.js" />
+    <Content Include="Scripts\highcharts\rgbcolor.js" />
+    <Content Include="Scripts\highcharts\themes\dark-blue.js" />
+    <Content Include="Scripts\highcharts\themes\dark-green.js" />
+    <Content Include="Scripts\highcharts\themes\gray.js" />
+    <Content Include="Scripts\highcharts\themes\grid.js" />
+    <Content Include="Scripts\highcharts\themes\skies.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="layout.Master" />
+    <Content Include="packages.config" />
+    <None Include="Scripts\jquery-1.8.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.8.2.js" />
+    <Content Include="Scripts\jquery-1.8.2.min.js" />
+    <None Include="Scripts\jquery-2.1.1.intellisense.js" />
+    <Content Include="Scripts\jquery-2.1.1.js" />
+    <Content Include="Scripts\jquery-2.1.1.min.js" />
+    <Content Include="Scripts\jquery-jvectormap-1.2.2.min.js" />
+    <Content Include="Scripts\jquery-jvectormap-world-mill-en.js" />
+    <Content Include="Scripts\jquery-ui-1.10.4.custom.css" />
+    <Content Include="Scripts\jquery-ui-1.10.4.custom.js" />
+    <Content Include="Scripts\jquery-ui-1.10.4.js" />
+    <Content Include="Scripts\jquery-ui-1.10.4.min.js" />
+    <Content Include="Scripts\jquery-ui-1.8.24.js" />
+    <Content Include="Scripts\jquery-ui-1.8.24.min.js" />
+    <Content Include="Scripts\jquery.colorhelpers.min.js" />
+    <Content Include="Scripts\jquery.countTo.js" />
+    <Content Include="Scripts\jquery.flot.canvas.min.js" />
+    <Content Include="Scripts\jquery.flot.categories.min.js" />
+    <Content Include="Scripts\jquery.flot.crosshair.min.js" />
+    <Content Include="Scripts\jquery.flot.errorbars.min.js" />
+    <Content Include="Scripts\jquery.flot.example.js" />
+    <Content Include="Scripts\jquery.flot.fillbetween.min.js" />
+    <Content Include="Scripts\jquery.flot.image.min.js" />
+    <Content Include="Scripts\jquery.flot.min.js" />
+    <Content Include="Scripts\jquery.flot.navigate.min.js" />
+    <Content Include="Scripts\jquery.flot.pie.min.js" />
+    <Content Include="Scripts\jquery.flot.resize.min.js" />
+    <Content Include="Scripts\jquery.flot.selection.min.js" />
+    <Content Include="Scripts\jquery.flot.stack.min.js" />
+    <Content Include="Scripts\jquery.flot.symbol.min.js" />
+    <Content Include="Scripts\jquery.flot.threshold.min.js" />
+    <Content Include="Scripts\jquery.flot.time.min.js" />
+    <Content Include="Scripts\jquery.keyboard.extension-all.js" />
+    <Content Include="Scripts\jquery.keyboard.extension-all.min.js" />
+    <Content Include="Scripts\jquery.keyboard.extension-autocomplete.js" />
+    <Content Include="Scripts\jquery.keyboard.extension-autocomplete.min.js" />
+    <Content Include="Scripts\jquery.keyboard.extension-mobile.js" />
+    <Content Include="Scripts\jquery.keyboard.extension-mobile.min.js" />
+    <Content Include="Scripts\jquery.keyboard.extension-navigation.js" />
+    <Content Include="Scripts\jquery.keyboard.extension-navigation.min.js" />
+    <Content Include="Scripts\jquery.keyboard.extension-scramble.js" />
+    <Content Include="Scripts\jquery.keyboard.extension-scramble.min.js" />
+    <Content Include="Scripts\jquery.keyboard.extension-typing.js" />
+    <Content Include="Scripts\jquery.keyboard.extension-typing.min.js" />
+    <Content Include="Scripts\jquery.keyboard.js" />
+    <Content Include="Scripts\jquery.keyboard.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\modernizr-2.6.2.min.js" />
+    <Content Include="Scripts\morris.min.js" />
+    <Content Include="Scripts\raphael.2.1.0.min.js" />
+    <Content Include="Scripts\skycons.js" />
+    <Content Include="Scripts\style_pdf.css" />
+    <Content Include="Scripts\swfobject\swfobject.js" />
+    <Content Include="Scripts\todos.js" />
+    <Content Include="Scripts\typica-login.js" />
+    <Content Include="Scripts\uploadify\jquery.uploadify.v2.1.0.min.js" />
+    <Content Include="Scripts\uploadify\uploadify.swf" />
+    <Content Include="Scripts\waypoints.min.js" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="default.aspx.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="default.aspx.designer.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="layout.Master.cs">
+      <DependentUpon>layout.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="layout.Master.designer.cs">
+      <DependentUpon>layout.Master</DependentUpon>
+    </Compile>
+    <Compile Include="login.aspx.cs">
+      <DependentUpon>login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="login.aspx.designer.cs">
+      <DependentUpon>login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="master\contratante\contratantes.aspx.cs">
+      <DependentUpon>contratantes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="master\contratante\contratantes.aspx.designer.cs">
+      <DependentUpon>contratantes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\CsvExport.cs" />
+    <Compile Include="Util\CTipos.cs" />
+    <Compile Include="Util\Geral.cs" />
+    <Compile Include="Util\Keys.cs" />
+    <Compile Include="Util\UsuarioLogado.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Themes\padrao\fonts\fontawesome-webfont.eot" />
+    <Content Include="App_Themes\padrao\fonts\fontawesome-webfont.ttf" />
+    <Content Include="App_Themes\padrao\fonts\fontawesome-webfont.woff" />
+    <Content Include="App_Themes\padrao\fonts\FontAwesome.otf" />
+    <Content Include="App_Themes\padrao\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="App_Themes\padrao\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="App_Themes\padrao\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="App_Themes\padrao\fonts\glyphicons-regular.eot" />
+    <Content Include="App_Themes\padrao\fonts\glyphicons-regular.ttf" />
+    <Content Include="App_Themes\padrao\fonts\glyphicons-regular.woff" />
+    <Content Include="App_Themes\padrao\padrao.skin" />
+    <Content Include="Scripts\jquery-2.1.1.min.map" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Entidades\Entidades.csproj">
+      <Project>{1494ffee-eac6-4b6d-bb12-843d4ca872df}</Project>
+      <Name>Entidades</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entity\Entity.csproj">
+      <Project>{fd2002ea-da01-4fbe-945f-765b27c120be}</Project>
+      <Name>Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Facade\Facade.csproj">
+      <Project>{93710b14-b48c-411b-8f85-4e6a004490ff}</Project>
+      <Name>Facade</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>20214</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:10657/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
