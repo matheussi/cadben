@@ -154,6 +154,7 @@
     <Content Include="App_Themes\padrao\padrao.css" />
     <Content Include="App_Themes\padrao\style.css" />
     <Content Include="App_Themes\padrao\todos.css" />
+    <Content Include="bd.txt" />
     <Content Include="css\bootstrap-responsive.min.css" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\keyboard.css" />
