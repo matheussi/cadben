@@ -10,7 +10,7 @@
 namespace cadben.www.master.contratante {
     
     
-    public partial class contratantes {
+    public partial class contratante {
         
         /// <summary>
         /// up control.
@@ -22,15 +22,6 @@ namespace cadben.www.master.contratante {
         protected global::System.Web.UI.UpdatePanel up;
         
         /// <summary>
-        /// lnkNovo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button lnkNovo;
-        
-        /// <summary>
         /// txtNome control.
         /// </summary>
         /// <remarks>
@@ -40,30 +31,66 @@ namespace cadben.www.master.contratante {
         protected global::System.Web.UI.WebControls.TextBox txtNome;
         
         /// <summary>
-        /// cmdProcurar control.
+        /// txtAlias control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button cmdProcurar;
+        protected global::System.Web.UI.WebControls.TextBox txtAlias;
         
         /// <summary>
-        /// grid control.
+        /// txtEmail control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView grid;
+        protected global::System.Web.UI.WebControls.TextBox txtEmail;
         
         /// <summary>
-        /// litMensagem control.
+        /// chkAtivo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litMensagem;
+        protected global::System.Web.UI.WebControls.CheckBox chkAtivo;
+        
+        /// <summary>
+        /// litCadastro control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litCadastro;
+        
+        /// <summary>
+        /// litAlteracao control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litAlteracao;
+        
+        /// <summary>
+        /// cmdVoltar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button cmdVoltar;
+        
+        /// <summary>
+        /// cmdSalvar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button cmdSalvar;
     }
 }

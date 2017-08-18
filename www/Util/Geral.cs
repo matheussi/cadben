@@ -13,6 +13,9 @@ using System.Text.RegularExpressions;
 //using Ent = cadben.Entidades;
 //using LC.Web.PadraoSeguros.Facade;
 using Enty = cadben.Entity;
+using System.Collections.Specialized;
+using cadben.www.seguranca;
+using System.Web.Configuration;
 
 namespace cadben.www.Util
 {
@@ -567,6 +570,55 @@ namespace cadben.www.Util
                 //    client.Dispose();
                 //}
             }
+        }
+
+        public static string PreparaQueryStringSegura(string[] keys, string[] vals)
+        {
+            NameValueCollection querystring = new NameValueCollection();
+
+            for (int i = 0; i < keys.Length; i++)
+            {
+                querystring.Add(keys[i], vals[i]);
+            }
+
+            string encryptedString = 
+                CryptoQueryStringHandler.EncryptQueryStrings(querystring, WebConfigurationManager.AppSettings["CryptoKey"]);
+
+            return encryptedString;
+        }
+
+        public static string[,] ProcessaQueryStringSegura(string querystring)
+        {
+            string sequencia = CryptoQueryStringHandler.DecryptQueryStrings(querystring, WebConfigurationManager.AppSettings["CryptoKey"]);
+            string[] pares = sequencia.Split('&');
+
+            string[,] retorno = new string[pares.Length, 2];
+
+            for (int i=0;i<pares.Length;i++)
+            {
+                retorno[i, 0] = pares[i].Split('=')[0];
+                retorno[i, 1] = pares[i].Split('=')[1];
+            }
+
+            return retorno;
+        }
+
+        public static T ProcessaQueryStringSegura<T>(string secureuri, string key)
+        {
+            string sequencia = CryptoQueryStringHandler.DecryptQueryStrings(secureuri, WebConfigurationManager.AppSettings["CryptoKey"]);
+            string[] pares = sequencia.Split('&');
+
+            string[,] retorno = new string[pares.Length, 2];
+
+            for (int i = 0; i < pares.Length; i++)
+            {
+                if (pares[i].Split('=')[0] == key)
+                {
+                    return CTipos.CTipo<T>(pares[i].Split('=')[1]);
+                }
+            }
+
+            return (T)typeof(T).GetField("MinValue").GetValue(null);
         }
     }
 

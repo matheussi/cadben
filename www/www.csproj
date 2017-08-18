@@ -201,6 +201,7 @@
     <Content Include="Images\tick.png" />
     <Content Include="Images\unactive.png" />
     <Content Include="login.aspx" />
+    <Content Include="master\contratante\contratante.aspx" />
     <Content Include="master\contratante\contratantes.aspx" />
     <Content Include="Scripts\application.js" />
     <Content Include="Scripts\backstretch.min.js" />
@@ -375,6 +376,13 @@
     <Compile Include="login.aspx.designer.cs">
       <DependentUpon>login.aspx</DependentUpon>
     </Compile>
+    <Compile Include="master\contratante\contratante.aspx.cs">
+      <DependentUpon>contratante.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="master\contratante\contratante.aspx.designer.cs">
+      <DependentUpon>contratante.aspx</DependentUpon>
+    </Compile>
     <Compile Include="master\contratante\contratantes.aspx.cs">
       <DependentUpon>contratantes.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -387,6 +395,7 @@
     <Compile Include="Util\CTipos.cs" />
     <Compile Include="Util\Geral.cs" />
     <Compile Include="Util\Keys.cs" />
+    <Compile Include="Util\Seguranca.cs" />
     <Compile Include="Util\UsuarioLogado.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -7,6 +7,7 @@ namespace cadben.www.Util
 {
     public class Keys
     {
+        public static readonly string rKey = "request";
         public static readonly string IdKey = "id";
         public static readonly String IDKey = "_idkey";
         public static readonly String IDKey2 = "_idkey2";

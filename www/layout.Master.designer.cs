@@ -76,6 +76,24 @@ namespace MedProj.www {
         protected global::System.Web.UI.WebControls.Panel pnlMenu;
         
         /// <summary>
+        /// litMastContratan control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl litMastContratan;
+        
+        /// <summary>
+        /// aMastContratan control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor aMastContratan;
+        
+        /// <summary>
         /// li10 control.
         /// </summary>
         /// <remarks>

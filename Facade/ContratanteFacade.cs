@@ -40,7 +40,7 @@
             return contratante;
         }
 
-        public Contratante Carregar(int id)
+        public Contratante Carregar(long id)
         {
             Contratante ret = null;
 
@@ -66,13 +66,24 @@
             return ret;
         }
 
-        public List<Contratante> CarregarTodos()
+        public List<Contratante> CarregarTodos(string nome = null)
         {
             using (ISession sessao = ObterSessao())
             {
-                var ret = sessao.Query<Contratante>().OrderBy(c => c.Nome).ToList();
+                if (string.IsNullOrEmpty(nome))
+                {
+                    var ret = sessao.Query<Contratante>().OrderBy(c => c.Nome).ToList();
 
-                return ret;
+                    return ret;
+                }
+                else
+                {
+                    var ret = sessao.Query<Contratante>()
+                        .Where(c => c.Nome.Contains(nome))
+                        .OrderBy(c => c.Nome).ToList();
+
+                    return ret;
+                }
             }
         }
     }
