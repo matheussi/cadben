@@ -1,0 +1,2123 @@
+﻿/****** Object:  Table [dbo].[_atendimento]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[_atendimento](
+	[atendimento_id] [int] NOT NULL,
+	[atendimento_propostaId] [int] NOT NULL,
+	[atendimento_usuarioId] [int] NULL,
+	[atendimento_tipoId] [int] NULL,
+	[atendimento_subTipoId] [int] NULL,
+	[atendimento_titulo] [varchar](350) NULL,
+	[atendimento_texto] [varchar](8000) NULL,
+	[atendimento_dataInicio] [datetime] NULL,
+	[atendimento_dataPrevisao] [datetime] NULL,
+	[atendimento_dataTermino] [datetime] NULL,
+	[atendimento_data] [datetime] NULL,
+	[atendimento_cadastrado] [varchar](150) NULL,
+	[atendimento_resolvido] [varchar](150) NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[_atendimentoItem]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[_atendimentoItem](
+	[atendimentoitem_id] [int] NOT NULL,
+	[atendimentoitem_atendimentoId] [int] NOT NULL,
+	[atendimentoitem_texto] [varchar](8000) NULL,
+	[atendimentoitem_data] [datetime] NOT NULL,
+	[atendimentoitem_tipoId] [int] NOT NULL,
+	[atendimentoitem_subTipoId] [int] NOT NULL,
+	[atendimentoitem_usuarioId] [int] NOT NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[adicional]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[adicional](
+	[adicional_id] [int] NOT NULL,
+	[adicional_operadoraId] [int] NOT NULL,
+	[adicional_descricao] [varchar](200) NOT NULL,
+	[adicional_ativo] [bit] NOT NULL,
+	[adicional_valorUnico] [decimal](18, 2) NULL,
+	[adicional_paraTodaProposta] [bit] NOT NULL,
+	[adicional_data] [datetime] NULL,
+	[adicional_codTitular] [varchar](50) NULL,
+	[adicional_codAgregado] [varchar](50) NULL,
+	[adicional_codDependente] [varchar](50) NULL,
+	[adicional_dental] [bit] NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[adicional_beneficiario]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[adicional_beneficiario](
+	[adicionalbeneficiario_id] [int] NOT NULL,
+	[adicionalbeneficiario_propostaId] [int] NOT NULL,
+	[adicionalbeneficiario_adicionalid] [int] NOT NULL,
+	[adicionalbeneficiario_beneficiarioid] [int] NOT NULL,
+	[adicionalbeneficiario_data] [datetime] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[adicional_faixa]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[adicional_faixa](
+	[adicionalfaixa_id] [int] NOT NULL,
+	[adicionalfaixa_adicionalid] [int] NOT NULL,
+	[adicionalfaixa_idadeInicio] [int] NULL,
+	[adicionalfaixa_idadeFim] [int] NULL,
+	[adicionalfaixa_valor] [decimal](18, 2) NULL,
+	[adicionalfaixa_vigencia] [datetime] NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[adicional_regra]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[adicional_regra](
+	[adicionalregra_id] [int] NOT NULL,
+	[adicionalregra_operadoraId] [int] NOT NULL,
+	[adicionalregra_adicionalId] [int] NOT NULL,
+	[adicionalregra_tipo] [int] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[arquivo_baixa]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[arquivo_baixa](
+	[arquivobaixa_id] [bigint] NOT NULL,
+	[arquivobaixa_nome] [varchar](350) NOT NULL,
+	[arquivobaixa_lote] [varchar](50) NULL,
+	[arquivobaixa_corpo] [text] NULL,
+	[arquivobaixa_tipo] [tinyint] NULL,
+	[arquivobaixa_criacao] [datetime] NOT NULL,
+	[arquivobaixa_processamento] [datetime] NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[arquivo_baixa_item]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[arquivo_baixa_item](
+	[arquivobaixaitem_id] [bigint] NOT NULL,
+	[arquivobaixaitem_arquivoId] [bigint] NOT NULL,
+	[arquivobaixaitem_contratoId] [bigint] NULL,
+	[arquivobaixaitem_cobrancaId] [bigint] NULL,
+	[arquivobaixaitem_identificacao] [varchar](100) NOT NULL,
+	[arquivobaixaitem_status] [tinyint] NOT NULL,
+	[arquivobaixaitem_data] [datetime] NOT NULL,
+	[arquivobaixaitem_dataCredito] [datetime] NULL,
+	[arquivobaixaitem_agenciaOrigem] [varchar](10) NULL,
+	[arquivobaixaitem_dataRemessa] [datetime] NULL,
+	[arquivobaixaitem_valorPago] [decimal](18, 2) NULL,
+	[arquivobaixaitem_titular] [varchar](350) NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[atendimento]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[atendimento](
+	[atendimento_id] [int] NOT NULL,
+	[atendimento_operadora_id] [int] NULL,
+	[atendimento_atendente_id] [int] NULL,
+	[atendimento_numero_contrato] [varchar](50) NULL,
+	[atendimento_nome] [varchar](255) NULL,
+	[atendimento_email] [varchar](255) NULL,
+	[atendimento_telefone] [varchar](20) NULL,
+	[atendimento_cpf] [varchar](20) NULL,
+	[atendimento_datahora] [datetime] NULL,
+	[atendimento_protocolo] [varchar](20) NULL,
+	[atendimento_cancelado] [bit] NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[atendimento_item]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[atendimento_item](
+	[item_id] [int] NOT NULL,
+	[item_atendimento_id] [int] NULL,
+	[item_tipo] [int] NULL,
+	[item_plano_id] [int] NULL,
+	[item_acomodacao_id] [int] NULL,
+	[item_texto] [text] NULL,
+	[item_beneficiario_ids] [varchar](350) NULL,
+	[item_parentesco_ids] [varchar](350) NULL,
+	[item_datahora] [datetime] NULL,
+	[item_status] [tinyint] NULL,
+	[item_prazo] [datetime] NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[atendimentoTipo]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[atendimentoTipo](
+	[atendimentotipo_id] [int] NOT NULL,
+	[atendimentotipo_descricao] [varchar](550) NOT NULL,
+	[atendimentotipo_email] [varchar](70) NULL,
+	[atendimentotipo_prazoConclusao] [int] NOT NULL,
+	[atendimentotipo_tipo] [tinyint] NULL,
+	[atendimentotipo_data] [datetime] NOT NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[banco]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[banco](
+	[ID] [bigint] NOT NULL,
+	[Codigo] [varchar](4) NULL,
+	[Nome] [varchar](150) NULL,
+	[Agencia] [varchar](5) NULL,
+	[AgenciaDAC] [varchar](1) NULL,
+	[Conta] [varchar](12) NULL,
+	[Tipo] [int] NOT NULL,
+	[Unidade_ID] [bigint] NULL,
+	[ContaDAC] [varchar](2) NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[beneficiario]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[beneficiario](
+	[beneficiario_id] [bigint] NOT NULL,
+	[beneficiario_tipo] [tinyint] NOT NULL,
+	[beneficiario_estadoCivilId] [int] NULL,
+	[beneficiario_nome] [varchar](600) NULL,
+	[beneficiario_razaoSocial] [varchar](250) NULL,
+	[beneficiario_sindicatoPatronal] [varchar](250) NULL,
+	[beneficiario_sindicatoLaboral] [varchar](250) NULL,
+	[beneficiario_sexo] [nvarchar](max) NULL,
+	[beneficiario_cpf] [nvarchar](max) NULL,
+	[beneficiario_rg] [nvarchar](max) NULL,
+	[beneficiario_rgUF] [nvarchar](max) NULL,
+	[beneficiario_rgOrgaoExp] [nvarchar](max) NULL,
+	[beneficiario_dataNascimento] [datetime] NOT NULL,
+	[beneficiario_dataCasamento] [datetime] NULL,
+	[beneficiario_telefone] [nvarchar](max) NULL,
+	[beneficiario_ramal] [nvarchar](max) NULL,
+	[beneficiario_telefone2] [nvarchar](max) NULL,
+	[beneficiario_ramal2] [nvarchar](max) NULL,
+	[beneficiario_celular] [nvarchar](max) NULL,
+	[beneficiario_celularOperadora] [nvarchar](max) NULL,
+	[beneficiario_email] [nvarchar](max) NULL,
+	[beneficiario_nomeMae] [nvarchar](max) NULL,
+	[beneficiario_altura] [decimal](18, 2) NULL,
+	[beneficiario_peso] [decimal](18, 2) NULL,
+	[beneficiario_data] [datetime] NULL,
+	[beneficiario_declaracaoNascimentoVivo] [nvarchar](max) NULL,
+	[beneficiario_cns] [nvarchar](max) NULL,
+	[importId] [int] NULL,
+	[beneficiario_dmed] [bit] NULL,
+	[beneficiario_matrizId] [bigint] NULL,
+	[status] [int] NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[calendario]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[calendario](
+	[calendario_id] [int] NOT NULL,
+	[calendario_contratoId] [int] NOT NULL,
+	[calendario_admissaoDeDia] [tinyint] NOT NULL,
+	[calendario_admissaoDeTipo] [int] NOT NULL,
+	[calendario_admissaoAteDia] [tinyint] NOT NULL,
+	[calendario_admissaoAteTipo] [int] NOT NULL,
+	[calendario_vigenciaDia] [tinyint] NOT NULL,
+	[calendario_vigenciaTipo] [int] NOT NULL,
+	[calendario_vencimentoDia] [tinyint] NULL,
+	[calendario_vencimentoTipo] [int] NULL,
+	[calendario_dataSemJurosDia] [tinyint] NULL,
+	[calendario_dataLimiteTipo] [tinyint] NULL,
+	[calendario_dataLimiteValor] [varchar](1000) NULL,
+	[calendario_data] [datetime] NOT NULL,
+	[calendario_admissaoDataDeRef] [datetime] NULL,
+	[calendario_admissaoDataAteRef] [datetime] NULL,
+	[calendario_vigenciaDataRef] [datetime] NULL,
+	[calendario_vencimentoDataRef] [datetime] NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[calendario_recebimento]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[calendario_recebimento](
+	[calendariorecebimento_id] [int] NOT NULL,
+	[calendariorecebimento_calendarioAdmissId] [int] NOT NULL,
+	[calendariorecebimento_faturaDia] [tinyint] NOT NULL,
+	[calendariorecebimento_admissaoDeTipo] [tinyint] NOT NULL,
+	[calendariorecebimento_comissaoDia] [tinyint] NOT NULL,
+	[calendariorecebimento_comissaoTipo] [tinyint] NOT NULL,
+	[calendariorecebimento_percentualComissao] [tinyint] NOT NULL,
+	[calendariorecebimento_data] [datetime] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[calendarioVencimento]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[calendarioVencimento](
+	[calendariovencto_id] [int] NOT NULL,
+	[calendariovencto_calendarioAdmissaoId] [int] NOT NULL,
+	[calendario_vencimentoDia] [int] NOT NULL,
+	[calendariovencto_vencimentoTipo] [int] NOT NULL,
+	[calendariovencto_dataSemJurosDia] [int] NULL,
+	[calendariovencto_dataLimiteTipo] [int] NOT NULL,
+	[calendariovencto_dataLimiteValor] [varchar](5000) NULL,
+	[calendariovencto_data] [datetime] NOT NULL,
+	[calendariovencto_limiteAposVencimento] [int] NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[categoria]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[categoria](
+	[categoria_id] [int] NOT NULL,
+	[categoria_perfilId] [int] NULL,
+	[categoria_descricao] [varchar](150) NOT NULL,
+	[categoria_ativa] [bit] NOT NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[cobranca]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[cobranca](
+	[cobranca_id] [int] IDENTITY(1,1) NOT NULL,
+	[cobranca_propostaId] [bigint] NOT NULL,
+	[cobranca_parcela] [int] NULL,
+	[cobranca_arquivoUltimoEnvioId] [int] NULL,
+	[cobranca_valor] [decimal](18, 2) NOT NULL,
+	[cobranca_valorNominal] [decimal](18, 2) NULL,
+	[cobranca_dataVencimento] [datetime] NULL,
+	[cobranca_dataVencimentoIsencaoJuro] [datetime] NULL,
+	[cobranca_dataCriacao] [datetime] NOT NULL,
+	[cobranca_dataBaixaAuto] [datetime] NULL,
+	[cobranca_pago] [bit] NOT NULL,
+	[cobranca_dataPagto] [datetime] NULL,
+	[cobranca_valorPagto] [decimal](18, 2) NULL,
+	[cobranca_tipo] [tinyint] NOT NULL,
+	[cobranca_cobrancaRefId] [int] NULL,
+	[cobranca_comissaoPaga] [bit] NULL,
+	[cobranca_cancelada] [bit] NULL,
+	[cobranca_nossoNumero] [varchar](100) NULL,
+	[cobranca_tipoTemp] [tinyint] NULL,
+	[cobranca_carteira] [int] NOT NULL,
+	[cobranca_dataVencimentoForcada] [bit] NULL,
+	[exc] [tinyint] NULL,
+	[cobranca_qtdVidas] [int] NULL,
+	[cobranca_instrAdicional] [varchar](300) NULL,
+	[cobranca_adicionalId] [bigint] NULL,
+	[cobranca_acrescimoContrato] [decimal](18, 2) NULL,
+	[cobranca_acrescimoContratoTipo] [tinyint] NULL,
+ CONSTRAINT [PK_cobranca] PRIMARY KEY CLUSTERED 
+(
+	[cobranca_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[cobranca_motivoBaixa]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[cobranca_motivoBaixa](
+	[motivobaixa_id] [int] NOT NULL,
+	[motivobaixa_codigo] [varchar](50) NULL,
+	[motivobaixa_descricao] [varchar](1500) NOT NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[cobranca_pendenciaCnab]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[cobranca_pendenciaCnab](
+	[pendenciacnab_id] [bigint] IDENTITY(1,1) NOT NULL,
+	[pendenciacnab_cobrancaid] [bigint] NOT NULL,
+	[pendenciacnab_origem] [tinyint] NOT NULL,
+	[pendenciacnab_data] [datetime] NOT NULL,
+	[pendenciacnab_alteracaoValor] [bit] NOT NULL,
+	[pendenciacnab_alteracaoVencimento] [bit] NOT NULL,
+	[pendenciacnab_processado] [bit] NULL,
+	[pendenciacnab_processadoData] [datetime] NULL,
+ CONSTRAINT [PK_cobranca_pendenciaCnab] PRIMARY KEY CLUSTERED 
+(
+	[pendenciacnab_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[cobranca_titulosBaixados]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[cobranca_titulosBaixados](
+	[cobrancaId] [int] NOT NULL,
+	[retornooutputId] [int] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[comissao_modelo]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[comissao_modelo](
+	[comissaomodelo_id] [int] NOT NULL,
+	[comissaomodelo_descricao] [varchar](150) NULL,
+	[comissaomodelo_vitalicia] [bit] NULL,
+	[comissaomodelo_vitaliciaNumParcela] [int] NULL,
+	[comissaomodelo_vitaliciaPercentual] [decimal](18, 2) NULL,
+	[comissaomodelo_categoriaId] [int] NULL,
+	[comissaomodelo_grupoId] [int] NULL,
+	[comissaomodelo_contratoAdmId] [int] NULL,
+	[comissaomodelo_data] [datetime] NULL,
+	[comissaomodelo_idadeEspecial] [int] NULL,
+	[comissaomodelo_tipo] [int] NOT NULL,
+	[comissaomodelo_properties] [text] NULL,
+	[timestamp] [timestamp] NOT NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[comissao_modelo_idade]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[comissao_modelo_idade](
+	[comissaoidade_id] [int] NOT NULL,
+	[comissaoidade_comissaoid] [int] NOT NULL,
+	[comissaoidade_idade] [tinyint] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[comissao_modelo_idade_item]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[comissao_modelo_idade_item](
+	[comissaoidadeitem_id] [int] NOT NULL,
+	[comissaoidadeitem_comissaoidadeid] [int] NOT NULL,
+	[comissaoidadeitem_parcela] [tinyint] NOT NULL,
+	[comissaoidadeitem_percentual] [decimal](18, 2) NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[comissao_modelo_item]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[comissao_modelo_item](
+	[comissaomodeloitem_id] [int] NOT NULL,
+	[comissaomodeloitem_grupoId] [int] NOT NULL,
+	[comissaomodeloitem_parcela] [int] NOT NULL,
+	[comissaomodeloitem_percentual] [decimal](18, 2) NOT NULL,
+	[comissaomodeloitem_percentualCompraCarencia] [decimal](18, 2) NULL,
+	[comissaomodeloitem_percentualMigracao] [decimal](18, 2) NULL,
+	[comissaomodeloitem_percentualADM] [decimal](18, 2) NULL,
+	[comissaomodeloitem_percentualEspecial] [decimal](18, 2) NULL,
+	[comissaomodeloitem_idade] [decimal](18, 2) NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[comissao_modelo_vitaliciedade]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[comissao_modelo_vitaliciedade](
+	[comissaovitalicia_id] [int] NOT NULL,
+	[comissaovitalicia_grupoId] [int] NOT NULL,
+	[comissaovitalicia_tipoColunaComissao] [int] NOT NULL,
+	[comissaovitalicia_vitalicia] [bit] NOT NULL,
+	[comissaovitalicia_parcelaInicio] [int] NULL,
+	[comissaovitalicia_percentual] [decimal](18, 2) NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[comissao_operadora]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[comissao_operadora](
+	[comissaooperadora_id] [int] NOT NULL,
+	[comissaooperadora_contratoAdmId] [int] NULL,
+	[comissaooperadora_descricao] [varchar](300) NULL,
+	[comissaooperadora_data] [datetime] NOT NULL,
+	[comissaooperadora_ativa] [bit] NOT NULL,
+	[comissaooperadora_vitalicia] [bit] NULL,
+	[comissaooperadora_vitaliciaNumParcela] [int] NULL,
+	[comissaooperadora_vitaliciaPercentual] [decimal](18, 2) NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[comissao_operadora_item]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[comissao_operadora_item](
+	[comissaooperadoraitem_id] [int] NOT NULL,
+	[comissaooperadoraitem_comissaoid] [int] NOT NULL,
+	[comissaooperadoraitem_contratoId] [int] NULL,
+	[comissaooperadoraitem_parcela] [int] NOT NULL,
+	[comissaooperadoraitem_percentual] [decimal](18, 2) NOT NULL,
+	[comissaooperadoraitem_percentualCompraCarencia] [decimal](18, 2) NULL,
+	[comissaooperadoraitem_percentualMigracao] [decimal](18, 2) NULL,
+	[comissaooperadoraitem_percentualADM] [decimal](18, 2) NULL,
+	[comissaooperadoraitem_percentualEspecial] [decimal](18, 2) NULL,
+	[comissaooperadoraitem_idade] [decimal](18, 2) NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[comissao_operadora_vitaliciedade]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[comissao_operadora_vitaliciedade](
+	[cov_id] [int] NOT NULL,
+	[cov_comissaoId] [int] NOT NULL,
+	[cov_tipoColunaComissao] [int] NOT NULL,
+	[cov_vitalicia] [bit] NOT NULL,
+	[cov_parcelaInicio] [tinyint] NOT NULL,
+	[cov_percentual] [decimal](18, 2) NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[comissao_usuario]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[comissao_usuario](
+	[comissaousuario_id] [int] NOT NULL,
+	[comissaousuario_usuarioId] [int] NOT NULL,
+	[comissaousuario_perfilId] [int] NULL,
+	[comissaousuario_tabelaComissionamentoId] [int] NOT NULL,
+	[comissaousuario_grupovendaId] [int] NULL,
+	[comissaousuario_data] [datetime] NULL,
+	[comissaousuario_ativo] [bit] NULL,
+	[comissaousuario_dataAtribuicao] [datetime] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[comissaoGrupo]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[comissaoGrupo](
+	[comissaogrupo_id] [int] NOT NULL,
+	[comissaogrupo_tabelaComissaoId] [int] NOT NULL,
+	[comissaogrupo_descricao] [varchar](150) NOT NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[comissaoGrupo_contratoExcluido]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[comissaoGrupo_contratoExcluido](
+	[grupoId] [int] NOT NULL,
+	[contratoAdmId] [int] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[comissaoInstancia]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[comissaoInstancia](
+	[comissaoInstancia_id] [int] NOT NULL,
+	[comissaoInstancia_modeloId] [int] NOT NULL,
+	[comissaoInstancia_agenteId] [int] NOT NULL,
+	[comissaoInstancia_data] [datetime] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[comissaoInstancia_item]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[comissaoInstancia_item](
+	[comissaoInstanciaItem_id] [int] NOT NULL,
+	[comissaoInstanciaItem_comissaoInstanciaId] [int] NOT NULL,
+	[comissaoInstanciaItem_parcela] [tinyint] NOT NULL,
+	[comissaoInstanciaItem_percentual] [decimal](18, 0) NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[config_adicional]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[config_adicional](
+	[ca_id] [bigint] NOT NULL,
+	[ca_estipulanteId] [bigint] NULL,
+	[ca_contratoAdmId] [bigint] NULL,
+	[ca_descricao] [varchar](150) NOT NULL,
+	[ca_texto] [varchar](200) NULL,
+	[ca_valor] [decimal](18, 2) NOT NULL,
+	[ca_todosContratos] [bit] NULL,
+	[ca_ativo] [bit] NOT NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[config_adicional_contratos]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[config_adicional_contratos](
+	[cac_id] [bigint] NOT NULL,
+	[cac_configId] [bigint] NOT NULL,
+	[cac_contratoId] [bigint] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[config_email]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[config_email](
+	[ce_id] [bigint] NOT NULL,
+	[ce_descricao] [varchar](250) NOT NULL,
+	[ce_tipo] [tinyint] NOT NULL,
+	[ce_diasAntes] [int] NULL,
+	[ce_frequencia] [int] NULL,
+	[ce_email] [text] NULL,
+	[ce_ativo] [bit] NULL,
+	[ce_textoId] [bigint] NULL,
+	[ce_estipulanteId] [bigint] NULL,
+	[ce_contratoAdmId] [bigint] NULL,
+	[ce_todosContratos] [bit] NOT NULL,
+	[ce_dataCriacao] [datetime] NOT NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[config_email_contratos]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[config_email_contratos](
+	[cec_id] [bigint] NOT NULL,
+	[cec_configId] [bigint] NOT NULL,
+	[cec_contratoId] [bigint] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[config_email_instancia]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[config_email_instancia](
+	[cei_id] [bigint] NOT NULL,
+	[cei_configId] [bigint] NOT NULL,
+	[cei_cobrancaId] [bigint] NOT NULL,
+	[cei_tipo] [tinyint] NOT NULL,
+	[cei_mensagem] [varchar](500) NULL,
+	[cei_email] [varchar](500) NULL,
+	[cei_data] [datetime] NOT NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[config_email_texto]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[config_email_texto](
+	[cet_id] [bigint] NOT NULL,
+	[cet_descricao] [varchar](500) NOT NULL,
+	[cet_texto] [varchar](8000) NOT NULL,
+	[cet_ativo] [bit] NOT NULL,
+	[cet_dataCriacao] [datetime] NOT NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[contratante]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[contratante](
+	[contratante_id] [bigint] IDENTITY(1,1) NOT NULL,
+	[contratante_nome] [varchar](500) NOT NULL,
+	[contratante_alias] [varchar](50) NOT NULL,
+	[contratante_email] [varchar](80) NULL,
+	[contratante_dataCadastro] [datetime] NOT NULL,
+	[contratante_dataAlteracao] [datetime] NULL,
+	[contratante_ativo] [bit] NOT NULL,
+ CONSTRAINT [PK_contratante] PRIMARY KEY CLUSTERED 
+(
+	[contratante_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[contrato]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[contrato](
+	[contrato_id] [bigint] NOT NULL,
+	[contrato_tipoPessoa] [tinyint] NULL,
+	[contrato_filialId] [int] NULL,
+	[contrato_estipulanteId] [bigint] NULL,
+	[contrato_operadoraId] [int] NULL,
+	[contrato_contratoAdmId] [int] NULL,
+	[contrato_planoId] [int] NOT NULL,
+	[contrato_tipoContratoId] [int] NULL,
+	[contrato_donoId] [int] NOT NULL,
+	[contrato_corretorTerceiroNome] [varchar](250) NULL,
+	[contrato_corretorTerceiroCPF] [varchar](11) NULL,
+	[contrato_superiorTerceiroNome] [varchar](250) NULL,
+	[contrato_superiorTerceiroCPF] [varchar](11) NULL,
+	[contrato_operadorTmktId] [int] NULL,
+	[contrato_enderecoReferenciaId] [int] NULL,
+	[contrato_enderecoCobrancaId] [int] NULL,
+	[contrato_numero] [varchar](50) NOT NULL,
+	[contrato_numeroId] [int] NULL,
+	[contrato_emailCobranca] [varchar](70) NULL,
+	[contrato_numeroMatricula] [varchar](250) NULL,
+	[contrato_vingencia] [varchar](50) NULL,
+	[contrato_data] [datetime] NOT NULL,
+	[contrato_usuarioId] [int] NULL,
+	[contrato_dataCancelamento] [datetime] NULL,
+	[contrato_valorAto] [decimal](18, 2) NULL,
+	[contrato_adimplente] [bit] NULL,
+	[contrato_cobrarTaxaAssociativa] [bit] NULL,
+	[contrato_responsavelNome] [varchar](150) NULL,
+	[contrato_responsavelCPF] [varchar](50) NULL,
+	[contrato_responsavelRG] [varchar](50) NULL,
+	[contrato_responsavelDataNascimento] [datetime] NULL,
+	[contrato_responsavelSexo] [varchar](50) NULL,
+	[contrato_responsavelParentescoId] [int] NULL,
+	[contrato_usuarioLiberador] [int] NULL,
+	[contrato_tipoAcomodacao] [tinyint] NULL,
+	[contrato_admissao] [datetime] NULL,
+	[contrato_vigencia] [datetime] NULL,
+	[contrato_vencimento] [datetime] NULL,
+	[contrato_empresaAnterior] [varchar](250) NULL,
+	[contrato_empresaAnteriorMatricula] [varchar](150) NULL,
+	[contrato_empresaAnteriorTempo] [tinyint] NULL,
+	[contrato_rascunho] [bit] NOT NULL,
+	[contrato_inativo] [bit] NOT NULL,
+	[contrato_cancelado] [bit] NOT NULL,
+	[contrato_pendente] [bit] NULL,
+	[contrato_obs] [varchar](8000) NULL,
+	[contrato_alteracao] [datetime] NULL,
+	[contrato_codcobranca] [int] NULL,
+	[contrato_desconto] [decimal](18, 2) NULL,
+	[contrato_status] [tinyint] NULL,
+	[contrato_empresaCobrancaId] [int] NULL,
+	[timestamp] [timestamp] NOT NULL,
+	[contrato_senha] [varchar](6) NULL,
+	[contrato_validade] [datetime] NOT NULL,
+	[contrato_cartaoSolicitado] [bit] NOT NULL,
+	[contrato_kitSolicitado] [bit] NOT NULL,
+	[contrato_importado] [bit] NOT NULL,
+	[contrato_senhabkp] [varchar](50) NULL,
+	[contrato_produto] [varchar](250) NULL,
+	[contrato_numeroApolice] [varchar](100) NULL,
+	[contrato_ramo] [varchar](100) NULL,
+	[contrato_caminhoArquivo] [varchar](350) NULL,
+	[contrato_qtdVidas] [int] NULL,
+	[contrato_responsavel] [nvarchar](100) NULL,
+	[contrato_corretorComissionadoId] [bigint] NULL,
+	[contrato_descascTipo] [smallint] NULL,
+	[contrato_descascValor] [decimal](18, 2) NULL,
+	[contrato_descascDataFinal] [datetime] NULL,
+	[contrato_TipoSeguro] [int] NULL,
+	[contrato_GRUPO] [int] NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[contrato_beneficiario]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[contrato_beneficiario](
+	[contratobeneficiario_id] [bigint] NOT NULL,
+	[contratobeneficiario_contratoId] [bigint] NOT NULL,
+	[contratobeneficiario_tipoContratoId] [int] NULL,
+	[contratobeneficiario_beneficiarioId] [bigint] NOT NULL,
+	[contratobeneficiario_tipo] [int] NULL,
+	[contratobeneficiario_parentescoId] [int] NULL,
+	[contratobeneficiario_estadoCivilId] [int] NULL,
+	[contratobeneficiario_dataCasamento] [datetime] NULL,
+	[contratobeneficiario_peso] [decimal](18, 2) NULL,
+	[contratobeneficiario_altura] [decimal](18, 2) NULL,
+	[contratobeneficiario_ativo] [bit] NOT NULL,
+	[contratobeneficiario_valor] [decimal](18, 2) NULL,
+	[contratobeneficiario_status] [tinyint] NOT NULL,
+	[contratobeneficiario_data] [datetime] NOT NULL,
+	[contratobeneficiario_vigencia] [datetime] NULL,
+	[contratobeneficiario_dataInativo] [datetime] NULL,
+	[contratobeneficiario_numeroSequencia] [int] NOT NULL,
+	[contratobeneficiario_carenciaOperadoraId] [varchar](5000) NULL,
+	[contratobeneficiario_carenciaOperadoraOrigemId] [int] NULL,
+	[contratobeneficiario_carenciaOperadoraDescricao] [varchar](500) NULL,
+	[contratobeneficiario_carenciaMatriculaNumero] [varchar](50) NULL,
+	[contratobeneficiario_carenciaContratoDataDe] [datetime] NULL,
+	[contratobeneficiario_carenciaContratoDataAte] [datetime] NULL,
+	[contratobeneficiario_carenciaContratoTempo] [int] NULL,
+	[contratobeneficiario_carenciaCodigo] [varchar](50) NULL,
+	[contratobeneficiario_portabilidade] [varchar](50) NULL,
+	[contratobeneficiario_numMatriculaSaude] [varchar](50) NULL,
+	[contratobeneficiario_numMatriculaDental] [varchar](50) NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[contrato_grupo]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[contrato_grupo](
+	[contrato_grupo_id] [int] NOT NULL,
+	[contrato_grupo] [nvarchar](50) NOT NULL,
+	[contrato_grupo_data] [date] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[contrato_rest]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[contrato_rest](
+	[contrato_id] [bigint] NOT NULL,
+	[contrato_filialId] [int] NULL,
+	[contrato_estipulanteId] [bigint] NULL,
+	[contrato_operadoraId] [int] NULL,
+	[contrato_contratoAdmId] [int] NULL,
+	[contrato_planoId] [int] NOT NULL,
+	[contrato_tipoContratoId] [int] NULL,
+	[contrato_donoId] [int] NOT NULL,
+	[contrato_corretorTerceiroNome] [varchar](250) NULL,
+	[contrato_corretorTerceiroCPF] [varchar](11) NULL,
+	[contrato_superiorTerceiroNome] [varchar](250) NULL,
+	[contrato_superiorTerceiroCPF] [varchar](11) NULL,
+	[contrato_operadorTmktId] [int] NULL,
+	[contrato_enderecoReferenciaId] [int] NULL,
+	[contrato_enderecoCobrancaId] [int] NULL,
+	[contrato_numero] [varchar](50) NOT NULL,
+	[contrato_numeroId] [int] NULL,
+	[contrato_emailCobranca] [varchar](70) NULL,
+	[contrato_numeroMatricula] [varchar](250) NULL,
+	[contrato_vingencia] [varchar](50) NULL,
+	[contrato_data] [datetime] NOT NULL,
+	[contrato_usuarioId] [int] NULL,
+	[contrato_dataCancelamento] [datetime] NULL,
+	[contrato_valorAto] [decimal](18, 2) NULL,
+	[contrato_adimplente] [bit] NULL,
+	[contrato_cobrarTaxaAssociativa] [bit] NULL,
+	[contrato_responsavelNome] [varchar](150) NULL,
+	[contrato_responsavelCPF] [varchar](50) NULL,
+	[contrato_responsavelRG] [varchar](50) NULL,
+	[contrato_responsavelDataNascimento] [datetime] NULL,
+	[contrato_responsavelSexo] [varchar](50) NULL,
+	[contrato_responsavelParentescoId] [int] NULL,
+	[contrato_usuarioLiberador] [int] NULL,
+	[contrato_tipoAcomodacao] [tinyint] NULL,
+	[contrato_admissao] [datetime] NULL,
+	[contrato_vigencia] [datetime] NULL,
+	[contrato_vencimento] [datetime] NULL,
+	[contrato_empresaAnterior] [varchar](250) NULL,
+	[contrato_empresaAnteriorMatricula] [varchar](150) NULL,
+	[contrato_empresaAnteriorTempo] [tinyint] NULL,
+	[contrato_rascunho] [bit] NOT NULL,
+	[contrato_inativo] [bit] NULL,
+	[contrato_cancelado] [bit] NULL,
+	[contrato_pendente] [bit] NULL,
+	[contrato_obs] [varchar](8000) NULL,
+	[contrato_alteracao] [datetime] NULL,
+	[contrato_codcobranca] [int] NULL,
+	[contrato_desconto] [decimal](18, 2) NULL,
+	[contrato_status] [tinyint] NULL,
+	[contrato_empresaCobrancaId] [int] NULL,
+	[timestamp] [timestamp] NOT NULL,
+	[contrato_senha] [varchar](50) NULL,
+	[contrato_validade] [datetime] NOT NULL,
+	[contrato_cartaoSolicitado] [bit] NOT NULL,
+	[contrato_kitSolicitado] [bit] NOT NULL,
+	[contrato_importado] [bit] NOT NULL,
+	[contrato_senhabkp] [varchar](50) NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[contrato_saldo]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[contrato_saldo](
+	[saldo_id] [bigint] NOT NULL,
+	[saldo_atual] [decimal](18, 2) NULL,
+	[saldo_creditoTotal] [decimal](18, 2) NULL,
+	[saldo_dataUltimaMovimentacao] [datetime] NULL,
+	[saldo_debitoTotal] [decimal](18, 2) NULL,
+	[saldo_contratoId] [bigint] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[contrato_saldo_historico]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[contrato_saldo_historico](
+	[saldohist_id] [bigint] NOT NULL,
+	[saldohist_contratoId] [int] NOT NULL,
+	[saldohist_descricao] [varchar](5000) NOT NULL,
+	[saldohist_data] [datetime] NOT NULL,
+	[saldohist_usuarioId] [bigint] NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[contratoADM]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[contratoADM](
+	[contratoadm_id] [bigint] NOT NULL,
+	[contratoadm_tabelaComissionamentoAtivaId] [int] NULL,
+	[contratoadm_tabelaReajusteAtualId] [int] NULL,
+	[contratoadm_descricao] [varchar](300) NULL,
+	[contratoadm_numero] [varchar](100) NULL,
+	[contratoadm_operadoraId] [int] NOT NULL,
+	[contratoadm_estipulanteId] [int] NOT NULL,
+	[contratoadm_ativo] [bit] NOT NULL,
+	[contratoadm_data] [datetime] NOT NULL,
+	[contratoadm_contratoSaude] [varchar](50) NULL,
+	[contratoadm_contratoDental] [varchar](50) NULL,
+	[contratoadm_codFilial] [varchar](50) NULL,
+	[contratoadm_codUnidade] [varchar](50) NULL,
+	[contratoadm_codAdministradora] [varchar](50) NULL,
+	[contratoadm_doc] [varchar](50) NULL,
+	[contratoADM_DTVC] [nvarchar](10) NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[contratoAdm_parentesco_agregado]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[contratoAdm_parentesco_agregado](
+	[contratoAdmparentescoagregado_id] [int] NOT NULL,
+	[contratoAdmparentescoagregado_contratoAdmId] [int] NOT NULL,
+	[contratoAdmparentescoagregado_parentescoDescricao] [varchar](250) NOT NULL,
+	[contratoAdmparentescoagregado_parentescoCodigo] [varchar](100) NULL,
+	[contratoAdmparentescoagregado_parentescoTipo] [tinyint] NOT NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[contratoADM_plano_adicional]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[contratoADM_plano_adicional](
+	[contratoplanoadicional_id] [int] NOT NULL,
+	[contratoplanoadicional_contratoid] [int] NOT NULL,
+	[contratoplanoadicional_planoid] [int] NOT NULL,
+	[contratoplanoadicional_adicionalid] [int] NOT NULL,
+	[contratoplanoadicional_data] [datetime] NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[contratoAdmGrupo]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[contratoAdmGrupo](
+	[contratoadmgrupo_id] [int] NOT NULL,
+	[contratoadmgrupo_contratoAdmId] [int] NOT NULL,
+	[contratoadmgrupo_grupoId] [int] NOT NULL,
+	[contratoadmgrupo_tabelaId] [int] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[contratoStatus]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[contratoStatus](
+	[contratostatus_id] [int] NOT NULL,
+	[contratostatus_tipo] [tinyint] NOT NULL,
+	[contratostatus_descricao] [varchar](500) NOT NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[contratoStatusHistorico]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[contratoStatusHistorico](
+	[contratostatushistorico_id] [int] NOT NULL,
+	[contratostatushistorico_operadoraId] [int] NOT NULL,
+	[contratostatushistorico_propostaNumero] [varchar](50) NOT NULL,
+	[contratostatushistorico_status] [tinyint] NOT NULL,
+	[contratostatushistorico_data] [datetime] NOT NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[contratoStatusInstancia]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[contratoStatusInstancia](
+	[contratostatusinst_id] [int] NOT NULL,
+	[contratostatusinst_statusId] [int] NOT NULL,
+	[contratostatusinst_contratoId] [int] NOT NULL,
+	[contratostatusinst_data] [datetime] NOT NULL,
+	[contratostatusinst_usuarioId] [int] NOT NULL,
+	[contratostatusinst_dataSistema] [datetime] NOT NULL,
+	[contratostatusinst_obs] [varchar](5000) NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[corretor]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[corretor](
+	[corretor_id] [bigint] NOT NULL,
+	[corretor_nome] [varchar](150) NOT NULL,
+	[corretor_tabelaComissaoId] [bigint] NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[declaracao_saude_item]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[declaracao_saude_item](
+	[itemdeclaracaosaude_id] [int] NOT NULL,
+	[itemdeclaracaosaude_operadoraid] [int] NOT NULL,
+	[itemdeclaracaosaude_codigo] [varchar](50) NULL,
+	[itemdeclaracaosaude_ordem] [tinyint] NULL,
+	[itemdeclaracaosaude_texto] [varchar](8000) NOT NULL,
+	[itemdeclaracaosaude_ativo] [bit] NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[declaracao_saude_item_instancia]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[declaracao_saude_item_instancia](
+	[itemdeclaracaosaudeinstancia_id] [int] NOT NULL,
+	[itemdeclaracaosaudeinstancia_itemdeclaracaoid] [int] NOT NULL,
+	[itemdeclaracaosaudeinstancia_beneficiarioId] [int] NOT NULL,
+	[itemdeclaracaosaudeinstancia_sim] [bit] NOT NULL,
+	[itemDeclaracaoSaudeInstancia_cidInicial] [varchar](50) NULL,
+	[itemDeclaracaoSaudeInstancia_cidFinal] [varchar](50) NULL,
+	[itemDeclaracaoSaudeInstancia_descricao] [varchar](2000) NULL,
+	[itemDeclaracaoSaudeInstancia_aprovadoMedico] [bit] NULL,
+	[itemDeclaracaoSaudeInstancia_dataAprovadoMedico] [datetime] NULL,
+	[itemDeclaracaoSaudeInstancia_obs] [varchar](1500) NULL,
+	[itemDeclaracaoSaudeInstancia_dataAprovadoDeptoTecnico] [datetime] NULL,
+	[itemDeclaracaoSaudeInstancia_aprovadoDeptoTecnico] [bit] NULL,
+	[itemDeclaracaoSaudeInstancia_obsDeptoTecnico] [varchar](1500) NULL,
+	[itemDeclaracaoSaudeInstancia_data] [datetime] NULL,
+	[itemDeclaracaoSaudeInstancia_parecerDeptoTecnico] [bit] NULL,
+	[itemDeclaracaoSaudeInstancia_dataParecerDeptoTecnico] [datetime] NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[declaracao_saude_regra]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[declaracao_saude_regra](
+	[declaracaosauderegra_id] [int] NOT NULL,
+	[declaracaosauderegra_operadoraId] [int] NOT NULL,
+	[declaracaosauderegra_descricao] [varchar](150) NOT NULL,
+	[declaracaosauderegra_operadorIdade] [varchar](50) NULL,
+	[declaracaosauderegra_idade] [int] NULL,
+	[declaracaosauderegra_sexoId] [int] NULL,
+	[declaracaosauderegra_data] [datetime] NOT NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[declaracao_saude_regra_item]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[declaracao_saude_regra_item](
+	[itemdeclaracaoregra_id] [int] NOT NULL,
+	[itemdeclaracaoregra_regraDeclaracaoId] [int] NOT NULL,
+	[itemdeclaracaoregra_itemDeclaracaoId] [int] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[endereco]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[endereco](
+	[endereco_id] [int] NOT NULL,
+	[endereco_donoId] [int] NOT NULL,
+	[endereco_donoTipo] [tinyint] NOT NULL,
+	[endereco_logradouro] [varchar](4500) NOT NULL,
+	[endereco_numero] [varchar](5000) NULL,
+	[endereco_complemento] [varchar](2500) NULL,
+	[endereco_bairro] [varchar](3000) NULL,
+	[endereco_cidade] [varchar](3000) NULL,
+	[endereco_uf] [varchar](5000) NULL,
+	[endereco_cep] [varchar](5000) NULL,
+	[endereco_tipo] [tinyint] NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[estado_civil]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[estado_civil](
+	[estadocivil_id] [int] NOT NULL,
+	[estadocivil_operadoraid] [int] NOT NULL,
+	[estadocivil_descricao] [varchar](50) NOT NULL,
+	[estadocivil_codigo] [varchar](50) NOT NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[estado_civilUsuario]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[estado_civilUsuario](
+	[estadocivilusuario_id] [int] NOT NULL,
+	[estadocivilusuario_descricao] [varchar](50) NOT NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[estipulante]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[estipulante](
+	[estipulante_id] [bigint] NOT NULL,
+	[estipulante_descricao] [varchar](150) NOT NULL,
+	[estipulante_textoBoleto] [varchar](500) NULL,
+	[estipulante_ativo] [bit] NOT NULL,
+	[estipulante_taxaAssociativa] [decimal](18, 2) NULL,
+	[estipulante_tipoTaxa] [tinyint] NULL,
+	[estipulante_carteira] [varchar](150) NULL,
+	[estipulante_dataValidadeFixa] [datetime] NULL,
+	[estipulante_dataValidadeMeses] [int] NULL,
+	[estipulante_radical] [varchar](50) NULL,
+	[estipulante_beneficiarioId] [bigint] NULL,
+	[estipulante_dataVencimento] [int] NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[estipulante_taxa]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[estipulante_taxa](
+	[estipulantetaxa_id] [int] NOT NULL,
+	[estipulantetaxa_estipulanteId] [int] NOT NULL,
+	[estipulantetaxa_valor] [decimal](18, 2) NOT NULL,
+	[estipulantetaxa_tipo] [int] NOT NULL,
+	[estipulantetaxa_vigencia] [datetime] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[filial]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[filial](
+	[filial_id] [bigint] NOT NULL,
+	[filial_nome] [varchar](150) NOT NULL,
+	[filial_email] [varchar](70) NULL,
+	[filial_telefone] [varchar](15) NULL,
+	[filial_ativa] [bit] NOT NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[grupo_venda]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[grupo_venda](
+	[grupovenda_id] [int] NOT NULL,
+	[grupovenda_descricao] [varchar](250) NOT NULL,
+	[grupovenda_ativo] [bit] NOT NULL,
+	[grupovenda_data] [datetime] NOT NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[importacao]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[importacao](
+	[importacao_id] [bigint] NOT NULL,
+	[importacao_descricao] [varchar](150) NOT NULL,
+	[importacao_dataCriacao] [datetime] NOT NULL,
+	[importacao_dataExecucao] [datetime] NOT NULL,
+	[importacao_dataConclusao] [datetime] NULL,
+	[importacao_arquivoBeneficiario] [varchar](500) NULL,
+	[importacao_arquivo] [varchar](500) NULL,
+	[importacao_usuarioId] [bigint] NOT NULL,
+	[importacao_filialId] [bigint] NOT NULL,
+	[importacao_associadoPjId] [bigint] NOT NULL,
+	[importacao_operadoraId] [bigint] NOT NULL,
+	[importacao_contratoAdmId] [bigint] NOT NULL,
+	[importacao_planoId] [bigint] NOT NULL,
+	[importacao_ativa] [bit] NOT NULL,
+	[importacao_erro] [varchar](250) NULL,
+	[importacao_naocriticarcpf] [bit] NOT NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[importacao_log]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[importacao_log](
+	[importacaolog_id] [bigint] NOT NULL,
+	[importacaolog_linha] [bigint] NOT NULL,
+	[importacaolog_data] [datetime] NOT NULL,
+	[importacaolog_chave] [varchar](150) NULL,
+	[importacaolog_mensagem] [varchar](250) NULL,
+	[importacaolog_status] [tinyint] NOT NULL,
+	[importacaolog_agendaId] [bigint] NOT NULL,
+	[importacaolog_titularId] [bigint] NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[log_cobrancaGerada]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[log_cobrancaGerada](
+	[logcobranca_id] [bigint] IDENTITY(1,1) NOT NULL,
+	[logcobranca_cobrancaId] [int] NULL,
+	[logcobranca_propostaId] [bigint] NOT NULL,
+	[logcobranca_valor] [decimal](18, 2) NULL,
+	[logcobranca_dataVencto] [datetime] NULL,
+	[logcobranca_origem] [int] NOT NULL,
+	[logcobranca_data] [datetime] NOT NULL,
+	[logcobranca_dataEnviada] [varchar](50) NULL,
+	[logcobranca_qtdVidas] [int] NULL,
+	[logcobranca_msg] [varchar](150) NULL,
+ CONSTRAINT [PK_log_cobrancaGerada] PRIMARY KEY CLUSTERED 
+(
+	[logcobranca_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[log_web]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[log_web](
+	[id_log] [int] NOT NULL,
+	[log_Tipo] [nvarchar](100) NOT NULL,
+	[log_Nome] [nvarchar](100) NOT NULL,
+	[log_IP] [nvarchar](50) NOT NULL,
+	[log_Data] [datetime] NOT NULL,
+	[log_Status] [nchar](10) NOT NULL,
+	[id_beneficiario] [int] NOT NULL,
+	[log_update] [datetime] NULL,
+	[url_boleto] [text] NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[numero_contrato]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[numero_contrato](
+	[numerocontrato_id] [bigint] NOT NULL,
+	[numerocontrato_numero] [varchar](50) NOT NULL,
+	[numerocontrato_numero2] [bigint] NULL,
+	[numerocontrato_contratoId] [bigint] NULL,
+	[numerocontrato_ativo] [bit] NOT NULL,
+	[numerocontrato_cv] [varchar](3) NOT NULL,
+	[numerocontrato_data] [datetime] NOT NULL,
+	[numerocontrato_dv] [int] NOT NULL,
+	[numerocontrato_via] [int] NOT NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[operadora]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[operadora](
+	[operadora_id] [bigint] NOT NULL,
+	[operadora_tabelaReajusterAtualId] [int] NULL,
+	[operadora_nome] [varchar](150) NOT NULL,
+	[operadora_cnpj] [varchar](50) NOT NULL,
+	[operadora_email] [varchar](70) NULL,
+	[operadora_ddd] [varchar](50) NULL,
+	[operadora_fone] [varchar](50) NULL,
+	[operadora_ramal] [varchar](50) NULL,
+	[operadora_contato] [varchar](150) NULL,
+	[operadora_inativa] [bit] NULL,
+	[operadora_diaPagamento] [int] NULL,
+	[operadora_diaRecebimento] [int] NULL,
+	[operadora_tamanhoMaximoLogradouroBeneficiario] [int] NULL,
+	[operadora_permiteReativacao] [bit] NULL,
+	[operadora_enviaCartaAviso] [bit] NULL,
+	[operadora_data] [datetime] NOT NULL,
+	[operadora_mensagemRemessa] [varchar](150) NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[operadoraOrigem]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[operadoraOrigem](
+	[operadoraorigem_id] [int] NOT NULL,
+	[operadoraorigem_codigo] [varchar](255) NULL,
+	[operadoraorigem_nome] [varchar](255) NULL,
+	[operadoraorigem_codigoAns] [varchar](255) NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[parentesco]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[parentesco](
+	[parentesco_id] [int] NOT NULL,
+	[parentesco_descricao] [varchar](50) NULL,
+	[parentesco_tipo] [tinyint] NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[perfil]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[perfil](
+	[perfil_id] [int] NOT NULL,
+	[perfil_descricao] [varchar](50) NULL,
+	[perfil_parentId] [int] NULL,
+	[perfil_comissionavel] [bit] NULL,
+	[perfil_participanteContrato] [bit] NULL,
+	[perfil_tipo] [tinyint] NULL,
+	[perfil_ranking] [int] NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[plano]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[plano](
+	[plano_id] [bigint] NOT NULL,
+	[plano_contratoId] [int] NOT NULL,
+	[plano_descricao] [varchar](150) NULL,
+	[plano_codigo] [varchar](50) NULL,
+	[plano_subplano] [varchar](150) NULL,
+	[plano_inicioColetivo] [datetime] NULL,
+	[plano_codigoParticular] [varchar](50) NULL,
+	[plano_subplanoParticular] [varchar](150) NULL,
+	[plano_caracteristica] [text] NULL,
+	[plano_inicioParticular] [datetime] NULL,
+	[plano_ativo] [bit] NOT NULL,
+	[plano_data] [datetime] NOT NULL,
+	[plano_tabelaValorAtualId] [int] NULL,
+	[plano_quartoComum] [bit] NOT NULL,
+	[plano_quartoParticular] [bit] NOT NULL,
+	[plano_quartoComunAns] [varchar](20) NULL,
+	[plano_quartoParticularAns] [varchar](20) NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[regraComissao]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[regraComissao](
+	[regracom_id] [bigint] NOT NULL,
+	[regracom_nome] [varchar](250) NOT NULL,
+	[regracom_estipulanteId] [bigint] NOT NULL,
+	[regracom_corretorId] [int] NULL,
+	[regracom_data] [datetime] NOT NULL,
+	[regracom_ativo] [bit] NOT NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[regraComissao_contrato]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[regraComissao_contrato](
+	[regracomissaocontrato_id] [bigint] NOT NULL,
+	[regracomissaocontrato_regraId] [bigint] NOT NULL,
+	[regracomissaocontrato_contratoId] [bigint] NOT NULL,
+	[regracomissaocontrato_data] [datetime] NOT NULL,
+	[regracomissaocontrato_usuarioId] [bigint] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[regraComissao_corretor]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[regraComissao_corretor](
+	[regracomissaocorretor_id] [bigint] NOT NULL,
+	[regracomissaocorretor_regraId] [bigint] NOT NULL,
+	[regracomissaocorretor_corretorId] [bigint] NOT NULL,
+	[regracomissaocorretor_data] [datetime] NOT NULL,
+	[regracomissaocorretor_usuarioId] [bigint] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[regraComissaoExcecao]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[regraComissaoExcecao](
+	[regracomissaoexcecao_id] [bigint] NOT NULL,
+	[regracomissaoexcecao_regraid] [bigint] NOT NULL,
+	[regracomissaoexcecao_contratoId] [bigint] NULL,
+	[regracomissaoexcecao_corretorId] [bigint] NOT NULL,
+	[regracomissaoexcecao_parcela] [int] NOT NULL,
+	[regracomissaoexcecao_percentual] [decimal](18, 2) NOT NULL,
+	[regracomissaoexcecao_vitalicio] [bit] NOT NULL,
+	[regracomissaoexcecao_tipo] [int] NULL,
+	[regracomissaoexcecao_dataInicio] [datetime] NULL,
+	[regracomissaoexcecao_usuarioId] [int] NULL,
+	[regracomissaoexcecao_naocomissionado] [bit] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[regraComissaoItem]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[regraComissaoItem](
+	[regracomitem_id] [bigint] NOT NULL,
+	[regracomitem_regraId] [bigint] NOT NULL,
+	[regracomitem_corretorId] [bigint] NOT NULL,
+	[regracomitem_percentual] [decimal](18, 2) NOT NULL,
+	[regracomitem_parcela] [int] NULL,
+	[regracomitem_vitalicio] [bit] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[remessa]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[remessa](
+	[remessa_id] [bigint] NOT NULL,
+	[remessa_data] [datetime] NOT NULL,
+	[remessa_qtdBoletos] [int] NULL,
+	[remessa_arquivo] [varchar](800) NOT NULL,
+	[remessa_tipo] [tinyint] NOT NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[segmento]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[segmento](
+	[ID] [bigint] NOT NULL,
+	[Nome] [nvarchar](max) NULL,
+	[Ativo] [bit] NOT NULL,
+	[Detalhamento] [bit] NOT NULL,
+	[url] [nvarchar](200) NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[sysdiagrams]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[sysdiagrams](
+	[name] [nvarchar](128) NOT NULL,
+	[principal_id] [int] NOT NULL,
+	[diagram_id] [int] NOT NULL,
+	[version] [int] NULL,
+	[definition] [varbinary](max) NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[tabela_cobertura]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[tabela_cobertura](
+	[tabela_id] [bigint] NOT NULL,
+	[tabela_associadoPjId] [bigint] NULL,
+	[tabela_contratoAdmId] [bigint] NULL,
+	[tabela_nome] [varchar](250) NOT NULL,
+	[tabela_valorPorVida] [decimal](18, 2) NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[tabela_cobertura_item]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[tabela_cobertura_item](
+	[itemcobertura_id] [bigint] NOT NULL,
+	[itemcobertura_tabelaId] [bigint] NOT NULL,
+	[itemcobertura_descricao] [varchar](250) NOT NULL,
+	[itemcobertura_valor] [decimal](18, 2) NULL,
+	[status_] [nvarchar](50) NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[tabela_cobertura_vigencia]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tabela_cobertura_vigencia](
+	[vigcobertura_id] [bigint] NOT NULL,
+	[vigcobertura_valor] [decimal](18, 2) NOT NULL,
+	[vigcobertura_valorNet] [decimal](18, 2) NOT NULL,
+	[vigcobertura_inicio] [date] NOT NULL,
+	[vigcobertura_tabelaId] [bigint] NOT NULL,
+	[data_Venc] [nvarchar](2) NULL,
+	[capital_principal] [nvarchar](50) NULL,
+	[idSeguradora] [int] NULL,
+	[idApolice] [int] NULL,
+	[SUB] [nvarchar](50) NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tabela_preco]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tabela_preco](
+	[ID] [bigint] NOT NULL,
+	[Nome] [nvarchar](max) NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tabela_preco_vigencia]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tabela_preco_vigencia](
+	[ID] [bigint] NOT NULL,
+	[Ativa] [bit] NOT NULL,
+	[DataInicio] [datetime] NOT NULL,
+	[DataFim] [datetime] NULL,
+	[Tabela_ID] [bigint] NULL,
+	[ValorReal] [decimal](18, 2) NOT NULL,
+	[TabelaProcedimento_ID] [bigint] NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tabela_procedimento]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tabela_procedimento](
+	[ID] [bigint] NOT NULL,
+	[Ativa] [bit] NOT NULL,
+	[Codigo] [int] NOT NULL,
+	[Nome] [nvarchar](max) NULL,
+	[Data] [datetime] NOT NULL,
+	[Segmento_ID] [bigint] NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tabela_valor]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[tabela_valor](
+	[tabelavalor_id] [int] NOT NULL,
+	[tabelavalor_contratoId] [int] NOT NULL,
+	[tabelavalor_descricao] [varchar](150) NULL,
+	[tabelavalor_data] [datetime] NULL,
+	[tabelavalor_inicio] [datetime] NOT NULL,
+	[tabelavalor_fim] [datetime] NOT NULL,
+	[tabelavalor_atual] [tinyint] NULL,
+	[tabelavalor_vencimentoInicio] [datetime] NULL,
+	[tabelavalor_vencimentoFim] [datetime] NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[tabela_valor_data]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tabela_valor_data](
+	[tvdata_id] [int] NOT NULL,
+	[tvdata_tabelaId] [int] NOT NULL,
+	[tvdata_planoId] [int] NOT NULL,
+	[tvdata_data] [datetime] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tabela_valor_item]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tabela_valor_item](
+	[tabelavaloritem_id] [int] NOT NULL,
+	[tabelavaloritem_tabelaid] [int] NOT NULL,
+	[tabelavaloritem_planoId] [int] NULL,
+	[tabelavaloritem_idadeInicio] [int] NULL,
+	[tabelavaloritem_idadeFim] [int] NOT NULL,
+	[tabelavaloritem_qComum] [decimal](18, 2) NOT NULL,
+	[tabelavaloritem_qParticular] [decimal](18, 2) NOT NULL,
+	[tabelavaloritem_qComumPagamento] [decimal](18, 2) NULL,
+	[tabelavaloritem_qParticularPagamento] [decimal](18, 2) NULL,
+	[tabelavaloritem_qComumCompraCarencia] [decimal](18, 2) NULL,
+	[tabelavaloritem_qParticularCompraCarencia] [decimal](18, 2) NULL,
+	[tabelavaloritem_qComumMigracao] [decimal](18, 2) NULL,
+	[tabelavaloritem_qParticularMigracao] [decimal](18, 2) NULL,
+	[tabelavaloritem_qComumADM] [decimal](18, 2) NULL,
+	[tabelavaloritem_qParticularADM] [decimal](18, 2) NULL,
+	[tabelavaloritem_qComumEspecial] [decimal](18, 2) NULL,
+	[tabelavaloritem_qParticularEspecial] [decimal](18, 2) NULL,
+	[tabelavaloritem_qComumIdadeLimite] [int] NULL,
+	[tabelavaloritem_qParticularIdadeLimite] [int] NULL,
+	[tabelavaloritem_data] [datetime] NULL,
+	[tabelavaloritem_calculoAutomatico] [bit] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[taxa]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[taxa](
+	[taxa_id] [int] NOT NULL,
+	[taxa_tabelaValorId] [int] NOT NULL,
+	[taxa_over] [decimal](18, 2) NOT NULL,
+	[taxa_fixo] [decimal](18, 2) NOT NULL,
+	[taxa_embutido] [bit] NOT NULL,
+	[taxa_valorEmbutido] [decimal](18, 2) NULL,
+	[taxa_percentualReajuste] [decimal](18, 2) NULL,
+	[taxa_data] [datetime] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tipo_contrato]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[tipo_contrato](
+	[tipocontrato_id] [int] NOT NULL,
+	[tipocontrato_descricao] [varchar](200) NOT NULL,
+	[tipocontrato_ativo] [bit] NOT NULL,
+	[tipocontrato_solicitaInfoAnterior] [bit] NOT NULL,
+	[tipocontrato_tipoComissionamento] [tinyint] NOT NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Token_Inst]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Token_Inst](
+	[id_token] [int] NOT NULL,
+	[token] [nvarchar](200) NOT NULL,
+	[date_token] [datetime] NOT NULL,
+	[Proj] [nvarchar](50) NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[usuario]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[usuario](
+	[usuario_id] [bigint] IDENTITY(1,1) NOT NULL,
+	[usuario_nome] [varchar](550) NULL,
+	[usuario_codigo] [varchar](150) NULL,
+	[usuario_apelido] [varchar](500) NULL,
+	[usuario_superiorId] [int] NULL,
+	[usuario_perfilId] [int] NULL,
+	[usuario_categoriaId] [int] NULL,
+	[usuario_filialId] [int] NULL,
+	[usuario_contratanteId] [bigint] NULL,
+	[usuario_login] [varchar](30) NULL,
+	[usuario_email] [varchar](70) NULL,
+	[usuario_marcaotica] [varchar](70) NULL,
+	[usuario_senha] [char](40) NULL,
+	[usuario_ativo] [bit] NULL,
+	[usuario_liberaContratos] [bit] NULL,
+	[usuario_alteraValorContratos] [bit] NULL,
+	[usuario_system] [bit] NULL,
+	[usuario_dataNascimento] [datetime] NULL,
+	[usuario_sexo] [tinyint] NULL,
+	[usuario_estadoCivil] [tinyint] NULL,
+	[usuario_tipoPessoa] [tinyint] NULL,
+	[usuario_documento1] [varchar](50) NULL,
+	[usuario_documento2] [varchar](50) NULL,
+	[usuario_ddd1] [varchar](50) NULL,
+	[usuario_fone1] [varchar](50) NULL,
+	[usuario_ramal1] [varchar](50) NULL,
+	[usuario_ddd2] [varchar](50) NULL,
+	[usuario_fone2] [varchar](50) NULL,
+	[usuario_ramal2] [varchar](50) NULL,
+	[usuario_ddd3] [varchar](50) NULL,
+	[usuario_fone3] [varchar](50) NULL,
+	[usuario_ramal3] [varchar](50) NULL,
+	[usuario_entrevistadoPor] [varchar](150) NULL,
+	[usuario_entrevistadoEm] [datetime] NULL,
+	[usuario_banco] [varchar](150) NULL,
+	[usuario_agencia] [varchar](100) NULL,
+	[usuario_contaTipo] [varchar](50) NULL,
+	[usuario_conta] [varchar](100) NULL,
+	[usuario_favorecido] [varchar](300) NULL,
+	[usuario_obs] [text] NULL,
+	[usuario_data] [datetime] NOT NULL,
+	[usuario_alteraProdutor] [bit] NULL,
+	[usuario_empresaCobrancaId] [int] NULL,
+	[usuario_extraPermission] [bit] NULL,
+	[usuario_extraPermission2] [bit] NULL,
+	[usuario_perfilIdOriginal] [int] NULL,
+	[usuario_tipo] [tinyint] NULL,
+ CONSTRAINT [PK_usuario] PRIMARY KEY CLUSTERED 
+(
+	[usuario_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[usuario_contato]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[usuario_contato](
+	[usuariocontato_id] [int] NOT NULL,
+	[usuariocontato_usuarioId] [int] NOT NULL,
+	[usuariocontato_nome] [varchar](300) NOT NULL,
+	[usuariocontato_departamento] [varchar](500) NULL,
+	[usuariocontato_ddd] [varchar](50) NULL,
+	[usuariocontato_fone] [varchar](50) NULL,
+	[usuariocontato_ramal] [varchar](50) NULL,
+	[usuariocontato_email] [varchar](70) NULL
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[usuario_filial]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[usuario_filial](
+	[usuariofilial_id] [int] NOT NULL,
+	[usuariofilial_usuarioId] [int] NOT NULL,
+	[usuariofilial_filialId] [int] NOT NULL,
+	[usuariofilial_data] [datetime] NOT NULL,
+	[usuariofilial_sysdate] [datetime] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[usuario_grupoVenda]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[usuario_grupoVenda](
+	[usuariogvenda_id] [int] NOT NULL,
+	[usuariogvenda_grupovendaId] [int] NOT NULL,
+	[usuariogvenda_usuarioId] [int] NOT NULL,
+	[usuariogvenda_data] [datetime] NOT NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[usuarios]    Script Date: 18/08/2017 16:25:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[usuarios](
+	[ID] [bigint] NOT NULL,
+	[Nome] [nvarchar](max) NULL,
+	[Email] [varchar](90) NULL,
+	[Login] [nvarchar](max) NULL,
+	[Senha] [nvarchar](max) NULL,
+	[Tipo] [int] NOT NULL,
+	[Unidade_ID] [bigint] NULL,
+	[Ativo] [bit] NOT NULL,
+	[DataCadastro] [datetime] NOT NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+ALTER TABLE [dbo].[cobranca_pendenciaCnab] ADD  CONSTRAINT [DF_cobranca_pendenciaCnab_pendenciacnab_data]  DEFAULT (getdate()) FOR [pendenciacnab_data]
+GO
+ALTER TABLE [dbo].[cobranca_pendenciaCnab] ADD  CONSTRAINT [DF_cobranca_pendenciaCnab_pendenciacnab_alteracaoValor]  DEFAULT ((0)) FOR [pendenciacnab_alteracaoValor]
+GO
+ALTER TABLE [dbo].[cobranca_pendenciaCnab] ADD  CONSTRAINT [DF_cobranca_pendenciaCnab_pendenciacnab_alteracaoVencimento]  DEFAULT ((0)) FOR [pendenciacnab_alteracaoVencimento]
+GO
+ALTER TABLE [dbo].[contratante] ADD  CONSTRAINT [DF_contratante_contratante_dataCadastro]  DEFAULT (getdate()) FOR [contratante_dataCadastro]
+GO
+ALTER TABLE [dbo].[contratante] ADD  CONSTRAINT [DF_contratante_contratante_ativo]  DEFAULT ((1)) FOR [contratante_ativo]
+GO
+ALTER TABLE [dbo].[remessa] ADD  CONSTRAINT [DF_remessa_remessa_tipo]  DEFAULT ((0)) FOR [remessa_tipo]
+GO
+ALTER TABLE [dbo].[usuario] ADD  CONSTRAINT [DF_usuario_usuario_data]  DEFAULT (getdate()) FOR [usuario_data]
+GO
