@@ -11,7 +11,7 @@
 
     <head runat="server">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Clube Azul</title>
+        <title>CadBen</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
@@ -161,7 +161,6 @@
                             <li class="active">
                                 <a runat="server" enableviewstate="false" href="~/meusdados.aspx"><i style="color:#003761;font-size:13px" class="fa fa-dashboard"></i><span style="color:#003761;font-size:13px">Meus dados</span></a>
                             </li>
-                            <asp:Panel ID="pnlMenu" runat="server" Visible="true">
 
                             <li class="sub-menu">
                                 <a href="javascript:void(0);"><i style="color:#003761;font-size:13px" class="fa fa-cogs"></i><span style="color:#003761;font-size:13px">Master</span><i class="arrow fa fa-angle-right pull-right"></i></a>
@@ -169,6 +168,17 @@
                                     <li runat="server" id="litMastContratan" enableviewstate="false"><a id="aMastContratan" style="color:white;font-size:13px" runat="server" enableviewstate="false" href="~/master/contratante/contratantes.aspx">Contratante</a></li>
                                 </ul>
                             </li>
+
+                            <asp:Panel ID="pnlMenu" runat="server" Visible="true">
+
+                            <li class="sub-menu">
+                                <a href="javascript:void(0);"><i style="color:#003761;font-size:13px" class="fa fa-cogs"></i><span style="color:#003761;font-size:13px">Cadastros</span><i class="arrow fa fa-angle-right pull-right"></i></a>
+                                <ul>
+                                    <li runat="server" id="litCadEst" enableviewstate="false"><a id="aCadEsti" style="color:white;font-size:13px" runat="server" enableviewstate="false" href="~/_cad/estipulante/estipulantes.aspx">Estipulantes</a></li>
+                                    <li runat="server" id="liCadOper" enableviewstate="false"><a id="aCadOper" style="color:white;font-size:13px" runat="server" enableviewstate="false" href="~/_cad/operadora/operadoras.aspx">Operadoras</a></li>
+                                </ul>
+                            </li>
+
                             <li class="sub-menu">
                                 <a href="javascript:void(0);"><i style="color:#003761;font-size:13px" class="fa fa-cogs"></i><span style="color:#003761;font-size:13px">Administração</span><i class="arrow fa fa-angle-right pull-right"></i></a>
                                 <ul>

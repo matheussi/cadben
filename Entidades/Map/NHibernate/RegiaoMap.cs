@@ -7,14 +7,14 @@
 
     using FluentNHibernate.Mapping;
 
-    public class RegiaoMap : ClassMap<Regiao>
-    {
-        public RegiaoMap()
-        {
-            base.Table("regiao");
-            base.Id(c => c.ID).Column("ID").GeneratedBy.Identity();
+    //public class RegiaoMap : ClassMap<Regiao>
+    //{
+    //    public RegiaoMap()
+    //    {
+    //        base.Table("regiao");
+    //        base.Id(c => c.ID).Column("ID").GeneratedBy.Identity();
 
-            base.Map(c => c.Nome).Column("Nome");
-        }
-    }
+    //        base.Map(c => c.Nome).Column("Nome");
+    //    }
+    //}
 }

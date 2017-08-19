@@ -53,6 +53,7 @@
 
 #if DEBUG
             string[] arr = new string[] { "admin", "admin" };
+            Util.UsuarioLogado.IDContratante = 1;
 
             //string erro = "";
             //Util.Geral.Mail.Enviar("assunto", "corpo", "denis.goncalves@wedigi.com.br", true, out erro);

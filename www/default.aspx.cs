@@ -87,12 +87,12 @@
                 //this.carregarDados();
 
                 //ORIENTADOR
-                this.carregaEstados();
-                this.carregaCidades();
-                this.carregaBairros();
-                this.carregaSegmentos();
-                this.carregaEspecialidades();
-                this.carregaProcedimentos();
+                //this.carregaEstados();
+                //this.carregaCidades();
+                //this.carregaBairros();
+                //this.carregaSegmentos();
+                //this.carregaEspecialidades();
+                //this.carregaProcedimentos();
             }
         }
 
@@ -412,62 +412,62 @@
 
         void carregaEspecialidades()
         {
-            cboEspecialidade.Items.Clear();
+            //cboEspecialidade.Items.Clear();
 
-            if (cboSegmento.Items.Count == 0) return;
+            //if (cboSegmento.Items.Count == 0) return;
 
-            IList<cadben.Entidades.Especialidade> lista = null;
-                //EspecialidadeFacade.Instance.Carregar(string.Empty, CUtil.CTipos.CTipo<long>(cboSegmento.SelectedValue));
+            //IList<cadben.Entidades.Especialidade> lista = null;
+            //    //EspecialidadeFacade.Instance.Carregar(string.Empty, CUtil.CTipos.CTipo<long>(cboSegmento.SelectedValue));
 
-            if (lista != null)
-            {
-                var ret = lista.OrderBy(e => e.Nome);
-                cboEspecialidade.Items.Add(new ListItem("todas", "-1"));
+            //if (lista != null)
+            //{
+            //    var ret = lista.OrderBy(e => e.Nome);
+            //    cboEspecialidade.Items.Add(new ListItem("todas", "-1"));
 
-                foreach (var espec in ret)
-                {
-                    cboEspecialidade.Items.Add(new ListItem(espec.Nome, espec.ID.ToString()));
-                }
-            }
+            //    foreach (var espec in ret)
+            //    {
+            //        cboEspecialidade.Items.Add(new ListItem(espec.Nome, espec.ID.ToString()));
+            //    }
+            //}
         }
         void carregaProcedimentos()
         {
-            IList<cadben.Entidades.Procedimento> lista = null;
+            //IList<cadben.Entidades.Procedimento> lista = null;
 
-            //if (cboEspecialidade.SelectedValue != "-1")
-            //    lista = ProcedimentoFacade.Instancia.CarregarPorEspecialidade(cboEspecialidade.SelectedItem.Text);
+            ////if (cboEspecialidade.SelectedValue != "-1")
+            ////    lista = ProcedimentoFacade.Instancia.CarregarPorEspecialidade(cboEspecialidade.SelectedItem.Text);
+            ////else
+            ////    lista = ProcedimentoFacade.Instancia.Carregar();
+
+            //cboProcedimento.Items.Clear();
+            //cboProcedimento.Items.Add(new ListItem("selecione", "-1"));
+
+            //if (lista != null)
+            //{
+            //    /// FORNCANDO O PROCEDIMENTO Consulta ////////////////////////
+            //    var ret = lista.FirstOrDefault(p => p.Codigo == "10101012");
+            //    if (ret == null && cboProcedimento.SelectedValue != "10015") //não pode adicionar para Patologia Clínica
+            //    {
+            //        cboProcedimento.Items.Add(new ListItem("(10101012) Consulta em consultorio", "1"));
+            //    }
+            //    //////////////////////////////////////////////////////////////
+
+            //    foreach (var proc in lista)
+            //    {
+            //        cboProcedimento.Items.Add(new ListItem(
+            //            string.Concat("(", proc.Codigo, ") ", trataNomeProcedimento(proc.Nome)),
+            //            proc.ID.ToString()));
+            //    }
+            //}
             //else
-            //    lista = ProcedimentoFacade.Instancia.Carregar();
-
-            cboProcedimento.Items.Clear();
-            cboProcedimento.Items.Add(new ListItem("selecione", "-1"));
-
-            if (lista != null)
-            {
-                /// FORNCANDO O PROCEDIMENTO Consulta ////////////////////////
-                var ret = lista.FirstOrDefault(p => p.Codigo == "10101012");
-                if (ret == null && cboProcedimento.SelectedValue != "10015") //não pode adicionar para Patologia Clínica
-                {
-                    cboProcedimento.Items.Add(new ListItem("(10101012) Consulta em consultorio", "1"));
-                }
-                //////////////////////////////////////////////////////////////
-
-                foreach (var proc in lista)
-                {
-                    cboProcedimento.Items.Add(new ListItem(
-                        string.Concat("(", proc.Codigo, ") ", trataNomeProcedimento(proc.Nome)),
-                        proc.ID.ToString()));
-                }
-            }
-            else
-            {
-                /// FORNCANDO O PROCEDIMENTO Consulta ////////////////////////
-                if (cboProcedimento.SelectedValue != "10015") //não pode adicionar para Patologia Clínica
-                { 
-                    cboProcedimento.Items.Add(new ListItem("(10101012) Consulta em consultorio", "1")); 
-                }
-                //////////////////////////////////////////////////////////////
-            }
+            //{
+            //    /// FORNCANDO O PROCEDIMENTO Consulta ////////////////////////
+            //    if (cboProcedimento.SelectedValue != "10015") //não pode adicionar para Patologia Clínica
+            //    { 
+            //        cboProcedimento.Items.Add(new ListItem("(10101012) Consulta em consultorio", "1")); 
+            //    }
+            //    //////////////////////////////////////////////////////////////
+            //}
         }
 
         string trataNomeProcedimento(string nome)
@@ -479,135 +479,135 @@
         }
         void carregaEstados()
         {
-            using (var sessaoF = CriarSessaoNHibernate())
-            {
-                using (var sessao = sessaoF.OpenSession())
-                {
-                    using (IDbCommand cmd = sessao.Connection.CreateCommand())
-                    {
-                        cmd.CommandText = "select distinct(UF) as uf from prestador_unidade where UF <> '' and UF is not null order by UF";
+            //using (var sessaoF = CriarSessaoNHibernate())
+            //{
+            //    using (var sessao = sessaoF.OpenSession())
+            //    {
+            //        using (IDbCommand cmd = sessao.Connection.CreateCommand())
+            //        {
+            //            cmd.CommandText = "select distinct(UF) as uf from prestador_unidade where UF <> '' and UF is not null order by UF";
 
-                        cboUf.Items.Clear();
+            //            cboUf.Items.Clear();
 
-                        using (IDataReader dr = cmd.ExecuteReader())
-                        {
-                            while (dr.Read())
-                            {
-                                cboUf.Items.Add(new ListItem(dr.GetString(0), dr.GetString(0)));
-                            }
+            //            using (IDataReader dr = cmd.ExecuteReader())
+            //            {
+            //                while (dr.Read())
+            //                {
+            //                    cboUf.Items.Add(new ListItem(dr.GetString(0), dr.GetString(0)));
+            //                }
 
-                            dr.Close();
-                        }
-                    }
-                }
-            }
+            //                dr.Close();
+            //            }
+            //        }
+            //    }
+            //}
         }
         void carregaCidades()
         {
-            using (var sessaoF = CriarSessaoNHibernate())
-            {
-                using (var sessao = sessaoF.OpenSession())
-                {
-                    using (IDbCommand cmd = sessao.Connection.CreateCommand())
-                    {
-                        cmd.CommandText = "select distinct(Cidade) as cid from prestador_unidade where UF='" + cboUf.SelectedValue + "' and Cidade <> '' and Cidade is not null order by Cidade";
+            //using (var sessaoF = CriarSessaoNHibernate())
+            //{
+            //    using (var sessao = sessaoF.OpenSession())
+            //    {
+            //        using (IDbCommand cmd = sessao.Connection.CreateCommand())
+            //        {
+            //            cmd.CommandText = "select distinct(Cidade) as cid from prestador_unidade where UF='" + cboUf.SelectedValue + "' and Cidade <> '' and Cidade is not null order by Cidade";
 
-                        cboCidade.Items.Clear();
+            //            cboCidade.Items.Clear();
 
-                        using (IDataReader dr = cmd.ExecuteReader())
-                        {
-                            while (dr.Read())
-                            {
-                                cboCidade.Items.Add(new ListItem(dr.GetString(0), dr.GetString(0)));
-                            }
+            //            using (IDataReader dr = cmd.ExecuteReader())
+            //            {
+            //                while (dr.Read())
+            //                {
+            //                    cboCidade.Items.Add(new ListItem(dr.GetString(0), dr.GetString(0)));
+            //                }
 
-                            dr.Close();
-                        }
-                    }
-                }
-            }
+            //                dr.Close();
+            //            }
+            //        }
+            //    }
+            //}
         }
         void carregaBairros()
         {
-            using (var sessaoF = CriarSessaoNHibernate())
-            {
-                using (var sessao = sessaoF.OpenSession())
-                {
-                    using (IDbCommand cmd = sessao.Connection.CreateCommand())
-                    {
-                        cmd.CommandText = "select distinct(Bairro) from prestador_unidade where UF='" + cboUf.SelectedValue + "' and Cidade='" + cboCidade.SelectedValue + "' and Bairro <> '' and Bairro is not null order by Bairro";
+            //using (var sessaoF = CriarSessaoNHibernate())
+            //{
+            //    using (var sessao = sessaoF.OpenSession())
+            //    {
+            //        using (IDbCommand cmd = sessao.Connection.CreateCommand())
+            //        {
+            //            cmd.CommandText = "select distinct(Bairro) from prestador_unidade where UF='" + cboUf.SelectedValue + "' and Cidade='" + cboCidade.SelectedValue + "' and Bairro <> '' and Bairro is not null order by Bairro";
 
-                        cboBairro.Items.Clear();
-                        cboBairro.Items.Add("todos");
+            //            cboBairro.Items.Clear();
+            //            cboBairro.Items.Add("todos");
 
-                        using (IDataReader dr = cmd.ExecuteReader())
-                        {
-                            while (dr.Read())
-                            {
-                                cboBairro.Items.Add(new ListItem(dr.GetString(0), dr.GetString(0)));
-                            }
+            //            using (IDataReader dr = cmd.ExecuteReader())
+            //            {
+            //                while (dr.Read())
+            //                {
+            //                    cboBairro.Items.Add(new ListItem(dr.GetString(0), dr.GetString(0)));
+            //                }
 
-                            dr.Close();
-                        }
-                    }
-                }
-            }
+            //                dr.Close();
+            //            }
+            //        }
+            //    }
+            //}
         }
 
         protected void cboSegmento_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.carregaEspecialidades();
+            //this.carregaEspecialidades();
 
-            if (cboEspecialidade.SelectedIndex > 0)
-            {
-                this.carregaProcedimentos();
-                if (cboSegmento.SelectedItem.Text == "Saúde")   pnlDivProcedimentos.Visible = true;
-                else                                            pnlDivProcedimentos.Visible = false;
-            }
-            else
-            {
-                cboProcedimento.Items.Clear();
-                pnlDivProcedimentos.Visible = false;
-            }
+            //if (cboEspecialidade.SelectedIndex > 0)
+            //{
+            //    this.carregaProcedimentos();
+            //    if (cboSegmento.SelectedItem.Text == "Saúde")   pnlDivProcedimentos.Visible = true;
+            //    else                                            pnlDivProcedimentos.Visible = false;
+            //}
+            //else
+            //{
+            //    cboProcedimento.Items.Clear();
+            //    pnlDivProcedimentos.Visible = false;
+            //}
         }
 
         protected void cboEspecialidade_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cboEspecialidade.SelectedIndex > 0)
-            {
-                this.carregaProcedimentos();
+            //if (cboEspecialidade.SelectedIndex > 0)
+            //{
+            //    this.carregaProcedimentos();
 
-                if(cboSegmento.SelectedItem.Text == "Saúde") pnlDivProcedimentos.Visible = true;
-                else                                         pnlDivProcedimentos.Visible = false;
-            }
-            else
-            {
-                cboProcedimento.Items.Clear();
-                pnlDivProcedimentos.Visible = false;
-            }
+            //    if(cboSegmento.SelectedItem.Text == "Saúde") pnlDivProcedimentos.Visible = true;
+            //    else                                         pnlDivProcedimentos.Visible = false;
+            //}
+            //else
+            //{
+            //    cboProcedimento.Items.Clear();
+            //    pnlDivProcedimentos.Visible = false;
+            //}
         }
         protected void cboUf_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.carregaCidades();
-            this.carregaBairros();
+            //this.carregaCidades();
+            //this.carregaBairros();
         }
         protected void cboCidade_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.carregaBairros();
+            //this.carregaBairros();
         }
         protected void cmdPesquisar_Click(object sender, EventArgs e)
         {
-            if (cboEspecialidade.SelectedIndex > 0)
-            {
-                if (cboProcedimento.SelectedIndex <= 0)
-                    this.pesquisarSemValor();
-                else
-                    this.pesquisarComValor();
-            }
-            else
-            {
-                this.pesquisarSemValor();
-            }
+            //if (cboEspecialidade.SelectedIndex > 0)
+            //{
+            //    if (cboProcedimento.SelectedIndex <= 0)
+            //        this.pesquisarSemValor();
+            //    else
+            //        this.pesquisarComValor();
+            //}
+            //else
+            //{
+            //    this.pesquisarSemValor();
+            //}
         }
 
         void pesquisarComValor() 

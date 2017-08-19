@@ -64,6 +64,18 @@
             set { HttpContext.Current.Session["uTp"] = value; }
         }
 
+        public static long IDContratante
+        {
+            get
+            {
+                if (HttpContext.Current.Session["conId"] != null)
+                    return (long)HttpContext.Current.Session["conId"];
+                else
+                    return 0;
+            }
+            set { HttpContext.Current.Session["conId"] = value; }
+        }
+
         public static long IDUnidade
         {
             get

@@ -3,7 +3,12 @@
     height: 24px !important;
 }
 
-
+.centralizar {
+    margin: auto;
+    width: 50%;
+    border: 3px solid green;
+    padding: 10px;
+}
 
 table             { font-family: Arial, Trebuchet MS, Verdana, Helvetica; color:black; font-size:11px; }
 

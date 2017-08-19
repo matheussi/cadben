@@ -27,6 +27,8 @@
     </SccAuxPath>
     <SccProvider>
     </SccProvider>
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -292,6 +294,10 @@
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="layout.Master" />
     <Content Include="packages.config" />
+    <Content Include="_cad\estipulante\estipulante.aspx" />
+    <Content Include="_cad\estipulante\estipulantes.aspx" />
+    <Content Include="_cad\operadora\operadora.aspx" />
+    <Content Include="_cad\operadora\operadoras.aspx" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
@@ -398,6 +404,34 @@
     <Compile Include="Util\Keys.cs" />
     <Compile Include="Util\Seguranca.cs" />
     <Compile Include="Util\UsuarioLogado.cs" />
+    <Compile Include="_cad\estipulante\estipulante.aspx.cs">
+      <DependentUpon>estipulante.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="_cad\estipulante\estipulante.aspx.designer.cs">
+      <DependentUpon>estipulante.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="_cad\estipulante\estipulantes.aspx.cs">
+      <DependentUpon>estipulantes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="_cad\estipulante\estipulantes.aspx.designer.cs">
+      <DependentUpon>estipulantes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="_cad\operadora\operadora.aspx.cs">
+      <DependentUpon>operadora.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="_cad\operadora\operadora.aspx.designer.cs">
+      <DependentUpon>operadora.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="_cad\operadora\operadoras.aspx.cs">
+      <DependentUpon>operadoras.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="_cad\operadora\operadoras.aspx.designer.cs">
+      <DependentUpon>operadoras.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Themes\padrao\fonts\fontawesome-webfont.eot" />
@@ -433,9 +467,13 @@
       <Name>Facade</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
@@ -454,6 +492,9 @@
           <CustomServerUrl>
           </CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+          <servers defaultServer="SelfHostServer">
+            <server name="SelfHostServer" exePath="" cmdArgs="" url="http://localhost:10657/" workingDir="" />
+          </servers>
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>

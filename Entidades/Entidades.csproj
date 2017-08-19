@@ -102,6 +102,7 @@
     <Compile Include="EntidadeBase.cs" />
     <Compile Include="Enuns.cs" />
     <Compile Include="Especialidade.cs" />
+    <Compile Include="Estipulante.cs" />
     <Compile Include="Filial.cs" />
     <Compile Include="Map\NHibernate\AgendaAtribuicaoProcedimentoMap.cs" />
     <Compile Include="Map\NHibernate\AgendaPagamentoItemMap.cs" />
@@ -129,6 +130,7 @@
     <Compile Include="Map\NHibernate\CorretorMap.cs" />
     <Compile Include="Map\NHibernate\EnderecoMap.cs" />
     <Compile Include="Map\NHibernate\EspecialidadeMap.cs" />
+    <Compile Include="Map\NHibernate\EstipulanteMap.cs" />
     <Compile Include="Map\NHibernate\FilialMap.cs" />
     <Compile Include="Map\NHibernate\NumeroCartaoMap.cs" />
     <Compile Include="Map\NHibernate\OperadoraMap.cs" />

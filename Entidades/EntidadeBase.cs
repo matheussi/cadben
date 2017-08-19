@@ -4,7 +4,7 @@
     using System.Linq;
     using System.Text;
     using System.Collections.Generic;
-    
+
     [Serializable]
     public abstract class EntidadeBase
     {
@@ -79,5 +79,13 @@
         {
             return regExc.Match(palavra).Success;
         }
+    }
+
+    public abstract class EntidadeBaseData : EntidadeBase
+    {
+        public EntidadeBaseData() { DataCadastro = DateTime.Now; }
+
+        public virtual DateTime DataCadastro { get; set; }
+        public virtual DateTime? DataAlteracao { get; set; }
     }
 }
