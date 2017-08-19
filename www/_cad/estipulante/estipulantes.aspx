@@ -80,8 +80,8 @@
                                     <%--<div class="col-xs-6 text-center"><asp:Button ID="cmdFechar" Text="Fechar" runat="server" SkinID="botaoPadraoINFO_Small" /></div>--%>
                                     <div class="col-xs-12 text-center"><asp:Button ID="cmdSalvar" Text="Gravar" runat="server" SkinID="botaoPadraoDANGER_Small" /></div>
                                 </div>
-                            <div class="clearfix"></div>
                             </div>
+                            <div class="clearfix"></div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-info" data-dismiss="modal" id="cmdFecharModal">Fechar</button>
