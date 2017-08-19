@@ -50,7 +50,8 @@
             }
             else if (e.CommandName.Equals("Taxas"))
             {
-                mpeTaxas.Show();
+                //mpeTaxas.Show();
+                Util.Geral.JSScript(this, "showModalTaxas()");
             }
             else if (e.CommandName.Equals("Excluir"))
             {

@@ -1,0 +1,33 @@
+﻿	    <ajaxToolkit:ModalPopupExtender ID="mpeTaxas" runat="server" PopupControlID="pnlTaxas" CancelControlID="cmdFechar" TargetControlID="targetTaxas"></ajaxToolkit:ModalPopupExtender>
+            <asp:Panel ID="pnlTaxas" runat="server">
+                <asp:LinkButton runat="server" EnableViewState="false" ID="targetTaxas" />
+                <asp:TextBox ID="txtIdEstipulante" Visible="false" runat="server" />
+                    <div class="mfade"></div>
+                    <div class="col-xs-10 alert alert-warning ">
+                        <div class="form-group">
+                            <label class="col-xs-2 control-label">Valor</label>
+                            <div class="col-xs-2"><asp:TextBox ID="txtTaxaValor" runat="server" Width="100%" SkinID="txtPadrao" /></div>
+                            <label class="col-xs-2 control-label">Tipo</label>
+                            <div class="col-xs-2"><asp:DropDownList ID="cboTaxaTipo" runat="server" Width="100%" SkinID="comboPadrao1" /></div>
+                            <label class="col-xs-2 control-label">Vigência</label>
+                            <div class="col-xs-2"><asp:TextBox ID="txtVigencia" runat="server" Width="100%" SkinID="txtPadrao" /></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-6 text-center"><asp:Button ID="cmdFechar" Text="Fechar" runat="server" SkinID="botaoPadraoINFO_Small" /></div>
+                            <div class="col-xs-6 text-center"><asp:Button ID="cmdSalvar" Text="Gravar" runat="server" SkinID="botaoPadraoDANGER_Small" /></div>
+                        </div>
+                    </div>
+            </asp:Panel>
+
+    <style>
+        .mfade {
+          opacity:    0.3; 
+          background: #000; 
+          width:      100%;
+          height:     100%; 
+          z-index:    0;
+          top:        0; 
+          left:       0; 
+          position:   fixed; 
+        }
+    </style>

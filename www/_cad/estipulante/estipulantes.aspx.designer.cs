@@ -67,33 +67,6 @@ namespace cadben.www._cad.estipulante {
         protected global::System.Web.UI.WebControls.Literal litMensagem;
         
         /// <summary>
-        /// Controle mpeTaxas.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
-        /// </remarks>
-        protected global::AjaxControlToolkit.ModalPopupExtender mpeTaxas;
-        
-        /// <summary>
-        /// Controle pnlTaxas.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlTaxas;
-        
-        /// <summary>
-        /// Controle targetTaxas.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton targetTaxas;
-        
-        /// <summary>
         /// Controle txtIdEstipulante.
         /// </summary>
         /// <remarks>
@@ -128,15 +101,6 @@ namespace cadben.www._cad.estipulante {
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtVigencia;
-        
-        /// <summary>
-        /// Controle cmdFechar.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button cmdFechar;
         
         /// <summary>
         /// Controle cmdSalvar.

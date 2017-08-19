@@ -181,6 +181,7 @@
     <Content Include="dlls\NextWay.Framework.PhantomV2.dll" />
     <Content Include="dlls\NHibernate.dll" />
     <Content Include="dlls\Pdfizer.dll" />
+    <Content Include="geral.txt" />
     <Content Include="Images\active.png" />
     <Content Include="Images\bgBotaoAnexo.jpg" />
     <Content Include="Images\cadeado.png" />
