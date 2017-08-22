@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/layout.Master" AutoEventWireup="true" CodeBehind="estipulantes.aspx.cs" Inherits="cadben.www._cad.estipulante.estipulantes" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-
+    <link href="<%# Page.ResolveClientUrl("~/Scripts/estilo.css") %>" rel='stylesheet' type='text/css'>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="title" runat="server">
     Estipulantes
@@ -55,46 +55,83 @@
                     <asp:Literal ID="litMensagem" EnableViewState="false" runat="server" />
                 </div>
             </div>
-
-            <!--Modal Taxas-->
-            <div class="modal" id="modalTaxas" tabindex="-1" role="dialog" aria-labelledby="myModalLabelTaxas" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header text-left">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h2 class="modal-title">Taxas</h2>
-                        </div>
-                        <div class="modal-body text-center">
-                            <asp:TextBox ID="txtIdEstipulante" Visible="false" runat="server" />
-                            <div class="col-xs-12 alert alert-warning ">
-                                <div class="form-group">
-                                    <label class="col-xs-2 control-label">Valor</label>
-                                    <div class="col-xs-2"><asp:TextBox ID="txtTaxaValor" runat="server" Width="100%" SkinID="txtPadrao" /></div>
-                                    <label class="col-xs-2 control-label">Tipo</label>
-                                    <div class="col-xs-2"><asp:DropDownList ID="cboTaxaTipo" runat="server" Width="100%" SkinID="comboPadrao1" /></div>
-                                    <label class="col-xs-2 control-label">Vigência</label>
-                                    <div class="col-xs-2"><asp:TextBox ID="txtVigencia" runat="server" Width="100%" SkinID="txtPadrao" /></div>
-                                </div>
-                                <br />
-                                <div class="form-group">
-                                    <%--<div class="col-xs-6 text-center"><asp:Button ID="cmdFechar" Text="Fechar" runat="server" SkinID="botaoPadraoINFO_Small" /></div>--%>
-                                    <div class="col-xs-12 text-center"><asp:Button ID="cmdSalvar" Text="Gravar" runat="server" SkinID="botaoPadraoDANGER_Small" /></div>
-                                </div>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-info" data-dismiss="modal" id="cmdFecharModal">Fechar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </ContentTemplate>
     </asp:UpdatePanel>
+
+    <!--Modal Taxas-->
+    <div class="modal" id="modalTaxas" tabindex="-1" role="dialog" aria-labelledby="myModalLabelTaxas" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header text-left">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h2 class="modal-title">Taxas</h2>
+                </div>
+                <div class="modal-body text-center">
+                    <asp:UpdatePanel ID="upTaxas" runat="server">
+                        <ContentTemplate>
+                            <asp:TextBox ID="txtIdEstipulante" Visible="false" runat="server" />
+                            <div class="col-md-12 alert alert-warning"><div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label class="col-md-1 control-label">Vigência</label>
+                                    <div class="col-md-2"><asp:TextBox ID="txtVigencia" runat="server" Width="100%" MaxLength="10" onkeypress="filtro_SoNumeros(event); mascara_DATA(this, event);" SkinID="txtPadrao" /></div>
+                                    <label class="col-md-1 control-label">Valor</label>
+                                    <div class="col-md-2"><asp:TextBox ID="txtTaxaValor" onkeypress="filtro_SoNumeros(event);" MaxLength="10" runat="server" Width="100%" SkinID="txtPadrao" /></div>
+                                    <label class="col-md-1 control-label">Tipo</label>
+                                    <div class="col-md-2">
+                                        <asp:DropDownList ID="cboTaxaTipo" runat="server" Width="100%" SkinID="comboPadrao1">
+                                            <asp:ListItem Value="-1" Text="selecione" Selected="True"></asp:ListItem>
+                                            <asp:ListItem Value="0" Text="Por beneficiário"></asp:ListItem>
+                                            <asp:ListItem Value="1" Text="Por proposta"></asp:ListItem>
+                                        </asp:DropDownList>
+                                    </div>
+                                    <div class="col-md-2"><asp:Button ID="cmdSalvar" Text="Gravar" runat="server" SkinID="botaoPadraoWarning_Small" OnClick="cmdSalvar_Click" /></div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <%--<br />
+                                <div class="form-group">
+                                    <div class="col-md-12 text-center">
+                                        
+                                    </div>
+                                </div>--%>
+                            </div>
+                            <div class="col-md-12">
+                                <asp:GridView ID="GridTaxa" runat="server" SkinID="gridStrib" Width="100%" 
+                                    AutoGenerateColumns="False" AllowPaging="true" PageSize="100" DataKeyNames="ID" 
+                                    OnRowCommand="gridTaxa_RowCommand" OnRowDataBound="gridTaxa_RowDataBound">
+                                    <Columns>
+                                        <asp:BoundField DataField="Vigencia" HeaderText="Vigência" DataFormatString="{0:dd/MM/yyyy}" />
+                                        <asp:BoundField DataField="Valor" HeaderText="Valor" DataFormatString="{0:C}" />
+                                        <asp:BoundField DataField="Tipo" HeaderText="Tipo" />
+                                        <asp:ButtonField ButtonType="Link" Text="" CommandName="Excluir">
+                                            <ItemStyle Width="1%" />
+                                            <ControlStyle Width="1%" />
+                                            <ControlStyle CssClass="glyphicon glyphicon-remove" />
+                                        </asp:ButtonField>
+                                    </Columns>
+                                    <RowStyle HorizontalAlign="Left" />
+                                </asp:GridView>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal" id="cmdFecharModal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
+        $(document).ready(function () {
+            Sys.WebForms.PageRequestManager.getInstance().add_endRequest(configAutocomplete);
+        });
+
         function showModalTaxas()
         {
-            $('#modalTaxas').modal('show');
+            $('#modalTaxas').modal(true);
         }
     </script>
 </asp:Content>

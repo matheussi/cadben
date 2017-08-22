@@ -67,6 +67,15 @@ namespace cadben.www._cad.estipulante {
         protected global::System.Web.UI.WebControls.Literal litMensagem;
         
         /// <summary>
+        /// Controle upTaxas.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upTaxas;
+        
+        /// <summary>
         /// Controle txtIdEstipulante.
         /// </summary>
         /// <remarks>
@@ -74,6 +83,15 @@ namespace cadben.www._cad.estipulante {
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtIdEstipulante;
+        
+        /// <summary>
+        /// Controle txtVigencia.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtVigencia;
         
         /// <summary>
         /// Controle txtTaxaValor.
@@ -94,15 +112,6 @@ namespace cadben.www._cad.estipulante {
         protected global::System.Web.UI.WebControls.DropDownList cboTaxaTipo;
         
         /// <summary>
-        /// Controle txtVigencia.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtVigencia;
-        
-        /// <summary>
         /// Controle cmdSalvar.
         /// </summary>
         /// <remarks>
@@ -110,5 +119,14 @@ namespace cadben.www._cad.estipulante {
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button cmdSalvar;
+        
+        /// <summary>
+        /// Controle GridTaxa.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridTaxa;
     }
 }

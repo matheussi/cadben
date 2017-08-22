@@ -21,4 +21,20 @@
             base.Map(e => e.Ativo).Column("estipulante_ativo");
         }
     }
+
+    public class EstipulanteTaxaMap : ClassMap<EstipulanteTaxa>
+    {
+        public EstipulanteTaxaMap()
+        {
+            base.Table("estipulante_taxa");
+            base.Id(e => e.ID).Column("estipulantetaxa_id").GeneratedBy.Identity();
+            base.Map(e => e.EstipulanteId).Column("estipulantetaxa_estipulanteId").Not.Nullable();
+            base.Map(e => e.Valor).Column("estipulantetaxa_valor").Not.Nullable();
+            base.Map(e => e.Vigencia).Column("estipulantetaxa_vigencia").Not.Nullable();
+            base.Map(e => e.Tipo).Column("estipulantetaxa_tipo").CustomType(typeof(int));
+
+            base.Map(e => e.DataCadastro).Column("estipulantetaxa_dataCadastro").Not.Nullable();
+            base.Map(e => e.DataAlteracao).Column("estipulantetaxa_dataAlteracao").Nullable();
+        }
+    }
 }

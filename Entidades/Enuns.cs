@@ -11,6 +11,12 @@
         Alteracao
     }
 
+    public enum TipoTaxa : int
+    {
+        PorBeneficiario,
+        PorProposta
+    }
+
     public enum TipoPessoa : int
     {
         Fisica,

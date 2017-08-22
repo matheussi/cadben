@@ -81,6 +81,7 @@
         }
     }
 
+    [Serializable]
     public abstract class EntidadeBaseData : EntidadeBase
     {
         public EntidadeBaseData() { DataCadastro = DateTime.Now; }

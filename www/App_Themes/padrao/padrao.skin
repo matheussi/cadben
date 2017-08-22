@@ -20,6 +20,10 @@
     <RowStyle HorizontalAlign="Left" />
 </asp:GridView>
 
+<asp:GridView SkinId="gridStrib" CssClass="table table-hover table-striped" runat="server" GridLines="None" AutoGenerateColumns="False">
+    <RowStyle HorizontalAlign="Left" />
+</asp:GridView>
+
 <asp:Button runat="server" CssClass="btn btn-info" SkinId="botaoPadrao1" />  <%--<asp:Button runat="server" CssClass="btn btn-primary" SkinId="botaoPadrao1" />--%>
 
 

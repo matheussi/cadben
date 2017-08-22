@@ -13,4 +13,12 @@
 
         public virtual long ContratanteId { get; set; }
     }
+
+    public class EstipulanteTaxa : EntidadeBaseData
+    {
+        public virtual long EstipulanteId { get; set; }
+        public virtual decimal Valor { get; set; }
+        public virtual DateTime Vigencia { get; set; }
+        public virtual TipoTaxa Tipo { get; set; }
+    }
 }
