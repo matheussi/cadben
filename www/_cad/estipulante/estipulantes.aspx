@@ -1,6 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/layout.Master" AutoEventWireup="true" CodeBehind="estipulantes.aspx.cs" Inherits="cadben.www._cad.estipulante.estipulantes" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <link href="<%# Page.ResolveClientUrl("~/Scripts/estilo.css") %>" rel='stylesheet' type='text/css'>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="title" runat="server">
     Estipulantes

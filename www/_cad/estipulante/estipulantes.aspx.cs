@@ -95,22 +95,24 @@
                 Util.UsuarioLogado.IDContratante);
             GridTaxa.DataBind();
             GridTaxa.UseAccessibleHeader = true;
-            GridTaxa.HeaderRow.TableSection = TableRowSection.TableHeader;
+
+            if (GridTaxa.DataSource != null && GridTaxa.Rows.Count > 0)
+                GridTaxa.HeaderRow.TableSection = TableRowSection.TableHeader;
         }
 
         protected void gridTaxa_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName.Equals("Editar"))
             {
-                long id = Util.Geral.ObterDataKeyValDoGrid<long>(grid, e, 0);
+                //long id = Util.Geral.ObterDataKeyValDoGrid<long>(GridTaxa, e, 0);
             }
-            else if (e.CommandName.Equals("Taxas"))
-            {
-                Util.Geral.JSScript(this, "showModalTaxas()");
-            }
+            //else if (e.CommandName.Equals("Taxas"))
+            //{
+            //    Util.Geral.JSScript(this, "showModalTaxas()");
+            //}
             else if (e.CommandName.Equals("Excluir"))
             {
-                long id = Util.Geral.ObterDataKeyValDoGrid<long>(grid, e, 0);
+                long id = Util.Geral.ObterDataKeyValDoGrid<long>(GridTaxa, e, 0);
 
                 EstipulanteFacade.Instancia.ExcluirTaxa(id);
 

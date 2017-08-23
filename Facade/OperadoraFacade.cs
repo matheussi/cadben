@@ -83,5 +83,83 @@
                 }
             }
         }
+
+        /*********************************************************************************/
+
+        public ContratoADM SalvarContratoAdm(ContratoADM contrato)
+        {
+            using (ISession sessao = ObterSessao())
+            {
+                using (ITransaction tran = sessao.BeginTransaction())
+                {
+                    sessao.SaveOrUpdate(contrato);
+                    tran.Commit();
+                }
+            }
+
+            return contrato;
+        }
+
+        public void ExcluirContratoAdm(long contratoadmId)
+        {
+            using (ISession sessao = ObterSessao())
+            {
+                using (ITransaction tran = sessao.BeginTransaction())
+                {
+                    var contrato = sessao.Get<ContratoADM>(contratoadmId);
+                    sessao.Delete(contrato);
+                    tran.Commit();
+                }
+            }
+        }
+
+        public ContratoADM CarregarContratoAdm(long id, long? contratanteId = null)
+        {
+            ContratoADM ret = null;
+
+            using (ISession sessao = ObterSessao())
+            {
+                ret = sessao.Query<ContratoADM>()
+                    .Fetch(c => c.Operadora)
+                    .Fetch(c => c.AssociadoPJ) //estipulante
+                    .Where(c => c.ID == id).SingleOrDefault();
+
+                if (contratanteId.HasValue && contratanteId.Value > 0)
+                {
+                    var operadora = sessao.Query<Operadora>()
+                    .Where(o => o.ID == ret.Operadora.ID && o.ContratanteId == contratanteId.Value).SingleOrDefault();
+
+                    if (operadora == null)
+                    {
+                        throw new ApplicationException("Security exception.");
+                    }
+                }
+            }
+
+            return ret;
+        }
+
+        public List<ContratoADM> CarregarContratosAdm(long operadoraId, long? contratanteId)
+        {
+            using (ISession sessao = ObterSessao())
+            {
+                if (contratanteId.HasValue)
+                {
+                    var operadora = sessao.Query<Operadora>()
+                        .Where(o => o.ID == operadoraId && o.ContratanteId == contratanteId.Value).SingleOrDefault();
+
+                    if (operadora == null)
+                    {
+                        throw new ApplicationException("Security exception.");
+                    }
+                }
+
+                return sessao.Query<ContratoADM>()
+                    .Fetch(c => c.AssociadoPJ)
+                    .Where(c => c.Operadora.ID == operadoraId)
+                    .OrderBy(c => c.Descricao)
+                    .ToList();
+            }
+        }
     }
 }

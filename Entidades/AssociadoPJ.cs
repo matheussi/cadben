@@ -12,6 +12,11 @@
         {
         }
 
+        public AssociadoPJ(long id) : this()
+        {
+            this.ID = id;
+        }
+
         public virtual string Nome { get; set; }
         public virtual string Radical { get; set; }
 
