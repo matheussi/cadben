@@ -84,6 +84,13 @@
                 this.carregarContratosAdm();
                 this.exibeModalContratoAdm();
             }
+            else if (e.CommandName.Equals("Adicionais"))
+            {
+                long id = Util.Geral.ObterDataKeyValDoGrid<long>(grid, e, 0);
+                txtAdicionalOperadoraId.Text = id.ToString();
+                this.carregarAdicionais();
+                this.exibeModalAdicional();
+            }
         }
 
         protected void grid_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -91,6 +98,7 @@
             //Util.Geral.grid_RowDataBound_Confirmacao(sender, e, 1, "Deseja excluir a operadora?");
         }
 
+        //CONTRATO ADM
         /**************************************************************/
 
         /// <summary>
@@ -241,6 +249,147 @@
         {
             pnlContratosLista.Visible = lista;
             pnlContratosAdmDetalhe.Visible = detalhe;
+        }
+
+        //ADICIONAIS
+        /**************************************************************/
+
+        void carregarAdicionais()
+        {
+            var adicionais = OperadoraFacade.Instancia.CarregarAdicionais(Convert.ToInt64(txtAdicionalOperadoraId.Text), Util.UsuarioLogado.IDContratante);
+            gridAdicionais.DataSource = adicionais;
+            gridAdicionais.DataBind();
+            gridAdicionais.UseAccessibleHeader = true;
+
+            if (gridAdicionais.DataSource != null && gridAdicionais.Rows.Count > 0) //if (contratos != null && contratos.Count > 0)
+                gridAdicionais.HeaderRow.TableSection = TableRowSection.TableHeader;
+        }
+
+        void exibeModalAdicional(string alert = null)
+        {
+            if (string.IsNullOrEmpty(alert))
+                Util.Geral.JSScript(this, "showmodalAdicional();");
+            else
+                Util.Geral.JSScript(this, string.Concat("showmodalAdicional();alert('", alert, "');"));
+        }
+        void adicionalSetaVisibilidadePaineis(bool detalhe, bool lista)
+        {
+            pnlAdicionalLista.Visible = lista;
+            pnlAdicionalDetalhe.Visible = detalhe;
+        }
+
+        protected void cmdAdicionalNovo_Click(object sender, EventArgs e)
+        {
+            txtAdicionalId.Text = "";
+            txtAdicionalCodigo.Text = "";
+            txtAdicionalDescricao.Text = "";
+            chkAdicionalAtivo.Checked = true;
+            chkAdicionalIndividual.Checked = false;
+
+            this.adicionalSetaVisibilidadePaineis(true, false);
+            this.exibeModalAdicional();
+        }
+
+        protected void cmdAdicionalCancelar_Click(object sender, EventArgs e)
+        {
+            this.adicionalSetaVisibilidadePaineis(false, true);
+            this.exibeModalAdicional();
+        }
+
+        protected void cmdAdicionalSalvar_Click(object sender, EventArgs e)
+        {
+            #region validacoes 
+
+            if (txtAdicionalDescricao.Text.Trim().Length <= 3)
+            {
+                this.exibeModalAdicional("Descrição do adicional não informada.");
+                return;
+            }
+
+            #endregion
+
+            Adicional adicional = new Adicional();
+
+            long id = Util.CTipos.CToLong(txtAdicionalId.Text);
+            if (id > 0)
+            {
+                adicional = OperadoraFacade.Instancia.CarregarAdicional(id, Util.UsuarioLogado.IDContratante);
+                adicional.DataAlteracao = DateTime.Now;
+                txtAdicionalId.Text = "";
+            }
+            else
+            {
+                adicional.DataCadastro = DateTime.Now;
+                adicional.Operadora = new Operadora(Util.CTipos.CTipo<long>(txtAdicionalOperadoraId.Text));
+            }
+
+            adicional.Descricao = txtAdicionalDescricao.Text;
+            adicional.Codigo = txtAdicionalCodigo.Text;
+            adicional.Ativo = chkAdicionalAtivo.Checked;
+            adicional.ParaTodaProposta = !chkAdicionalIndividual.Checked;
+
+            OperadoraFacade.Instancia.SalvarAdicional(adicional);
+
+            this.adicionalSetaVisibilidadePaineis(false, true);
+            this.carregarAdicionais();
+            this.exibeModalAdicional("Adicional salvo com sucesso.");
+        }
+
+        protected void cmdAdicionalAddItem_Click(object sender, EventArgs e)
+        {
+        }
+
+        //Grids
+        protected void gridAdicionais_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName.Equals("Editar"))
+            {
+                long id = Util.Geral.ObterDataKeyValDoGrid<long>(gridAdicionais, e, 0);
+
+                Adicional a = OperadoraFacade.Instancia.CarregarAdicional(id, Util.UsuarioLogado.IDContratante);
+
+                txtAdicionalCodigo.Text = a.Codigo;
+                txtAdicionalDescricao.Text = a.Descricao;
+                chkAdicionalAtivo.Checked = a.Ativo;
+                chkAdicionalIndividual.Checked = !a.ParaTodaProposta;
+
+                txtAdicionalId.Text = a.ID.ToString();
+                this.adicionalSetaVisibilidadePaineis(true, false);
+
+                //this.exibeModalContratoAdm();
+            }
+            else if (e.CommandName.Equals("Excluir"))
+            {
+                long id = Util.Geral.ObterDataKeyValDoGrid<long>(gridAdicionais, e, 0);
+
+                try
+                {
+                    OperadoraFacade.Instancia.ExcluirAdicional(id);
+                    this.carregarAdicionais();
+                    this.exibeModalAdicional("Adicional excluído com sucesso.");
+                }
+                catch
+                {
+                    this.exibeModalAdicional("Não foi possível excluir o adicional.\nVerifique se ele possui itens vigentes e exclua-os.");
+                }
+            }
+        }
+        protected void gridAdicionais_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            Util.Geral.grid_RowDataBound_Confirmacao(sender, e, 2, "Deseja excluir o adicional?");
+
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                Util.Geral.grid_AdicionaToolTip<LinkButton>(e, 2, 0, "Excluir");
+                Util.Geral.grid_AdicionaToolTip<LinkButton>(e, 3, 0, "Alterar");
+            }
+        }
+
+        protected void gridItemAdicional_RowCommand(object sender, GridViewCommandEventArgs ee)
+        {
+        }
+        protected void gridItemAdicional_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
         }
     }
 }

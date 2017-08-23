@@ -84,6 +84,7 @@
             }
         }
 
+        //CONTRATO ADM
         /*********************************************************************************/
 
         public ContratoADM SalvarContratoAdm(ContratoADM contrato)
@@ -159,6 +160,165 @@
                     .Where(c => c.Operadora.ID == operadoraId)
                     .OrderBy(c => c.Descricao)
                     .ToList();
+            }
+        }
+
+        //ADICIONAIS
+        /*********************************************************************************/
+
+        public Adicional SalvarAdicional(Adicional adicional)
+        {
+            using (ISession sessao = ObterSessao())
+            {
+                using (ITransaction tran = sessao.BeginTransaction())
+                {
+                    sessao.SaveOrUpdate(adicional);
+                    tran.Commit();
+                }
+            }
+
+            return adicional;
+        }
+
+        public void ExcluirAdicional(long adicionalId)
+        {
+            using (ISession sessao = ObterSessao())
+            {
+                using (ITransaction tran = sessao.BeginTransaction())
+                {
+                    var adicional = sessao.Get<Adicional>(adicionalId);
+                    sessao.Delete(adicional);
+                    tran.Commit();
+                }
+            }
+        }
+
+        public Adicional CarregarAdicional(long id, long? contratanteId = null)
+        {
+            Adicional ret = null;
+
+            using (ISession sessao = ObterSessao())
+            {
+                ret = sessao.Query<Adicional>()
+                    .Fetch(c => c.Operadora)
+                    .Where(c => c.ID == id).SingleOrDefault();
+
+                if (contratanteId.HasValue && contratanteId.Value > 0)
+                {
+                    var operadora = sessao.Query<Operadora>()
+                    .Where(o => o.ID == ret.Operadora.ID && o.ContratanteId == contratanteId.Value).SingleOrDefault();
+
+                    if (operadora == null)
+                    {
+                        throw new ApplicationException("Security exception.");
+                    }
+                }
+            }
+
+            return ret;
+        }
+
+        public List<Adicional> CarregarAdicionais(long operadoraId, long? contratanteId)
+        {
+            using (ISession sessao = ObterSessao())
+            {
+                if (contratanteId.HasValue)
+                {
+                    var operadora = sessao.Query<Operadora>()
+                        .Where(o => o.ID == operadoraId && o.ContratanteId == contratanteId.Value).SingleOrDefault();
+
+                    if (operadora == null)
+                    {
+                        throw new ApplicationException("Security exception.");
+                    }
+                }
+
+                return sessao.Query<Adicional>()
+                    .Where(c => c.Operadora.ID == operadoraId)
+                    .OrderBy(c => c.Descricao)
+                    .ToList();
+            }
+        }
+
+        /********/
+
+        public AdicionalFaixa SalvarAdicionalFaixa(AdicionalFaixa adicional)
+        {
+            using (ISession sessao = ObterSessao())
+            {
+                using (ITransaction tran = sessao.BeginTransaction())
+                {
+                    sessao.SaveOrUpdate(adicional);
+                    tran.Commit();
+                }
+            }
+
+            return adicional;
+        }
+
+        public void ExcluirAdicionalFaixa(long adicionalFaixaId)
+        {
+            using (ISession sessao = ObterSessao())
+            {
+                using (ITransaction tran = sessao.BeginTransaction())
+                {
+                    var adicional = sessao.Get<AdicionalFaixa>(adicionalFaixaId);
+                    sessao.Delete(adicional);
+                    tran.Commit();
+                }
+            }
+        }
+
+        public AdicionalFaixa CarregarAdicionalFaixa(long id, long? contratanteId = null)
+        {
+            AdicionalFaixa ret = null;
+
+            using (ISession sessao = ObterSessao())
+            {
+                ret = sessao.Query<AdicionalFaixa>()
+                    .Fetch(c => c.Adicional)
+                    //.ThenFetch(a => a.Operadora)
+                    .Where(c => c.ID == id).SingleOrDefault();
+
+                if (contratanteId.HasValue && contratanteId.Value > 0)
+                {
+                    var operadora = sessao.Query<Operadora>()
+                    .Where(o => o.ID == ret.Adicional.Operadora.ID && o.ContratanteId == contratanteId.Value).SingleOrDefault();
+
+                    if (operadora == null)
+                    {
+                        throw new ApplicationException("Security exception.");
+                    }
+                }
+            }
+
+            return ret;
+        }
+
+        public List<AdicionalFaixa> CarregarAdicionailFaixas(long adicionalId, long? contratanteId)
+        {
+            using (ISession sessao = ObterSessao())
+            {
+                var faixas = sessao.Query<AdicionalFaixa>()
+                    .Fetch(af => af.Adicional)
+                    .Where(af => af.Adicional.ID == adicionalId)
+                    .OrderBy(af => af.Vigencia)
+                    .OrderBy(af => af.IdadeInicio)
+                    .ToList();
+
+                if(faixas != null && faixas.Count > 0 && contratanteId.HasValue)
+                {
+                    var operadora = sessao.Query<Operadora>()
+                        .Where(o => o.ID == faixas[0].Adicional.Operadora.ID && o.ContratanteId == contratanteId.Value)
+                        .SingleOrDefault();
+
+                    if (operadora == null)
+                    {
+                        throw new ApplicationException("Security exception.");
+                    }
+                }
+
+                return faixas;
             }
         }
     }

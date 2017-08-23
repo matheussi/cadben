@@ -5,6 +5,7 @@
     using System.Text;
     using System.Collections.Generic;
 
+    [Serializable]
     public class Operadora : EntidadeBase
     {
         public Operadora() { }

@@ -73,6 +73,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adicional.cs" />
     <Compile Include="AgendaAtribuicaoProcedimento.cs" />
     <Compile Include="AgendaExportacaoCartao.cs" />
     <Compile Include="AgendaExportacaoCartaoItem.cs" />
@@ -104,6 +105,7 @@
     <Compile Include="Especialidade.cs" />
     <Compile Include="Estipulante.cs" />
     <Compile Include="Filial.cs" />
+    <Compile Include="Map\NHibernate\AdicionalMap.cs" />
     <Compile Include="Map\NHibernate\AgendaAtribuicaoProcedimentoMap.cs" />
     <Compile Include="Map\NHibernate\AgendaPagamentoItemMap.cs" />
     <Compile Include="Map\NHibernate\AgendaPagamentoMap.cs" />
