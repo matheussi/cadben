@@ -10,6 +10,9 @@
     {
         public virtual long ID { get; set; }
 
+        /// <summary>
+        /// True caso a entidade tenha um identificador.
+        /// </summary>
         public virtual bool TemId
         {
             get { return ID > 0; }

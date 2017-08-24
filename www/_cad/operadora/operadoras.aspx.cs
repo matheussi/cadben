@@ -84,6 +84,13 @@
                 this.carregarContratosAdm();
                 this.exibeModalContratoAdm();
             }
+            else if (e.CommandName.Equals("Planos"))
+            {
+                long id = Util.Geral.ObterDataKeyValDoGrid<long>(grid, e, 0);
+                txtPlanoOperadoraId.Text = id.ToString();
+                this.carregaPlanos();
+                this.exibeModalPlanos();
+            }
             else if (e.CommandName.Equals("Adicionais"))
             {
                 long id = Util.Geral.ObterDataKeyValDoGrid<long>(grid, e, 0);
@@ -114,6 +121,7 @@
 
         protected void cmdContratoAdmNovo_Click(object sender, EventArgs e)
         {
+            txtContratoAdmId.Text = "";
             cboContratoAdmEstipulante.SelectedIndex = 0;
             txtContratoAdmDescricao.Text = "";
             txtContratoAdmNumero.Text = "";
@@ -251,8 +259,30 @@
             pnlContratosAdmDetalhe.Visible = detalhe;
         }
 
-        //ADICIONAIS
+        #region ADICIONAIS 
         /**************************************************************/
+
+        List<AdicionalFaixa> Faixas
+        {
+            get
+            {
+                return ViewState["_f"] as List<AdicionalFaixa>;
+            }
+            set
+            {
+                ViewState["_f"] = value;
+            }
+        }
+
+        void exibirFaixas()
+        {
+            gridItemAdicional.DataSource = this.Faixas;
+            gridItemAdicional.DataBind();
+
+            gridItemAdicional.UseAccessibleHeader = true;
+            if (gridItemAdicional.DataSource != null && gridItemAdicional.Rows.Count > 0) 
+                gridItemAdicional.HeaderRow.TableSection = TableRowSection.TableHeader;
+        }
 
         void carregarAdicionais()
         {
@@ -286,6 +316,9 @@
             chkAdicionalAtivo.Checked = true;
             chkAdicionalIndividual.Checked = false;
 
+            this.Faixas = null;
+            this.exibirFaixas();
+
             this.adicionalSetaVisibilidadePaineis(true, false);
             this.exibeModalAdicional();
         }
@@ -304,6 +337,66 @@
             {
                 this.exibeModalAdicional("Descrição do adicional não informada.");
                 return;
+            }
+
+            List<AdicionalFaixa> faixas = null;
+
+            if (gridItemAdicional.Rows.Count > 0)
+            {
+                TextBox txtaux = null;
+                DateTime dtaux = DateTime.MinValue;
+                int auxIdadeInicio = 0, auxIdadeFim = 0;
+                int? auxidade = null; decimal? auxvalor = null;
+
+                faixas = this.Faixas;
+
+                for (int i = 0; i < gridItemAdicional.Rows.Count; i++)
+                {
+                    txtaux = (TextBox)gridItemAdicional.Rows[i].Cells[0].FindControl("txtAdicionalItemVigencia");
+                    dtaux = Util.CTipos.CStringToDateTime(txtaux.Text);
+                    if(dtaux == DateTime.MinValue)
+                    {
+                        Util.Geral.Alerta(this, "Uma ou mais faixas do adicional estão sem data de vigência.");
+                        return;
+                    }
+
+                    txtaux = (TextBox)gridItemAdicional.Rows[i].Cells[1].FindControl("txtAdicionalItemIdadeInicio");
+                    auxidade = Util.CTipos.CToIntNullable(txtaux.Text);
+                    if(auxidade == null)
+                    {
+                        Util.Geral.Alerta(this, "Uma ou mais faixas do adicional estão sem idade de início.");
+                        return;
+                    }
+                    auxIdadeInicio = auxidade.Value;
+
+                    txtaux = (TextBox)gridItemAdicional.Rows[i].Cells[2].FindControl("txtAdicionalItemIdadeFim");
+                    auxidade = Util.CTipos.CToIntNullable(txtaux.Text);
+                    if (auxidade == null)
+                    {
+                        Util.Geral.Alerta(this, "Uma ou mais faixas do adicional estão sem idade final.");
+                        return;
+                    }
+                    auxIdadeFim = auxidade.Value;
+
+                    if(auxIdadeFim < auxIdadeInicio)
+                    {
+                        Util.Geral.Alerta(this, "A idade final não pode ser menor que a idade inicial.\nVerifique as faixas do adicional.");
+                        return;
+                    }
+
+                    txtaux = (TextBox)gridItemAdicional.Rows[i].Cells[3].FindControl("txtAdicionalItemValor");
+                    auxvalor = Util.CTipos.CToDecimalNullable(txtaux.Text);
+                    if (auxvalor == null)
+                    {
+                        Util.Geral.Alerta(this, "Uma ou mais faixas do adicional estão com valor inválido.");
+                        return;
+                    }
+
+                    faixas[i].IdadeFim = auxIdadeFim;
+                    faixas[i].IdadeInicio = auxIdadeInicio;
+                    faixas[i].Valor = auxvalor.Value;
+                    faixas[i].Vigencia = dtaux;
+                }
             }
 
             #endregion
@@ -328,7 +421,7 @@
             adicional.Ativo = chkAdicionalAtivo.Checked;
             adicional.ParaTodaProposta = !chkAdicionalIndividual.Checked;
 
-            OperadoraFacade.Instancia.SalvarAdicional(adicional);
+            OperadoraFacade.Instancia.SalvarAdicional(adicional, faixas);
 
             this.adicionalSetaVisibilidadePaineis(false, true);
             this.carregarAdicionais();
@@ -337,6 +430,16 @@
 
         protected void cmdAdicionalAddItem_Click(object sender, EventArgs e)
         {
+            if (this.Faixas == null) this.Faixas = new List<AdicionalFaixa>();
+
+            this.Faixas.Add(new AdicionalFaixa
+                {
+                    Valor = 0,
+                    Vigencia = DateTime.Now
+                }
+            );
+
+            this.exibirFaixas();
         }
 
         //Grids
@@ -352,6 +455,10 @@
                 txtAdicionalDescricao.Text = a.Descricao;
                 chkAdicionalAtivo.Checked = a.Ativo;
                 chkAdicionalIndividual.Checked = !a.ParaTodaProposta;
+
+                //Faixas
+                this.Faixas = OperadoraFacade.Instancia.CarregarAdicionailFaixas(a.ID, Util.UsuarioLogado.IDContratante);
+                this.exibirFaixas();
 
                 txtAdicionalId.Text = a.ID.ToString();
                 this.adicionalSetaVisibilidadePaineis(true, false);
@@ -385,11 +492,144 @@
             }
         }
 
-        protected void gridItemAdicional_RowCommand(object sender, GridViewCommandEventArgs ee)
+        protected void gridItemAdicional_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+            if (e.CommandName.Equals("Editar"))
+            {
+                long id = Util.Geral.ObterDataKeyValDoGrid<long>(gridAdicionais, e, 0);
+
+                //Adicional a = OperadoraFacade.Instancia.CarregarAdicional(id, Util.UsuarioLogado.IDContratante);
+
+                //txtAdicionalCodigo.Text = a.Codigo;
+                //txtAdicionalDescricao.Text = a.Descricao;
+                //chkAdicionalAtivo.Checked = a.Ativo;
+                //chkAdicionalIndividual.Checked = !a.ParaTodaProposta;
+
+                //txtAdicionalId.Text = a.ID.ToString();
+                //this.adicionalSetaVisibilidadePaineis(true, false);
+            }
+            else if (e.CommandName.Equals("Excluir"))
+            {
+                try
+                {
+                    int index = Util.CTipos.CTipo<int>(e.CommandArgument);
+
+                    AdicionalFaixa faixa = this.Faixas[index]; //gridItemAdicional.Rows[index].DataItem as AdicionalFaixa;
+
+                    if(faixa.TemId)
+                    {
+                        OperadoraFacade.Instancia.ExcluirAdicionalFaixa(faixa.ID);
+                    }
+
+                    this.Faixas.RemoveAt(index);
+                    this.exibirFaixas();
+                }
+                catch
+                {
+                    this.exibeModalAdicional("Não foi possível excluir a faixa adicional.");
+                }
+            }
         }
         protected void gridItemAdicional_RowDataBound(object sender, GridViewRowEventArgs e)
         {
+            if(e.Row.RowType == DataControlRowType.DataRow)
+            {
+                Util.Geral.grid_AdicionaToolTip<LinkButton>(e, 4, 0, "Excluir");
+                Util.Geral.grid_RowDataBound_Confirmacao(sender, e, 4, "Deseja excluir a faixa de adicional?");
+
+                TextBox txt = (TextBox)e.Row.Cells[3].FindControl("txtAdicionalItemValor");
+                txt.Attributes.Add("onKeyUp", "mascara('" + txt.ClientID + "')");
+            }
         }
+
+        #endregion
+
+        //PLANOS
+        /**************************************************************/
+
+        void exibeModalPlanos(string alert = null)
+        {
+            if (string.IsNullOrEmpty(alert))
+                Util.Geral.JSScript(this, "showmodalPlano();");
+            else
+                Util.Geral.JSScript(this, string.Concat("showmodalPlano();alert('", alert, "');"));
+        }
+        void planoSetaVisibilidadePaineis(bool detalhe, bool lista)
+        {
+            pnlPlanoLista.Visible = lista;
+            pnlPlanoDetalhe.Visible = detalhe;
+        }
+        void carregaPlanos()
+        {
+        }
+
+        protected void cmdPlanoCancelar_Click(object sender, EventArgs e)
+        {
+            this.planoSetaVisibilidadePaineis(false, true);
+        }
+
+        protected void cmdPlanoSalvar_Click(object sender, EventArgs e)
+        {
+            this.planoSetaVisibilidadePaineis(false, true);
+        }
+
+        protected void cmdPlanoNovo_Click(object sender, EventArgs e)
+        {
+            txtPlanoId.Text = "";
+            this.planoSetaVisibilidadePaineis(true, false);
+        }
+
+        //Grids
+        protected void gridPlano_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            //if (e.CommandName.Equals("Editar"))
+            //{
+            //    long id = Util.Geral.ObterDataKeyValDoGrid<long>(GridContratoAdm, e, 0);
+
+            //    ContratoADM c = OperadoraFacade.Instancia.CarregarContratoAdm(id, Util.UsuarioLogado.IDContratante);
+
+            //    cboContratoAdmEstipulante.SelectedValue = c.AssociadoPJ.ID.ToString();
+            //    txtContratoAdmDescricao.Text = c.Descricao;
+            //    txtContratoAdmNumero.Text = c.Numero;
+            //    txtContratoAdmCodFilial.Text = c.CodigoFilial;
+            //    txtContratoAdmCodUnidade.Text = c.CodigoUnidade;
+            //    txtContratoAdmCodAdministradora.Text = c.CodigoAdministradora;
+            //    txtContratoAdmSaude.Text = c.ContratoSaude;
+            //    txtContratoAdmDental.Text = c.ContratoDental;
+            //    chkContratoAdmAtivo.Checked = c.Ativo;
+
+            //    txtContratoAdmId.Text = c.ID.ToString();
+            //    this.setaVisibilidadePaineis(true, false);
+
+            //    this.exibeModalContratoAdm();
+            //}
+            //else if (e.CommandName.Equals("Excluir"))
+            //{
+            //    long id = Util.Geral.ObterDataKeyValDoGrid<long>(GridContratoAdm, e, 0);
+
+            //    try
+            //    {
+            //        OperadoraFacade.Instancia.ExcluirContratoAdm(id);
+            //        this.carregarContratosAdm();
+            //        this.exibeModalContratoAdm("Contrado excluído com sucesso.");
+            //    }
+            //    catch
+            //    {
+            //        this.exibeModalContratoAdm("Não foi possível excluir o contrato pois ele está sendo usado.");
+            //    }
+            //}
+        }
+        protected void gridPlano_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            //Util.Geral.grid_RowDataBound_Confirmacao(sender, e, 4, "Deseja excluir o contrato?");
+
+            //if (e.Row.RowType == DataControlRowType.DataRow)
+            //{
+            //    Util.Geral.grid_AdicionaToolTip<LinkButton>(e, 4, 0, "Excluir");
+            //    Util.Geral.grid_AdicionaToolTip<LinkButton>(e, 5, 0, "Alterar");
+            //}
+        }
+
+
     }
 }

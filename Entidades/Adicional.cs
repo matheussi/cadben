@@ -5,9 +5,15 @@
     using System.Text;
     using System.Collections.Generic;
 
+    /// <summary>
+    /// TODO: data de alteracao
+    /// </summary>
     [Serializable]
     public class Adicional : EntidadeBaseData
     {
+        public Adicional() { }
+        public Adicional(long id) : this() { this.ID = id; }
+
         public virtual Operadora Operadora { get; set; }
 
         public virtual string Descricao { get; set; }
@@ -16,6 +22,9 @@
         public virtual bool Ativo { get; set; }
     }
 
+    /// <summary>
+    /// TODO: data de cadastro e alteracao
+    /// </summary>
     [Serializable]
     public class AdicionalFaixa : EntidadeBase
     {

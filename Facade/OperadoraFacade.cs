@@ -166,13 +166,23 @@
         //ADICIONAIS
         /*********************************************************************************/
 
-        public Adicional SalvarAdicional(Adicional adicional)
+        public Adicional SalvarAdicional(Adicional adicional, IList<AdicionalFaixa> faixas)
         {
             using (ISession sessao = ObterSessao())
             {
                 using (ITransaction tran = sessao.BeginTransaction())
                 {
                     sessao.SaveOrUpdate(adicional);
+
+                    if(faixas != null && faixas.Count > 0)
+                    {
+                        foreach(var faixa in faixas)
+                        {
+                            faixa.Adicional = adicional;
+                            sessao.SaveOrUpdate(faixa);
+                        }
+                    }
+
                     tran.Commit();
                 }
             }

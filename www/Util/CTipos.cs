@@ -15,7 +15,6 @@
             return (T)Convert.ChangeType(value, typeof(T));
         }
 
-        
 
         public static decimal ToDecimal(object param)
         {
@@ -29,6 +28,23 @@
             catch
             {
                 return decimal.Zero;
+            }
+        }
+
+        public static Nullable<decimal> CToDecimalNullable(Object param)
+        {
+            if (param == null || param == DBNull.Value || Convert.ToString(param).Trim() == "")
+                return null;
+            else
+            {
+                try
+                {
+                    return Convert.ToDecimal(param, new System.Globalization.CultureInfo("pt-Br"));
+                }
+                catch
+                {
+                    return null;
+                }
             }
         }
 
@@ -53,7 +69,16 @@
             if (param == null || param == DBNull.Value || Convert.ToString(param).Trim() == "")
                 return null;
             else
-                return Convert.ToInt32(param);
+            {
+                try
+                {
+                    return Convert.ToInt32(param);
+                }
+                catch
+                {
+                    return null;
+                }
+            }
         }
 
         public static Int64 CToLong(Object param)
