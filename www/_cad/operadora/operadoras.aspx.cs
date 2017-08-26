@@ -88,7 +88,8 @@
             {
                 long id = Util.Geral.ObterDataKeyValDoGrid<long>(grid, e, 0);
                 txtPlanoOperadoraId.Text = id.ToString();
-                this.carregaPlanos();
+                this.carregarContratosAdm_ParaPlanos();
+                this.carregarPlanos();
                 this.exibeModalPlanos();
             }
             else if (e.CommandName.Equals("Adicionais"))
@@ -547,6 +548,25 @@
         //PLANOS
         /**************************************************************/
 
+        void carregarContratosAdm_ParaPlanos()
+        {
+            var contratos = OperadoraFacade.Instancia.CarregarContratosAdm(Convert.ToInt64(txtPlanoOperadoraId.Text), Util.UsuarioLogado.IDContratante);
+
+            cboPlanoContratoAdm.Items.Clear();
+            cboPlanoContratoAdm.Items.Add(new ListItem("selecione", "-1"));
+
+            cboPlanoContratoAdmLista.Items.Clear();
+
+            if (contratos != null && contratos.Count > 0)
+            {
+                foreach(var contrato in contratos)
+                {
+                    cboPlanoContratoAdm.Items.Add(new ListItem(contrato.Descricao, contrato.ID.ToString()));
+                    cboPlanoContratoAdmLista.Items.Add(new ListItem(contrato.Descricao, contrato.ID.ToString()));
+                }
+            }
+        }
+
         void exibeModalPlanos(string alert = null)
         {
             if (string.IsNullOrEmpty(alert))
@@ -559,8 +579,19 @@
             pnlPlanoLista.Visible = lista;
             pnlPlanoDetalhe.Visible = detalhe;
         }
-        void carregaPlanos()
+        void carregarPlanos()
         {
+            if(cboPlanoContratoAdmLista.Items.Count > 0)
+            {
+                gridPlano.DataSource = OperadoraFacade.Instancia.CarregarPlanos(
+                    Util.CTipos.CTipo<long>(cboPlanoContratoAdmLista.SelectedValue), Util.UsuarioLogado.IDContratante);
+
+                gridPlano.DataBind();
+                gridPlano.UseAccessibleHeader = true;
+
+                if (gridPlano.DataSource != null && gridPlano.Rows.Count > 0) 
+                    gridPlano.HeaderRow.TableSection = TableRowSection.TableHeader;
+            }
         }
 
         protected void cmdPlanoCancelar_Click(object sender, EventArgs e)
@@ -570,66 +601,141 @@
 
         protected void cmdPlanoSalvar_Click(object sender, EventArgs e)
         {
+            #region valicacoes
+
+            if(cboPlanoContratoAdm.SelectedIndex <= 0)
+            {
+                Util.Geral.Alerta(this, "Contrato administrativo não informada.");
+                return;
+            }
+
+            if(txtPlanoDescicao.Text.Trim().Length <= 1)
+            {
+                Util.Geral.Alerta(this, "Descrição do plano não informada.");
+                return;
+            }
+
+            #endregion
+
+            Plano plano = new Plano();
+
+            long id = Util.CTipos.CToLong(txtPlanoId.Text);
+            if (id > 0)
+            {
+                plano = OperadoraFacade.Instancia.CarregarPlano(id, Util.UsuarioLogado.IDContratante);
+                plano.ContratoAdm.ID = Util.CTipos.CToLong(cboPlanoContratoAdm.SelectedValue);
+
+                txtPlanoId.Text = "";
+            }
+
+            plano.Data = DateTime.Now;
+            plano.Ativo = chkPlanoAtivo.Checked;
+            plano.ContratoAdm = new ContratoADM(Util.CTipos.CToLong(cboPlanoContratoAdm.SelectedValue));
+            plano.Descricao = txtPlanoDescicao.Text;
+
+            plano.QuartoComum = chkPlanoQuartoColetivo.Checked;
+            plano.QuartoComumCodigo = txtPlanoColetivoCodigo.Text;
+            plano.QuartoComumCodigoANS = txtPlanoColetivoCodigoAns.Text;
+            plano.QuartoComumInicio = Util.CTipos.CStringToDateTimeG(txtPlanoColetivoInicio.Text);
+            plano.QuartoComumSubplano = txtPlanoColetivoSubplano.Text;
+
+            plano.QuartoParticular = chkPlanoQuartoParticular.Checked;
+            plano.QuartoParticularCodigo = txtPlanoParticularCodigo.Text;
+            plano.QuartoParticularCodigoANS = txtPlanoParticularCodigoAns.Text;
+            plano.QuartoParticularInicio = Util.CTipos.CStringToDateTimeG(txtPlanoParticularInicio.Text);
+            plano.QuartoParticularSubplano = txtPlanoParticularSubplano.Text;
+
+            OperadoraFacade.Instancia.SalvarPlano(plano);
+
+            this.carregarPlanos();
             this.planoSetaVisibilidadePaineis(false, true);
+            Util.Geral.Alerta(this, "Plano salvo com sucesso.");
         }
 
         protected void cmdPlanoNovo_Click(object sender, EventArgs e)
         {
             txtPlanoId.Text = "";
+
+            txtPlanoColetivoCodigo.Text = "";
+            txtPlanoColetivoCodigoAns.Text = "";
+            txtPlanoColetivoInicio.Text = DateTime.Now.ToString("dd/MM/yyyy");
+            txtPlanoColetivoSubplano.Text = "";
+
+            txtPlanoDescicao.Text = "";
+            txtPlanoParticularCodigo.Text = "";
+            txtPlanoParticularCodigoAns.Text = "";
+            txtPlanoParticularInicio.Text = DateTime.Now.ToString("dd/MM/yyyy");
+            txtPlanoParticularSubplano.Text = "";
+
+            chkPlanoAtivo.Checked = true;
+            chkPlanoQuartoColetivo.Checked = false;
+            chkPlanoQuartoParticular.Checked = false;
+
             this.planoSetaVisibilidadePaineis(true, false);
         }
 
         //Grids
         protected void gridPlano_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            //if (e.CommandName.Equals("Editar"))
-            //{
-            //    long id = Util.Geral.ObterDataKeyValDoGrid<long>(GridContratoAdm, e, 0);
+            if (e.CommandName.Equals("Editar"))
+            {
+                long id = Util.Geral.ObterDataKeyValDoGrid<long>(gridPlano, e, 0);
 
-            //    ContratoADM c = OperadoraFacade.Instancia.CarregarContratoAdm(id, Util.UsuarioLogado.IDContratante);
+                Plano p = OperadoraFacade.Instancia.CarregarPlano(id, Util.UsuarioLogado.IDContratante);
 
-            //    cboContratoAdmEstipulante.SelectedValue = c.AssociadoPJ.ID.ToString();
-            //    txtContratoAdmDescricao.Text = c.Descricao;
-            //    txtContratoAdmNumero.Text = c.Numero;
-            //    txtContratoAdmCodFilial.Text = c.CodigoFilial;
-            //    txtContratoAdmCodUnidade.Text = c.CodigoUnidade;
-            //    txtContratoAdmCodAdministradora.Text = c.CodigoAdministradora;
-            //    txtContratoAdmSaude.Text = c.ContratoSaude;
-            //    txtContratoAdmDental.Text = c.ContratoDental;
-            //    chkContratoAdmAtivo.Checked = c.Ativo;
+                cboPlanoContratoAdm.SelectedValue = p.ContratoAdm.ID.ToString();
+                chkPlanoAtivo.Checked = p.Ativo;
+                txtPlanoDescicao.Text = p.Descricao;
 
-            //    txtContratoAdmId.Text = c.ID.ToString();
-            //    this.setaVisibilidadePaineis(true, false);
+                chkPlanoQuartoColetivo.Checked = p.QuartoComum;
+                txtPlanoColetivoCodigo.Text = p.QuartoComumCodigo;
+                txtPlanoColetivoCodigoAns.Text = p.QuartoComumCodigoANS;
+                txtPlanoColetivoSubplano.Text = p.QuartoComumSubplano;
 
-            //    this.exibeModalContratoAdm();
-            //}
-            //else if (e.CommandName.Equals("Excluir"))
-            //{
-            //    long id = Util.Geral.ObterDataKeyValDoGrid<long>(GridContratoAdm, e, 0);
+                if (p.QuartoComumInicio.HasValue)
+                    txtPlanoColetivoInicio.Text = p.QuartoComumInicio.Value.ToString("dd/MM/yyyy");
 
-            //    try
-            //    {
-            //        OperadoraFacade.Instancia.ExcluirContratoAdm(id);
-            //        this.carregarContratosAdm();
-            //        this.exibeModalContratoAdm("Contrado excluído com sucesso.");
-            //    }
-            //    catch
-            //    {
-            //        this.exibeModalContratoAdm("Não foi possível excluir o contrato pois ele está sendo usado.");
-            //    }
-            //}
+                chkPlanoQuartoParticular.Checked = p.QuartoParticular;
+                txtPlanoParticularCodigo.Text = p.QuartoParticularCodigo;
+                txtPlanoParticularCodigoAns.Text = p.QuartoParticularCodigoANS;
+                txtPlanoParticularSubplano.Text = p.QuartoParticularSubplano;
+
+                if (p.QuartoParticularInicio.HasValue)
+                    txtPlanoParticularInicio.Text = p.QuartoParticularInicio.Value.ToString("dd/MM/yyyy");
+
+                txtPlanoId.Text = p.ID.ToString();
+                this.planoSetaVisibilidadePaineis(true, false);
+            }
+            else if (e.CommandName.Equals("Excluir"))
+            {
+                long id = Util.Geral.ObterDataKeyValDoGrid<long>(gridPlano, e, 0);
+
+                try
+                {
+                    OperadoraFacade.Instancia.ExcluirPlano(id);
+                    this.carregarPlanos();
+                    Util.Geral.Alerta(this, "Plano excluído com sucesso.");
+                }
+                catch
+                {
+                    this.exibeModalContratoAdm("Não foi possível excluir o plano pois ele está sendo usado.");
+                }
+            }
         }
         protected void gridPlano_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            //Util.Geral.grid_RowDataBound_Confirmacao(sender, e, 4, "Deseja excluir o contrato?");
+            Util.Geral.grid_RowDataBound_Confirmacao(sender, e, 3, "Deseja excluir o plano?");
 
-            //if (e.Row.RowType == DataControlRowType.DataRow)
-            //{
-            //    Util.Geral.grid_AdicionaToolTip<LinkButton>(e, 4, 0, "Excluir");
-            //    Util.Geral.grid_AdicionaToolTip<LinkButton>(e, 5, 0, "Alterar");
-            //}
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                Util.Geral.grid_AdicionaToolTip<LinkButton>(e, 3, 0, "Excluir");
+                Util.Geral.grid_AdicionaToolTip<LinkButton>(e, 4, 0, "Alterar");
+            }
         }
 
-
+        protected void cboPlanoContratoAdmLista_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.carregarPlanos();
+        }
     }
 }

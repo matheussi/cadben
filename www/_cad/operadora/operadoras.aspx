@@ -78,6 +78,13 @@
                 <div class="modal-header text-left">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h2 class="modal-title">Contratos Administrativos</h2>
+                    <span style="padding-left:15px;">
+                        <asp:UpdatePanel ID="upContratoAdmTopo" runat="server" RenderMode="Inline">
+                            <ContentTemplate>
+                                <asp:Button ID="cmdContratoAdmNovo" Text="Novo Contrato Administrativo" runat="server" SkinID="botaoPadraoWarning_Small" OnClick="cmdContratoAdmNovo_Click" />
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
+                    </span>
                 </div>
                 <div class="modal-body text-center">
                     <asp:UpdatePanel ID="upContratoAdm" runat="server">
@@ -137,19 +144,12 @@
                             </asp:Panel>
                             <asp:Panel ID="pnlContratosLista" runat="server" Visible="true">
                                 <div class="col-md-12">
-                                    <div class="form-group">
-                                        <div class="col-md-12 text-center">
-                                            <asp:Button ID="cmdContratoAdmNovo" Text="Novo Contrato Administrativo" runat="server" SkinID="botaoPadraoWarning_Small" OnClick="cmdContratoAdmNovo_Click" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
                                     <asp:GridView ID="GridContratoAdm" runat="server" SkinID="gridStrib" Width="100%" 
                                         AutoGenerateColumns="False" AllowPaging="true" PageSize="100" DataKeyNames="ID" 
                                         OnRowCommand="gridContratoAdm_RowCommand" OnRowDataBound="gridContratoAdm_RowDataBound">
                                         <Columns>
                                             <asp:BoundField DataField="Numero" HeaderText="Número"  />
-                                            <asp:BoundField DataField="Descricao" HeaderText="Contrato" DataFormatString="{0:C}" />
+                                            <asp:BoundField DataField="Descricao" HeaderText="Contrato" />
                                             <asp:TemplateField HeaderText="Estipulante">
                                                 <itemtemplate>
                                                     <%#DataBinder.Eval(Container.DataItem, "AssociadoPJ.Nome")%>
@@ -190,6 +190,13 @@
                 <div class="modal-header text-left">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h2 class="modal-title">Adicionais</h2>
+                    <span style="padding-left:15px;">
+                        <asp:UpdatePanel ID="UpdatePanel1" runat="server" RenderMode="Inline">
+                            <ContentTemplate>
+                                <asp:Button ID="cmdAdicional" Text="Novo Adicional" runat="server" SkinID="botaoPadraoWarning_Small" OnClick="cmdAdicionalNovo_Click" />
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
+                    </span>
                 </div>
                 <div class="modal-body text-center">
                     <asp:UpdatePanel ID="upAdicional" runat="server">
@@ -265,13 +272,6 @@
                             </asp:Panel>
                             <asp:Panel ID="pnlAdicionalLista" runat="server" Visible="true">
                                 <div class="col-md-12">
-                                    <div class="form-group">
-                                        <div class="col-md-12 text-center">
-                                            <asp:Button ID="cmdAdicional" Text="Novo Adicional" runat="server" SkinID="botaoPadraoWarning_Small" OnClick="cmdAdicionalNovo_Click" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
                                     <asp:GridView ID="gridAdicionais" runat="server" SkinID="gridStrib" Width="100%" 
                                         AutoGenerateColumns="False" AllowPaging="true" PageSize="100" DataKeyNames="ID" 
                                         OnRowCommand="gridAdicionais_RowCommand" OnRowDataBound="gridAdicionais_RowDataBound">
@@ -312,6 +312,13 @@
                 <div class="modal-header text-left">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h2 class="modal-title">Planos</h2>
+                    <span style="padding-left:15px;">
+                        <asp:UpdatePanel ID="upPlanoTopo" runat="server" RenderMode="Inline">
+                            <ContentTemplate>
+                                <asp:Button ID="cmdPlanoNovo" Text="Novo Plano" runat="server" SkinID="botaoPadraoWarning_Small" OnClick="cmdPlanoNovo_Click" />
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
+                    </span>
                 </div>
                 <div class="modal-body text-center">
                     <asp:UpdatePanel ID="upPlano" runat="server">
@@ -325,7 +332,7 @@
                                             Contrato Administrativo<br />
                                             <asp:DropDownList ID="cboPlanoContratoAdm" runat="server" Width="100%" SkinID="comboPadrao1"/>
                                         </div>
-                                        <div class="col-md-6 text-left">
+                                        <div class="col-md-4 text-left">
                                             Descrição do plano<br />
                                             <asp:TextBox ID="txtPlanoDescicao" runat="server" Width="100%" MaxLength="250" SkinID="txtPadrao" />
                                         </div>
@@ -367,6 +374,11 @@
                                         <div class="col-md-2 text-left">Início</div>
                                         <div class="col-md-2 text-left"><asp:TextBox ID="txtPlanoParticularInicio" runat="server" SkinID="txtPadrao" Width="100%" MaxLength="10" onkeypress="filtro_SoNumeros(event); mascara_DATA(this, event);"></asp:TextBox> </div>
                                     </div>
+                                    <div class="row" style="padding-top:10px">
+                                        <div class="col-md-5 text-left">
+                                            <asp:CheckBox ID="chkPlanoAtivo" Text="Plano ativo" runat="server" Checked="true" />
+                                        </div>
+                                    </div>
                                     <div class="row" style="margin-top:20px">
                                         <div class="col-md-3 text-center">
                                             <asp:Button ID="cmdPlanoCancelar" Text="Cancelar" runat="server" SkinID="botaoPadraoWarning_Small" OnClick="cmdPlanoCancelar_Click" />
@@ -377,27 +389,27 @@
                                 </div>
                             </asp:Panel>
                             <asp:Panel ID="pnlPlanoLista" runat="server" Visible="true">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <div class="col-md-12 text-center">
-                                            <asp:Button ID="cmdPlanoNovo" Text="Novo Plano" runat="server" SkinID="botaoPadraoWarning_Small" OnClick="cmdPlanoNovo_Click" />
-                                        </div>
+                                <div class="row">
+                                    <label class="col-md-12 text-left">Selecione o contrato administrativo para exibir os planos</label>
+                                    <br />
+                                    <div class="col-md-12 text-left">
+                                        <asp:DropDownList ID="cboPlanoContratoAdmLista" runat="server" Width="100%" SkinID="comboPadrao1" AutoPostBack="true" OnSelectedIndexChanged="cboPlanoContratoAdmLista_SelectedIndexChanged"/>
                                     </div>
                                 </div>
+                                <div class="row" style="padding-top:5px">
                                 <div class="col-md-12">
                                     <asp:GridView ID="gridPlano" runat="server" SkinID="gridStrib" Width="100%" 
                                         AutoGenerateColumns="False" AllowPaging="true" PageSize="100" DataKeyNames="ID" 
                                         OnRowCommand="gridPlano_RowCommand" OnRowDataBound="gridPlano_RowDataBound">
                                         <Columns>
-                                            <asp:BoundField DataField="Numero" HeaderText="Número"  />
-                                            <asp:BoundField DataField="Descricao" HeaderText="Contrato" DataFormatString="{0:C}" />
-                                            <asp:TemplateField HeaderText="Estipulante">
+                                            <asp:BoundField DataField="Descricao" HeaderText="Plano"  />
+                                            <asp:TemplateField HeaderText="Contrato Adm.">
                                                 <itemtemplate>
-                                                    <%#DataBinder.Eval(Container.DataItem, "AssociadoPJ.Nome")%>
+                                                    <%#DataBinder.Eval(Container.DataItem, "ContratoAdm.Descricao")%>
                                                 </itemtemplate>
                                             </asp:TemplateField>
-                                            <asp:BoundField DataField="DataCadastro" HeaderText="Data" DataFormatString="{0:dd/MM/yyyy}" />
-                                            <asp:ButtonField ButtonType="Link" Text="" CommandName="Excluir">
+                                            <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:dd/MM/yyyy}" />
+                                            <asp:ButtonField Visible="false" ButtonType="Link" Text="" CommandName="Excluir">
                                                 <ItemStyle Width="1%" />
                                                 <ControlStyle Width="1%" />
                                                 <ControlStyle CssClass="glyphicon glyphicon-remove" />
@@ -411,6 +423,7 @@
                                         <RowStyle HorizontalAlign="Left" />
                                     </asp:GridView>
                                     <div class="clearfix"></div>
+                                </div>
                                 </div>
                                 <div class="clearfix"></div>
                             </asp:Panel>

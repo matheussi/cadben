@@ -67,6 +67,24 @@ namespace cadben.www._cad.operadora {
         protected global::System.Web.UI.WebControls.Literal litMensagem;
         
         /// <summary>
+        /// Controle upContratoAdmTopo.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upContratoAdmTopo;
+        
+        /// <summary>
+        /// Controle cmdContratoAdmNovo.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button cmdContratoAdmNovo;
+        
+        /// <summary>
         /// Controle upContratoAdm.
         /// </summary>
         /// <remarks>
@@ -211,15 +229,6 @@ namespace cadben.www._cad.operadora {
         protected global::System.Web.UI.WebControls.Panel pnlContratosLista;
         
         /// <summary>
-        /// Controle cmdContratoAdmNovo.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button cmdContratoAdmNovo;
-        
-        /// <summary>
         /// Controle GridContratoAdm.
         /// </summary>
         /// <remarks>
@@ -227,6 +236,24 @@ namespace cadben.www._cad.operadora {
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView GridContratoAdm;
+        
+        /// <summary>
+        /// Controle UpdatePanel1.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+        
+        /// <summary>
+        /// Controle cmdAdicional.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button cmdAdicional;
         
         /// <summary>
         /// Controle upAdicional.
@@ -346,15 +373,6 @@ namespace cadben.www._cad.operadora {
         protected global::System.Web.UI.WebControls.Panel pnlAdicionalLista;
         
         /// <summary>
-        /// Controle cmdAdicional.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button cmdAdicional;
-        
-        /// <summary>
         /// Controle gridAdicionais.
         /// </summary>
         /// <remarks>
@@ -362,6 +380,24 @@ namespace cadben.www._cad.operadora {
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gridAdicionais;
+        
+        /// <summary>
+        /// Controle upPlanoTopo.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upPlanoTopo;
+        
+        /// <summary>
+        /// Controle cmdPlanoNovo.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button cmdPlanoNovo;
         
         /// <summary>
         /// Controle upPlano.
@@ -508,6 +544,15 @@ namespace cadben.www._cad.operadora {
         protected global::System.Web.UI.WebControls.TextBox txtPlanoParticularInicio;
         
         /// <summary>
+        /// Controle chkPlanoAtivo.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkPlanoAtivo;
+        
+        /// <summary>
         /// Controle cmdPlanoCancelar.
         /// </summary>
         /// <remarks>
@@ -535,13 +580,13 @@ namespace cadben.www._cad.operadora {
         protected global::System.Web.UI.WebControls.Panel pnlPlanoLista;
         
         /// <summary>
-        /// Controle cmdPlanoNovo.
+        /// Controle cboPlanoContratoAdmLista.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button cmdPlanoNovo;
+        protected global::System.Web.UI.WebControls.DropDownList cboPlanoContratoAdmLista;
         
         /// <summary>
         /// Controle gridPlano.
