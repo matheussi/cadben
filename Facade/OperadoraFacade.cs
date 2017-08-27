@@ -410,5 +410,178 @@
                     .ToList();
             }
         }
+
+        //TABELAS DE VALOR
+        /*********************************************************************************/
+        public TabelaValor SalvarTabelaDeValor(TabelaValor tabela, IList<TabelaValorItem> itens)
+        {
+            using (ISession sessao = ObterSessao())
+            {
+                using (ITransaction tran = sessao.BeginTransaction())
+                {
+                    tabela.Contrato = sessao.Get<ContratoADM>(tabela.Contrato.ID);
+                    sessao.SaveOrUpdate(tabela);
+
+                    if (itens != null && itens.Count > 0)
+                    {
+                        foreach (var item in itens)
+                        {
+                            item.Tabela = tabela;
+                            item.Plano = sessao.Get<Plano>(item.Plano.ID);
+                            sessao.SaveOrUpdate(item);
+                        }
+                    }
+
+                    tran.Commit();
+                }
+            }
+
+            return tabela;
+        }
+
+        public void ExcluirTabela(long tabelaId)
+        {
+            using (ISession sessao = ObterSessao())
+            {
+                using (ITransaction tran = sessao.BeginTransaction())
+                {
+                    var tabela = sessao.Get<TabelaValor>(tabelaId);
+                    sessao.Delete(tabela);
+                    tran.Commit();
+                }
+            }
+        }
+
+        public TabelaValor CarregarTabela(long id, long? contratanteId = null)
+        {
+            TabelaValor ret = null;
+
+            using (ISession sessao = ObterSessao())
+            {
+                ret = sessao.Query<TabelaValor>()
+                    .Fetch(c => c.Contrato)
+                    .Where(c => c.ID == id).SingleOrDefault();
+
+                if (contratanteId.HasValue && contratanteId.Value > 0)
+                {
+                    var operadora = sessao.Query<Operadora>()
+                    .Where(o => o.ID == ret.Contrato.Operadora.ID && o.ContratanteId == contratanteId.Value).SingleOrDefault();
+
+                    if (operadora == null)
+                    {
+                        throw new ApplicationException("Security exception.");
+                    }
+                }
+            }
+
+            return ret;
+        }
+
+        public List<TabelaValor> CarregarTabelas(long contratoAdmId, long? contratanteId)
+        {
+            using (ISession sessao = ObterSessao())
+            {
+                //if (contratanteId.HasValue)
+                //{
+                //    var operadora = sessao.Query<Operadora>()
+                //        .Where(o => o.ID == operadoraId && o.ContratanteId == contratanteId.Value).SingleOrDefault();
+
+                //    if (operadora == null)
+                //    {
+                //        throw new ApplicationException("Security exception.");
+                //    }
+                //}
+
+                return sessao.Query<TabelaValor>()
+                    .Fetch(t => t.Contrato)
+                    .Where(t => t.Contrato.ID == contratoAdmId)
+                    .OrderBy(t => t.Contrato.Descricao)
+                    .ToList();
+            }
+        }
+
+        /********/
+
+        public TabelaValorItem SalvarTabelaValorItem(TabelaValorItem item)
+        {
+            using (ISession sessao = ObterSessao())
+            {
+                using (ITransaction tran = sessao.BeginTransaction())
+                {
+                    sessao.SaveOrUpdate(item);
+                    tran.Commit();
+                }
+            }
+
+            return item;
+        }
+
+        public void ExcluirTabelaValorItem(long itemId)
+        {
+            using (ISession sessao = ObterSessao())
+            {
+                using (ITransaction tran = sessao.BeginTransaction())
+                {
+                    var item = sessao.Get<TabelaValorItem>(itemId);
+                    sessao.Delete(item);
+                    tran.Commit();
+                }
+            }
+        }
+
+        public TabelaValorItem CarregarTabelaValorItem(long id, long? contratanteId = null)
+        {
+            TabelaValorItem ret = null;
+
+            using (ISession sessao = ObterSessao())
+            {
+                ret = sessao.Query<TabelaValorItem>()
+                    .Fetch(i => i.Tabela)
+                    .ThenFetch(t => t.Contrato)
+                    .Where(i => i.ID == id).SingleOrDefault();
+
+                if (contratanteId.HasValue && contratanteId.Value > 0)
+                {
+                    var operadora = sessao.Query<Operadora>()
+                    .Where(o => o.ID == ret.Tabela.Contrato.Operadora.ID && o.ContratanteId == contratanteId.Value).SingleOrDefault();
+
+                    if (operadora == null)
+                    {
+                        throw new ApplicationException("Security exception.");
+                    }
+                }
+            }
+
+            return ret;
+        }
+
+        public List<TabelaValorItem> CarregarTabelaValorItens(long tabelaId, long planoId, long? contratanteId)
+        {
+            using (ISession sessao = ObterSessao())
+            {
+                var itens = sessao.Query<TabelaValorItem>()
+                    .Fetch(i => i.Tabela)
+                    .ThenFetch(t => t.Contrato)
+                    .Fetch(i => i.Plano)
+                    .Where(i => i.Tabela.ID == tabelaId && i.Plano.ID == planoId)
+                    .OrderBy(i => i.Plano.ID)
+                    .OrderBy(i => i.IdadeInicio)
+                    .ToList();
+
+                if (itens != null && itens.Count > 0 && contratanteId.HasValue)
+                {
+                    var operadora = sessao.Query<Operadora>()
+                        .Where(o => o.ID == itens[0].Tabela.Contrato.Operadora.ID && o.ContratanteId == contratanteId.Value)
+                        .SingleOrDefault();
+
+                    if (operadora == null)
+                    {
+                        throw new ApplicationException("Security exception.");
+                    }
+                }
+
+                return itens;
+            }
+        }
     }
 }

@@ -46,6 +46,12 @@
                                 <ControlStyle Width="1%" />
                                 <ControlStyle />
                             </asp:ButtonField>
+                            
+                            <asp:ButtonField ButtonType="Link" Text="Tabelas" CommandName="Tabelas">
+                                <ItemStyle Width="1%" />
+                                <ControlStyle Width="1%" />
+                                <ControlStyle />
+                            </asp:ButtonField>
 
                             <asp:ButtonField ButtonType="Link" Text="Adicionais" CommandName="Adicionais">
                                 <ItemStyle Width="1%" />
@@ -437,6 +443,119 @@
         </div>
     </div>
 
+    <!---------------------------------------------------------------------------------------------------->
+    <!--Modal Tabela-->
+    <div class="modal" id="modalTabela" tabindex="-1" role="dialog" aria-labelledby="myModalLabelTabela" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header text-left">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h2 class="modal-title">Tabelas</h2>
+                    <span style="padding-left:15px;">
+                        <asp:UpdatePanel ID="upTabelaTopo" runat="server" RenderMode="Inline">
+                            <ContentTemplate>
+                                <asp:Button ID="cmdTabelaNova" Text="Nova Tabela" runat="server" SkinID="botaoPadraoWarning_Small" OnClick="cmdTabelaNova_Click" />
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
+                    </span>
+                </div>
+                <div class="modal-body text-center">
+                    <asp:UpdatePanel ID="upTabela" runat="server">
+                        <ContentTemplate>
+                            <asp:TextBox ID="txtTabelaId" Visible="false" runat="server" />
+                            <asp:TextBox ID="txtTabelaOperadoraId" Visible="false" runat="server" />
+                            <asp:Panel ID="pnlTabelaDetalhe" runat="server" Visible="false">
+                                <div class="alert alert-warning">
+                                    <div class="row">
+                                        <div class="col-md-6 text-left">
+                                            Contrato Administrativo<br />
+                                            <asp:DropDownList ID="cboTabelaContratoAdm" runat="server" Width="100%" SkinID="comboPadrao1"/>
+                                        </div>
+                                        <div class="col-md-2 text-left">
+                                            Início<br />
+                                            <asp:TextBox ID="txtTabelaInicio" runat="server" SkinID="txtPadrao" Width="100%" MaxLength="10" onkeypress="filtro_SoNumeros(event); mascara_DATA(this, event);"></asp:TextBox>
+                                        </div>
+                                        <div class="col-md-2 text-left">
+                                            Fim<br />
+                                            <asp:TextBox ID="txtTabelaFim" runat="server" SkinID="txtPadrao" Width="100%" MaxLength="10" onkeypress="filtro_SoNumeros(event); mascara_DATA(this, event);"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                    <!---->
+                                    <div class="row" style="margin-top:20px">
+                                        <div class="col-md-3 text-left">Percentual de over<br />
+                                            <asp:TextBox ID="txtTabelaOver" runat="server" SkinID="txtPadrao" Width="100%" MaxLength="6" onkeypress="filtro_SoNumeros(event);" />
+                                        </div>
+                                        <div class="col-md-3 text-left">Valor de fixo (R$)<br />
+                                            <asp:TextBox ID="txtTabelaFixo" runat="server" SkinID="txtPadrao" Width="100%" MaxLength="15" onkeypress="filtro_SoNumeros(event);" />
+                                        </div>
+                                        <div class="col-md-3 text-left">Valor de tarifa (R$)<br />
+                                            <asp:TextBox ID="txtTabelaTarifa" runat="server" SkinID="txtPadrao" Width="100%" MaxLength="15" onkeypress="filtro_SoNumeros(event);" />
+                                        </div>
+                                    </div>
+                                    <!---->
+                                    <div class="row" style="padding-top:10px">
+                                        <div class="col-md-5 text-left">
+                                            <asp:CheckBox ID="chkTabelaAtiva" Text="Tabela ativa" runat="server" Checked="true" />
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top:20px">
+                                        <div class="col-md-3 text-center">
+                                            <asp:Button ID="cmdTabelaCancelar" Text="Cancelar" runat="server" SkinID="botaoPadraoWarning_Small" OnClick="cmdTabelaCancelar_Click" />
+                                            &nbsp;
+                                            <asp:Button ID="cmdTabelaSalvar" Text="Gravar" runat="server" SkinID="botaoPadraoWarning_Small" OnClick="cmdTabelaSalvar_Click" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </asp:Panel>
+                            <asp:Panel ID="pnlTabelaLista" runat="server" Visible="true">
+                                <div class="row">
+                                    <label class="col-md-12 text-left">Selecione o contrato administrativo para exibir os planos</label>
+                                    <br />
+                                    <div class="col-md-12 text-left">
+                                        <asp:DropDownList ID="cboTabelaContratoAdmLista" runat="server" Width="100%" SkinID="comboPadrao1" AutoPostBack="true" OnSelectedIndexChanged="cboTabelaContratoAdmLista_SelectedIndexChanged"/>
+                                    </div>
+                                </div>
+                                <div class="row" style="padding-top:5px">
+                                <div class="col-md-12">
+                                    <asp:GridView ID="gridTabela" runat="server" SkinID="gridStrib" Width="100%" 
+                                        AutoGenerateColumns="False" AllowPaging="true" PageSize="100" DataKeyNames="ID" 
+                                        OnRowCommand="gridTabela_RowCommand" OnRowDataBound="gridTabela_RowDataBound">
+                                        <Columns>
+                                            <asp:BoundField DataField="Descricao" HeaderText="Tabela"  />
+                                            <asp:TemplateField HeaderText="Contrato Adm.">
+                                                <itemtemplate>
+                                                    <%#DataBinder.Eval(Container.DataItem, "ContratoAdm.Descricao")%>
+                                                </itemtemplate>
+                                            </asp:TemplateField>
+                                            <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:dd/MM/yyyy}" />
+                                            <asp:ButtonField Visible="false" ButtonType="Link" Text="" CommandName="Excluir">
+                                                <ItemStyle Width="1%" />
+                                                <ControlStyle Width="1%" />
+                                                <ControlStyle CssClass="glyphicon glyphicon-remove" />
+                                            </asp:ButtonField>
+                                            <asp:ButtonField ButtonType="Link" Text="" CommandName="Editar">
+                                                <ItemStyle Width="1%" />
+                                                <ControlStyle Width="1%" />
+                                                <ControlStyle CssClass="glyphicon glyphicon-pencil" />
+                                            </asp:ButtonField>
+                                        </Columns>
+                                        <RowStyle HorizontalAlign="Left" />
+                                    </asp:GridView>
+                                    <div class="clearfix"></div>
+                                </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </asp:Panel>
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal" id="cmdFecharModalTabela">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         function showmodalContratoAdm()
         {
@@ -449,6 +568,10 @@
         function showmodalPlano()
         {
             $('#modalPlano').modal(true);
+        }
+        function showmodalTabela()
+        {
+            $('#modalTabela').modal(true);
         }
     </script>
 </asp:Content>

@@ -148,6 +148,7 @@
     <Compile Include="Map\NHibernate\TabelaPrecoMap.cs" />
     <Compile Include="Map\NHibernate\TabelaPrecoVigenciaMap.cs" />
     <Compile Include="Map\NHibernate\TabelaProcedimentoMap.cs" />
+    <Compile Include="Map\NHibernate\TabelaValorMap.cs" />
     <Compile Include="Map\NHibernate\UnidadeEspecialidadeMap.cs" />
     <Compile Include="Map\NHibernate\UnidadeProcedimentoMap.cs" />
     <Compile Include="Map\NHibernate\UsuarioMap.cs" />
@@ -166,6 +167,7 @@
     <Compile Include="TabelaPreco.cs" />
     <Compile Include="TabelaPrecoVigencia.cs" />
     <Compile Include="TabelaProcedimento.cs" />
+    <Compile Include="TabelaValor.cs" />
     <Compile Include="UnidadeEspecialidade.cs" />
     <Compile Include="UnidadeProcedimento.cs" />
     <Compile Include="Usuario.cs" />

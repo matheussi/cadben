@@ -16,6 +16,10 @@
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            txtTabelaOver.Attributes.Add("onKeyUp", "mascara('" + txtTabelaOver.ClientID + "')");
+            txtTabelaFixo.Attributes.Add("onKeyUp", "mascara('" + txtTabelaFixo.ClientID + "')");
+            txtTabelaTarifa.Attributes.Add("onKeyUp", "mascara('" + txtTabelaTarifa.ClientID + "')");
+
             if (!IsPostBack)
             {
                 this.carregar();
@@ -91,6 +95,14 @@
                 this.carregarContratosAdm_ParaPlanos();
                 this.carregarPlanos();
                 this.exibeModalPlanos();
+            }
+            else if (e.CommandName.Equals("Tabelas"))
+            {
+                long id = Util.Geral.ObterDataKeyValDoGrid<long>(grid, e, 0);
+                txtTabelaOperadoraId.Text = id.ToString();
+                this.carregarContratosAdm_ParaTabela();
+                //this.carregarPlanos();
+                this.exibeModalTabela();
             }
             else if (e.CommandName.Equals("Adicionais"))
             {
@@ -545,7 +557,7 @@
 
         #endregion
 
-        //PLANOS
+        #region PLANOS 
         /**************************************************************/
 
         void carregarContratosAdm_ParaPlanos()
@@ -736,6 +748,200 @@
         protected void cboPlanoContratoAdmLista_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.carregarPlanos();
+        }
+        #endregion
+
+        //TABELA DE VALOR 
+        /**************************************************************/
+
+        void carregarContratosAdm_ParaTabela()
+        {
+            var contratos = OperadoraFacade.Instancia.CarregarContratosAdm(Convert.ToInt64(txtTabelaOperadoraId.Text), Util.UsuarioLogado.IDContratante);
+
+            cboTabelaContratoAdm.Items.Clear();
+            cboTabelaContratoAdm.Items.Add(new ListItem("selecione", "-1"));
+
+            cboTabelaContratoAdmLista.Items.Clear();
+
+            if (contratos != null && contratos.Count > 0)
+            {
+                foreach (var contrato in contratos)
+                {
+                    cboTabelaContratoAdm.Items.Add(new ListItem(contrato.Descricao, contrato.ID.ToString()));
+                    cboTabelaContratoAdmLista.Items.Add(new ListItem(contrato.Descricao, contrato.ID.ToString()));
+                }
+            }
+        }
+
+        void exibeModalTabela(string alert = null)
+        {
+            if (string.IsNullOrEmpty(alert))
+                Util.Geral.JSScript(this, "showmodalTabela();");
+            else
+                Util.Geral.JSScript(this, string.Concat("showmodalTabela();alert('", alert, "');"));
+        }
+        void tabelaSetaVisibilidadePaineis(bool detalhe, bool lista)
+        {
+            pnlTabelaLista.Visible = lista;
+            pnlTabelaDetalhe.Visible = detalhe;
+        }
+        void carregarTabelas()
+        {
+            if (cboTabelaContratoAdmLista.Items.Count > 0)
+            {
+                //gridPlano.DataSource = OperadoraFacade.Instancia.CarregarPlanos(
+                //    Util.CTipos.CTipo<long>(cboTabelaContratoAdmLista.SelectedValue), Util.UsuarioLogado.IDContratante);
+
+                //gridPlano.DataBind();
+                //gridPlano.UseAccessibleHeader = true;
+
+                //if (gridPlano.DataSource != null && gridPlano.Rows.Count > 0)
+                //    gridPlano.HeaderRow.TableSection = TableRowSection.TableHeader;
+            }
+        }
+
+        protected void cmdTabelaCancelar_Click(object sender, EventArgs e)
+        {
+            this.tabelaSetaVisibilidadePaineis(false, true);
+        }
+
+        protected void cmdTabelaSalvar_Click(object sender, EventArgs e)
+        {
+            #region valicacoes
+
+            if (cboTabelaContratoAdm.SelectedIndex <= 0)
+            {
+                Util.Geral.Alerta(this, "Contrato administrativo não informado.");
+                return;
+            }
+
+            //if (txtPlanoDescicao.Text.Trim().Length <= 1)
+            //{
+            //    Util.Geral.Alerta(this, "Descrição do plano não informada.");
+            //    return;
+            //}
+
+            #endregion
+
+            //Plano plano = new Plano();
+
+            //long id = Util.CTipos.CToLong(txtPlanoId.Text);
+            //if (id > 0)
+            //{
+            //    plano = OperadoraFacade.Instancia.CarregarPlano(id, Util.UsuarioLogado.IDContratante);
+            //    plano.ContratoAdm.ID = Util.CTipos.CToLong(cboPlanoContratoAdm.SelectedValue);
+
+            //    txtPlanoId.Text = "";
+            //}
+
+            //plano.Data = DateTime.Now;
+            //plano.Ativo = chkPlanoAtivo.Checked;
+            //plano.ContratoAdm = new ContratoADM(Util.CTipos.CToLong(cboPlanoContratoAdm.SelectedValue));
+            //plano.Descricao = txtPlanoDescicao.Text;
+
+            //plano.QuartoComum = chkPlanoQuartoColetivo.Checked;
+            //plano.QuartoComumCodigo = txtPlanoColetivoCodigo.Text;
+            //plano.QuartoComumCodigoANS = txtPlanoColetivoCodigoAns.Text;
+            //plano.QuartoComumInicio = Util.CTipos.CStringToDateTimeG(txtPlanoColetivoInicio.Text);
+            //plano.QuartoComumSubplano = txtPlanoColetivoSubplano.Text;
+
+            //plano.QuartoParticular = chkPlanoQuartoParticular.Checked;
+            //plano.QuartoParticularCodigo = txtPlanoParticularCodigo.Text;
+            //plano.QuartoParticularCodigoANS = txtPlanoParticularCodigoAns.Text;
+            //plano.QuartoParticularInicio = Util.CTipos.CStringToDateTimeG(txtPlanoParticularInicio.Text);
+            //plano.QuartoParticularSubplano = txtPlanoParticularSubplano.Text;
+
+            //OperadoraFacade.Instancia.SalvarPlano(plano);
+
+            this.carregarTabelas();
+            this.planoSetaVisibilidadePaineis(false, true);
+            Util.Geral.Alerta(this, "Plano salvo com sucesso.");
+        }
+
+        protected void cmdTabelaNova_Click(object sender, EventArgs e)
+        {
+            //txtPlanoId.Text = "";
+
+            //txtPlanoColetivoCodigo.Text = "";
+            //txtPlanoColetivoCodigoAns.Text = "";
+            //txtPlanoColetivoInicio.Text = DateTime.Now.ToString("dd/MM/yyyy");
+            //txtPlanoColetivoSubplano.Text = "";
+
+            //txtPlanoDescicao.Text = "";
+            //txtPlanoParticularCodigo.Text = "";
+            //txtPlanoParticularCodigoAns.Text = "";
+            //txtPlanoParticularInicio.Text = DateTime.Now.ToString("dd/MM/yyyy");
+            //txtPlanoParticularSubplano.Text = "";
+
+            //chkPlanoAtivo.Checked = true;
+            //chkPlanoQuartoColetivo.Checked = false;
+            //chkPlanoQuartoParticular.Checked = false;
+
+            this.tabelaSetaVisibilidadePaineis(true, false);
+        }
+
+        //Grids
+        protected void gridTabela_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName.Equals("Editar"))
+            {
+                long id = Util.Geral.ObterDataKeyValDoGrid<long>(gridTabela, e, 0);
+
+                //Plano p = OperadoraFacade.Instancia.CarregarPlano(id, Util.UsuarioLogado.IDContratante);
+
+                //cboPlanoContratoAdm.SelectedValue = p.ContratoAdm.ID.ToString();
+                //chkPlanoAtivo.Checked = p.Ativo;
+                //txtPlanoDescicao.Text = p.Descricao;
+
+                //chkPlanoQuartoColetivo.Checked = p.QuartoComum;
+                //txtPlanoColetivoCodigo.Text = p.QuartoComumCodigo;
+                //txtPlanoColetivoCodigoAns.Text = p.QuartoComumCodigoANS;
+                //txtPlanoColetivoSubplano.Text = p.QuartoComumSubplano;
+
+                //if (p.QuartoComumInicio.HasValue)
+                //    txtPlanoColetivoInicio.Text = p.QuartoComumInicio.Value.ToString("dd/MM/yyyy");
+
+                //chkPlanoQuartoParticular.Checked = p.QuartoParticular;
+                //txtPlanoParticularCodigo.Text = p.QuartoParticularCodigo;
+                //txtPlanoParticularCodigoAns.Text = p.QuartoParticularCodigoANS;
+                //txtPlanoParticularSubplano.Text = p.QuartoParticularSubplano;
+
+                //if (p.QuartoParticularInicio.HasValue)
+                //    txtPlanoParticularInicio.Text = p.QuartoParticularInicio.Value.ToString("dd/MM/yyyy");
+
+                //txtTabelaId.Text = p.ID.ToString();
+                this.tabelaSetaVisibilidadePaineis(true, false);
+            }
+            else if (e.CommandName.Equals("Excluir"))
+            {
+                long id = Util.Geral.ObterDataKeyValDoGrid<long>(gridTabela, e, 0);
+
+                try
+                {
+                    //OperadoraFacade.Instancia.ExcluirPlano(id);
+                    //this.carregarPlanos();
+                    Util.Geral.Alerta(this, "Tabela excluída com sucesso.");
+                }
+                catch
+                {
+                    this.exibeModalContratoAdm("Não foi possível excluir a tabela pois ela está em uso.");
+                }
+            }
+        }
+        protected void gridTabela_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            Util.Geral.grid_RowDataBound_Confirmacao(sender, e, 3, "Deseja excluir a tabela?");
+
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                Util.Geral.grid_AdicionaToolTip<LinkButton>(e, 3, 0, "Excluir");
+                Util.Geral.grid_AdicionaToolTip<LinkButton>(e, 4, 0, "Alterar");
+            }
+        }
+
+        protected void cboTabelaContratoAdmLista_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.carregarTabelas();
         }
     }
 }
