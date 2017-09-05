@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="layout.master.cs" Inherits="MedProj.www.layout" %>
+﻿<%@ Master EnableTheming="true"  Language="C#" AutoEventWireup="true" CodeBehind="layout.master.cs" Inherits="MedProj.www.layout" %>
 
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
