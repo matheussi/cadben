@@ -17,11 +17,11 @@
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            txtTaxaValor.Attributes.Add("onKeyUp", "mascara('" + txtTaxaValor.ClientID + "')");
-            if (!IsPostBack)
-            {
-                this.carregar();
-            }
+            //txtTaxaValor.Attributes.Add("onKeyUp", "mascara('" + txtTaxaValor.ClientID + "')");
+            //if (!IsPostBack)
+            //{
+            //    this.carregar();
+            //}
         }
 
         void carregar()
@@ -58,7 +58,8 @@
                 string id = Util.Geral.ObterDataKeyValDoGrid<string>(grid, e, 0);
                 txtIdEstipulante.Text = id; //todo: denis, encriptar
                 this.carregarTaxas();
-                Util.Geral.JSScript(this, "showModalTaxas();");
+                //Util.Geral.JSScript(this, "showModalTaxas();");
+                Util.Geral.JSScript(this, "document.getElementById('popSpan').click();");
             }
             else if (e.CommandName.Equals("Excluir"))
             {
@@ -91,7 +92,7 @@
         void carregarTaxas()
         {
             GridTaxa.DataSource = EstipulanteFacade.Instancia.CarregarTaxas(
-                Util.CTipos.CToLong(txtIdEstipulante.Text), 
+                Util.CTipos.CToLong(txtIdEstipulante.Text),
                 Util.UsuarioLogado.IDContratante);
             GridTaxa.DataBind();
             GridTaxa.UseAccessibleHeader = true;
@@ -130,7 +131,7 @@
                 Util.Geral.grid_AdicionaToolTip<LinkButton>(e, 3, 0, "Excluir");
 
                 var taxa = e.Row.DataItem as EstipulanteTaxa;
-                if(taxa != null)
+                if (taxa != null)
                 {
                     if (taxa.Tipo == TipoTaxa.PorBeneficiario)
                         e.Row.Cells[2].Text = "Por beneficiário";
@@ -142,25 +143,25 @@
 
         protected void cmdSalvar_Click(object sender, EventArgs e)
         {
-            #region validacoes 
+            #region validacoes
 
             long estipulanteId = Util.CTipos.CToLong(txtIdEstipulante.Text);
 
             DateTime vigencia = Util.CTipos.CStringToDateTime(txtVigencia.Text);
-            if(vigencia == DateTime.MinValue)
+            if (vigencia == DateTime.MinValue)
             {
                 Util.Geral.JSScript(this, "showModalTaxas();alert('Data de vigência não informada ou inválida.');");
                 return;
             }
 
-            if(cboTaxaTipo.SelectedIndex == 0)
+            if (cboTaxaTipo.SelectedIndex == 0)
             {
                 Util.Geral.JSScript(this, "showModalTaxas();alert('Tipo de taxa não informado.');");
                 return;
             }
 
             bool vigenciaOK = EstipulanteFacade.Instancia.ValidarVigenciaTaxa(null, estipulanteId, vigencia);
-            if(!vigenciaOK)
+            if (!vigenciaOK)
             {
                 Util.Geral.JSScript(this, "showModalTaxas();alert('Vigência inválida. Certifique-se de não haver outra taxa com mesma data.');");
                 return;

@@ -1,15 +1,17 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/layout.Master" AutoEventWireup="true" CodeBehind="estipulantes.aspx.cs" Inherits="cadben.www._cad.estipulante.estipulantes" %>
+﻿<%@ Page Language="C#" Theme="metronic1" MasterPageFile="~/layout2.Master" AutoEventWireup="true" CodeBehind="estipulantes.aspx.cs" Inherits="cadben.www._cad.estipulante.estipulantes" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="title" runat="server">
     Estipulantes
+    <!--<a class="btn red btn-outline sbold" data-toggle="modal" href="#basic"> View Demo </a><br />-->
+    <a id="popSpan" style="display:none" class="btn btn-outline dark" data-target="#stack1" data-toggle="modal"> View Demo </a>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="content" runat="server">
     <asp:UpdatePanel ID="up" runat="server">
         <ContentTemplate>
             <div class="panel panel-default">
                 <div class="panel-heading text-right" style="position:relative;">
-                    <div style="position:absolute; right:0; top:-70px;"><asp:Button ID="lnkNovo" Text="Novo estipulante" runat="server" EnableViewState="false" SkinID="botaoPadrao1" OnClick="lnkNovo_Click" /></div>
+                    <div style="position:absolute; right:0; top:-50px;"><asp:Button ID="lnkNovo" Text="Novo estipulante" runat="server" EnableViewState="false" SkinID="botaoPadrao1" OnClick="lnkNovo_Click" /></div>
                     <div class="col-md-12">
                         <div class="row">
                             <label class="col-md-12 text-left">Filtro:</label>
@@ -29,7 +31,7 @@
                 </div>
                 <div class="panel-body">
                     <div class="space"></div>
-                    <asp:GridView ID="grid" runat="server" SkinID="gridPadraoProp" Width="100%" AutoGenerateColumns="False" AllowPaging="true" PageSize="100" DataKeyNames="ID" OnRowCommand="grid_RowCommand" OnRowDataBound="grid_RowDataBound">
+                    <asp:GridView ID="grid" runat="server" SkinID="gridPadraoProp" Width="100%" AutoGenerateColumns="False" AllowPaging="true" PageSize="20" DataKeyNames="ID" OnRowCommand="grid_RowCommand" OnRowDataBound="grid_RowDataBound">
                         <Columns>
                             <asp:BoundField DataField="Nome" HeaderText="Estipulante" />
                             
@@ -58,7 +60,7 @@
     </asp:UpdatePanel>
 
     <!--Modal Taxas-->
-    <div class="modal" id="modalTaxas" tabindex="-1" role="dialog" aria-labelledby="myModalLabelTaxas" aria-hidden="true">
+    <div class="modal" id="modalTaxas" tabindex="-1" role="dialog" style="margin-top:15px !important" aria-labelledby="myModalLabelTaxas" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header text-left">
@@ -87,12 +89,7 @@
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="clearfix"></div>
-                                <%--<br />
-                                <div class="form-group">
-                                    <div class="col-md-12 text-center">
-                                        
-                                    </div>
-                                </div>--%>
+
                             </div>
                             <div class="col-md-12">
                                 <asp:GridView ID="GridTaxa" runat="server" SkinID="gridStrib" Width="100%" 
@@ -120,6 +117,33 @@
                     <button type="button" class="btn btn-info" data-dismiss="modal" id="cmdFecharModal">Fechar</button>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- stackable -->
+    <div id="stack1" class="modal fade" tabindex="-1" data-focus-on="input:first">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+            <h4 class="modal-title">Stack One</h4>
+        </div>
+        <div class="modal-body">
+            <p> One fine body… </p>
+            <p> One fine body… </p>
+            <p> One fine body… </p>
+            <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                <ContentTemplate>
+                    <p><asp:LinkButton ID="lnk" runat="server" Text="teste"></asp:LinkButton></p>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+            <div class="form-group">
+                <input class="form-control" type="text" data-tabindex="1"> </div>
+            <div class="form-group">
+                <input class="form-control" type="text" data-tabindex="2"> </div>
+            <button class="btn blue" data-toggle="modal" href="#stack2">Launch modal</button>
+        </div>
+        <div class="modal-footer">
+            <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
+            <button type="button" class="btn green">Ok</button>
         </div>
     </div>
 

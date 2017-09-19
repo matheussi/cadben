@@ -993,6 +993,7 @@
     <Content Include="App_Themes\metronic1\assets\global\plugins\socicon\font\socicon.woff" />
     <Content Include="App_Themes\metronic1\assets\global\plugins\socicon\font\socicon.woff2" />
     <Content Include="App_Themes\metronic1\assets\global\plugins\socicon\font\socicond41d.eot" />
+    <Content Include="App_Themes\metronic1\metronic1.skin" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
@@ -1208,9 +1209,6 @@
           <CustomServerUrl>
           </CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
-          <servers defaultServer="SelfHostServer">
-            <server name="SelfHostServer" exePath="" cmdArgs="" url="http://localhost:10657/" workingDir="" />
-          </servers>
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>

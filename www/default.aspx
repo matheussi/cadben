@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/layout.Master" AutoEventWireup="false" CodeBehind="default.aspx.cs" Inherits="MedProj.www._default" %>
+﻿<%@ Page Language="C#" Theme="padrao" MasterPageFile="~/layout.Master" AutoEventWireup="false" CodeBehind="default.aspx.cs" Inherits="MedProj.www._default" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <%--<script src="Scripts/highcharts/highcharts.js" ></script>--%>
     <script src="http://code.highcharts.com/highcharts.js"></script>

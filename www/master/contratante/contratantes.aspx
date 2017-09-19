@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/layout.Master" AutoEventWireup="true" CodeBehind="contratantes.aspx.cs" Inherits="cadben.www.master.contratante.contratantes" %>
+﻿<%@ Page Theme="metronic1" Language="C#" MasterPageFile="~/layout2.Master" AutoEventWireup="true" CodeBehind="contratantes.aspx.cs" Inherits="cadben.www.master.contratante.contratantes" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="title" runat="server">
@@ -9,7 +9,7 @@
         <ContentTemplate>
             <div class="panel panel-default">
                 <div class="panel-heading text-right" style="position:relative;">
-                    <div style="position:absolute; right:0; top:-70px;"><asp:Button ID="lnkNovo" Text="Nova contratante" runat="server" EnableViewState="false" SkinID="botaoPadrao1" OnClick="lnkNovo_Click" /></div>
+                    <div style="position:absolute; right:0; top:-50px;"><asp:Button ID="lnkNovo" Text="Novo contratante" runat="server" EnableViewState="false" SkinID="botaoPadrao1" OnClick="lnkNovo_Click" /></div>
                     <div class="col-md-12">
                         <div class="row">
                             <label class="col-md-12 text-left">Filtro:</label>

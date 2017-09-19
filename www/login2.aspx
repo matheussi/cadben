@@ -14,7 +14,7 @@
         <title>CadBen</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
-        <meta content="Preview page of Metronic Admin Theme #1 for " name="description" />
+        <meta content="CadBen" name="description" />
         <meta content="" name="author" />
         <!-- BEGIN GLOBAL MANDATORY STYLES -->
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&amp;subset=all" rel="stylesheet" type="text/css" />
@@ -53,34 +53,37 @@
         <!-- BEGIN LOGIN -->
         <div class="content">
             <!-- BEGIN LOGIN FORM -->
-            <form class="login-form" action="http://bla.com/preview/metronic/theme/admin_1/index.html" method="post">
-                <h3 class="form-title">Login to your account</h3>
+            <%--<form class="login-form" action="http://bla.com/preview/metronic/theme/admin_1/index.html" method="post">--%>
+            <form class="login-form" runat="server" id="form1">
+                <h3 class="form-title">Login no CadBen</h3>
                 <div class="alert alert-danger display-hide">
                     <button class="close" data-close="alert"></button>
-                    <span> Enter any username and password. </span>
+                    <span> Informe seu login e senha. </span>
                 </div>
                 <div class="form-group">
                     <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
                     <label class="control-label visible-ie8 visible-ie9">Username</label>
                     <div class="input-icon">
                         <i class="fa fa-user"></i>
-                        <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Username" name="username" /> </div>
+                        <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Login" name="username" /> </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label visible-ie8 visible-ie9">Password</label>
+                    <label class="control-label visible-ie8 visible-ie9">Senha</label>
                     <div class="input-icon">
                         <i class="fa fa-lock"></i>
-                        <input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Password" name="password" /> </div>
+                        <input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Senha" name="password" /> </div>
                 </div>
                 <div class="form-actions">
                     <label class="rememberme mt-checkbox mt-checkbox-outline">
-                        <input type="checkbox" name="remember" value="1" /> Remember me
+                        <input type="checkbox" name="remember" value="1" /> Lembrar
                         <span></span>
                     </label>
-                    <button type="submit" class="btn green pull-right"> Login </button>
+                    <%--<button runat="server" ID="cmdEntrar" onclick="cmdEntrar_Click" type="submit" class="btn green pull-right"> Login </button>--%>
+                    <%--<input type="submit" runat="server" ID="cmdEntrar" onclick="cmdEntrar_Click" class="btn green pull-right" value=" Login " />--%>
+                    <asp:Button ID="cmdEntrar" OnClick="cmdEntrar_Click" runat="server" class="btn green pull-right" Text=" Login " />
                 </div>
                 <div class="login-options">
-                    <h4>Or login with</h4>
+                    <h4>Ou entre com</h4>
                     <ul class="social-icons">
                         <li>
                             <a class="facebook" data-original-title="facebook" href="javascript:;"> </a>
@@ -97,13 +100,13 @@
                     </ul>
                 </div>
                 <div class="forget-password">
-                    <h4>Forgot your password ?</h4>
-                    <p> no worries, click
-                        <a href="javascript:;" id="forget-password"> here </a> to reset your password. </p>
+                    <h4>Esqueceu sua senha ?</h4>
+                    <p> clique
+                        <a href="javascript:;" id="forget-password"> aqui </a> para gerar uma nova senha. </p>
                 </div>
                 <div class="create-account">
-                    <p> Don't have an account yet ?&nbsp;
-                        <a href="javascript:;" id="register-btn"> Create an account </a>
+                    <p> Ainda não possui uma conta ?&nbsp;
+                        <a href="javascript:;" id="register-btn"> Criar uma conta </a>
                     </p>
                 </div>
             </form>

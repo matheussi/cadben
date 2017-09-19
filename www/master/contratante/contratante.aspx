@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/layout.Master" AutoEventWireup="true" CodeBehind="contratante.aspx.cs" Inherits="cadben.www.master.contratante.contratante" %>
+﻿<%@ Page Theme="metronic1" Language="C#" MasterPageFile="~/layout2.Master" AutoEventWireup="true" CodeBehind="contratante.aspx.cs" Inherits="cadben.www.master.contratante.contratante" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     
 </asp:Content>
