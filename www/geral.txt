@@ -31,3 +31,7 @@
           position:   fixed; 
         }
     </style>
+
+
+https://stackoverflow.com/questions/19184002/textboxes-are-empty-on-postback-with-bootstrap-modal-asp-net
+C:\src\cadeben\www\App_Themes\metronic1\assets\global\plugins\bootstrap-modal\js\bootstrap-modal.js , linha 351, estava body, coloquei form

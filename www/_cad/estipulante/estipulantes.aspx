@@ -1,10 +1,10 @@
-﻿<%@ Page Language="C#" Theme="metronic1" MasterPageFile="~/layout2.Master" AutoEventWireup="true" CodeBehind="estipulantes.aspx.cs" Inherits="cadben.www._cad.estipulante.estipulantes" %>
+﻿<%@ Page Language="C#" ViewStateMode="Enabled" EnableViewState="true" EnableViewStateMac="true" Theme="metronic1" MasterPageFile="~/layout2.Master" AutoEventWireup="true" CodeBehind="estipulantes.aspx.cs" Inherits="cadben.www._cad.estipulante.estipulantes" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="title" runat="server">
     Estipulantes
     <!--<a class="btn red btn-outline sbold" data-toggle="modal" href="#basic"> View Demo </a><br />-->
-    <a id="popSpan" style="display:none" class="btn btn-outline dark" data-target="#stack1" data-toggle="modal"> View Demo </a>
+    <a id="popSpan" class="btn btn-outline dark" data-target="#stack1" data-toggle="modal"> View Demo </a>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="content" runat="server">
     <asp:UpdatePanel ID="up" runat="server">
@@ -60,7 +60,8 @@
     </asp:UpdatePanel>
 
     <!--Modal Taxas-->
-    <div class="modal" id="modalTaxas" tabindex="-1" role="dialog" style="margin-top:15px !important" aria-labelledby="myModalLabelTaxas" aria-hidden="true">
+    <%----%>
+    <div class="modal" id="modalTaxas" tabindex="-1" role="dialog" aria-labelledby="myModalLabelTaxas" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header text-left">
@@ -68,9 +69,9 @@
                     <h2 class="modal-title">Taxas</h2>
                 </div>
                 <div class="modal-body text-center">
-                    <asp:UpdatePanel ID="upTaxas" runat="server">
+                    <asp:UpdatePanel ID="upTaxas" runat="server" EnableViewState="true">
                         <ContentTemplate>
-                            <asp:TextBox ID="txtIdEstipulante" Visible="false" runat="server" />
+                            <asp:TextBox ID="txtIdEstipulante" runat="server" />
                             <div class="col-md-12 alert alert-warning"><div class="clearfix"></div>
                                 <div class="form-group">
                                     <label class="col-md-1 control-label">Vigência</label>
@@ -85,7 +86,10 @@
                                             <asp:ListItem Value="1" Text="Por proposta"></asp:ListItem>
                                         </asp:DropDownList>
                                     </div>
-                                    <div class="col-md-2"><asp:Button ID="cmdSalvar" Text="Gravar" runat="server" SkinID="botaoPadraoWarning_Small" OnClick="cmdSalvar_Click" /></div>
+                                    <div class="col-md-2">
+                                        <asp:LinkButton ID="lnkSalvar" CssClass="btn btn-outline blue" Text="Salvar" runat="server" OnClick="cmdSalvar_Click"></asp:LinkButton>
+                                        <asp:Button Visible="false" ID="cmdSalvar" Text="Gravaar" runat="server" OnClick="cmdSalvar_Click" />
+                                    </div>
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="clearfix"></div>
@@ -119,31 +123,31 @@
             </div>
         </div>
     </div>
-
+    
     <!-- stackable -->
-    <div id="stack1" class="modal fade" tabindex="-1" data-focus-on="input:first">
+    <div id="stack1" class="modal" >
+    <!--<div id="stack1" class="modal container fade" tabindex="-1" runat="server">-->
         <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-            <h4 class="modal-title">Stack One</h4>
+            <%--<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+            <h4 class="modal-title">Taxas</h4>--%>
         </div>
         <div class="modal-body">
-            <p> One fine body… </p>
-            <p> One fine body… </p>
-            <p> One fine body… </p>
-            <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+    
+            <asp:UpdatePanel ID="UpdatePanel1" runat="server" EnableViewState="true" UpdateMode="Conditional" ViewStateMode="Enabled">
                 <ContentTemplate>
-                    <p><asp:LinkButton ID="lnk" runat="server" Text="teste"></asp:LinkButton></p>
+                    <asp:Button ID="cmd1" runat="server" OnClick="cmd1_Click" Text="teste" Visible="false" />
+
+                    <asp:LinkButton ID="Button1" runat="server" OnClick="cmd1_Click" Text="teste2" />
+                    <asp:TextBox ID="txt1" runat="server"></asp:TextBox>
+                    <hr />
+                    <asp:LinkButton ID="LinkButton1" runat="server" OnClick="cmd2_Click" Text="teste3" />
+                    <asp:Literal ID="lit1" runat="server"></asp:Literal>
                 </ContentTemplate>
             </asp:UpdatePanel>
-            <div class="form-group">
-                <input class="form-control" type="text" data-tabindex="1"> </div>
-            <div class="form-group">
-                <input class="form-control" type="text" data-tabindex="2"> </div>
-            <button class="btn blue" data-toggle="modal" href="#stack2">Launch modal</button>
         </div>
         <div class="modal-footer">
-            <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
-            <button type="button" class="btn green">Ok</button>
+            <%--<button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
+            <button type="button" class="btn green">Ok</button>--%>
         </div>
     </div>
 

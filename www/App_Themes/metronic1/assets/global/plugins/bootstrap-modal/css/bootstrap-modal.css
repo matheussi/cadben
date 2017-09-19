@@ -125,7 +125,8 @@
 @media (max-width: 979px) {
 	.modal, 
 	.modal.container,
-	.modal.modal-overflow 	{
+	.modal.modal-overflow 	
+    {
 		top: 1%;
 		right: 1%;
 		left: 1%;

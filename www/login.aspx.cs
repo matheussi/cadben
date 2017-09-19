@@ -38,6 +38,7 @@
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            Response.Redirect("login2.aspx");
             if (!IsPostBack)
             {
                 Session.Remove("logado");

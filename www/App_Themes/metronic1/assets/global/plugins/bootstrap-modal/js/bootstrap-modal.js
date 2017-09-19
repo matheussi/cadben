@@ -348,7 +348,7 @@
 		replace: false,
 		resize: false,
 		attentionAnimation: 'shake',
-		manager: 'body',
+		manager: 'form',
 		spinner: '<div class="loading-spinner" style="width: 200px; margin-left: -100px;"><div class="progress progress-striped active"><div class="bar" style="width: 100%;"></div></div></div>',
 		backdropTemplate: '<div class="modal-backdrop" />'
 	};

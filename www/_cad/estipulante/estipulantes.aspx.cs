@@ -17,11 +17,11 @@
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //txtTaxaValor.Attributes.Add("onKeyUp", "mascara('" + txtTaxaValor.ClientID + "')");
-            //if (!IsPostBack)
-            //{
-            //    this.carregar();
-            //}
+            txtTaxaValor.Attributes.Add("onKeyUp", "mascara('" + txtTaxaValor.ClientID + "')");
+            if (!IsPostBack)
+            {
+                //this.carregar();
+            }
         }
 
         void carregar()
@@ -54,12 +54,12 @@
             else if (e.CommandName.Equals("Taxas"))
             {
                 //mpeTaxas.Show();
+                //Util.Geral.JSScript(this, "document.getElementById('popSpan').click();");
 
                 string id = Util.Geral.ObterDataKeyValDoGrid<string>(grid, e, 0);
                 txtIdEstipulante.Text = id; //todo: denis, encriptar
                 this.carregarTaxas();
-                //Util.Geral.JSScript(this, "showModalTaxas();");
-                Util.Geral.JSScript(this, "document.getElementById('popSpan').click();");
+                Util.Geral.JSScript(this, "showModalTaxas();");
             }
             else if (e.CommandName.Equals("Excluir"))
             {
@@ -84,10 +84,10 @@
 
         /*****************************************************************************/
 
-        void exibeModalTaxas__(bool fclick = false)
-        {
-            Util.Geral.JSScript(this, "showModalTaxas()");
-        }
+        //void exibeModalTaxas__(bool fclick = false)
+        //{
+        //    Util.Geral.JSScript(this, "showModalTaxas()");
+        //}
 
         void carregarTaxas()
         {
@@ -117,7 +117,8 @@
 
                 EstipulanteFacade.Instancia.ExcluirTaxa(id);
 
-                Util.Geral.JSScript(this, "showModalTaxas();alert('Taxa excluída com sucesso.');");
+                //Util.Geral.JSScript(this, "showModalTaxas();alert('Taxa excluída com sucesso.');");
+                Util.Geral.Alerta(this, "Taxa excluída com sucesso.");
                 this.carregarTaxas();
             }
         }
@@ -150,20 +151,23 @@
             DateTime vigencia = Util.CTipos.CStringToDateTime(txtVigencia.Text);
             if (vigencia == DateTime.MinValue)
             {
-                Util.Geral.JSScript(this, "showModalTaxas();alert('Data de vigência não informada ou inválida.');");
+                //Util.Geral.JSScript(this, "showModalTaxas();alert('Data de vigência não informada ou inválida.');");
+                Util.Geral.Alerta(this, "Data de vigência não informada ou inválida.");
                 return;
             }
 
             if (cboTaxaTipo.SelectedIndex == 0)
             {
-                Util.Geral.JSScript(this, "showModalTaxas();alert('Tipo de taxa não informado.');");
+                //Util.Geral.JSScript(this, "showModalTaxas();alert('Tipo de taxa não informado.');");
+                Util.Geral.Alerta(this, "Tipo de taxa não informado.");
                 return;
             }
 
             bool vigenciaOK = EstipulanteFacade.Instancia.ValidarVigenciaTaxa(null, estipulanteId, vigencia);
             if (!vigenciaOK)
             {
-                Util.Geral.JSScript(this, "showModalTaxas();alert('Vigência inválida. Certifique-se de não haver outra taxa com mesma data.');");
+                //Util.Geral.JSScript(this, "showModalTaxas();alert('Vigência inválida. Certifique-se de não haver outra taxa com mesma data.');");
+                Util.Geral.Alerta(this, "Vigência inválida. Certifique-se de não haver outra taxa com mesma data.");
                 return;
             }
 
@@ -178,7 +182,18 @@
             EstipulanteFacade.Instancia.SalvarTaxa(taxa);
             this.carregarTaxas();
 
-            Util.Geral.JSScript(this, "showModalTaxas();alert('Taxa salva com sucesso.');");
+            //Util.Geral.JSScript(this, "showModalTaxas();alert('Taxa salva com sucesso.');");
+            Util.Geral.Alerta(this, "Taxa salva com sucesso.");
+        }
+
+        protected void cmd1_Click(object sender, EventArgs e)
+        {
+            txt1.Text = DateTime.Now.ToLongDateString();
+        }
+
+        protected void cmd2_Click(object sender, EventArgs e)
+        {
+            lit1.Text = txt1.Text;
         }
     }
 }
