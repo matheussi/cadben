@@ -60,23 +60,7 @@
     </asp:UpdatePanel>
 
     <!--Modal Taxas-->
-    <%----%>
-    <div class="modal" id="modalTaxas___old" tabindex="-1" role="dialog" aria-labelledby="myModalLabelTaxas" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header text-left">
-                </div>
-                <div class="modal-body text-center">
-                </div>
-                <div class="modal-footer">
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- stackable -->
     <div id="modalTaxas" class="modal container fade" style="width:800px !important;" >
-    <!--<div id="stack1" class="modal container fade" tabindex="-1" runat="server">-->
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h2 class="modal-title">Taxas</h2>
