@@ -54,12 +54,12 @@
             else if (e.CommandName.Equals("Taxas"))
             {
                 //mpeTaxas.Show();
-                //Util.Geral.JSScript(this, "document.getElementById('popSpan').click();");
+                Util.Geral.JSScript(this, "document.getElementById('popSpan').click();");
 
                 string id = Util.Geral.ObterDataKeyValDoGrid<string>(grid, e, 0);
                 txtIdEstipulante.Text = id; //todo: denis, encriptar
                 this.carregarTaxas();
-                Util.Geral.JSScript(this, "showModalTaxas();");
+                //Util.Geral.JSScript(this, "showModalTaxas();");
             }
             else if (e.CommandName.Equals("Excluir"))
             {
@@ -188,12 +188,12 @@
 
         protected void cmd1_Click(object sender, EventArgs e)
         {
-            txt1.Text = DateTime.Now.ToLongDateString();
+            //txt1.Text = DateTime.Now.ToLongDateString();
         }
 
         protected void cmd2_Click(object sender, EventArgs e)
         {
-            lit1.Text = txt1.Text;
+            //lit1.Text = txt1.Text;
         }
     }
 }
