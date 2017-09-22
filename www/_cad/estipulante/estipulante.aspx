@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/layout.Master" AutoEventWireup="true" CodeBehind="estipulante.aspx.cs" Inherits="cadben.www._cad.estipulante.estipulante" %>
+﻿<%@ Page Language="C#" Theme="metronic1" MasterPageFile="~/layout2.Master" AutoEventWireup="true" CodeBehind="estipulante.aspx.cs" Inherits="cadben.www._cad.estipulante.estipulante" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server"></asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="title" runat="server">
     Estipulante

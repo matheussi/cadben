@@ -4,7 +4,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="title" runat="server">
     Estipulantes
     <!--<a class="btn red btn-outline sbold" data-toggle="modal" href="#basic"> View Demo </a><br />-->
-    <a id="popSpan" class="btn btn-outline dark" data-target="#modalTaxas" data-toggle="modal"> View Demo </a>
+    <a id="popSpan" class="btn btn-outline dark" data-target="#modalTaxas" data-toggle="modal" style="display:none">modalTaxa</a>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="content" runat="server">
     <asp:UpdatePanel ID="up" runat="server">
@@ -60,7 +60,7 @@
     </asp:UpdatePanel>
 
     <!--Modal Taxas-->
-    <div id="modalTaxas" class="modal container fade" style="width:800px !important;" >
+    <div id="modalTaxas" class="modal container fade" >
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h2 class="modal-title">Taxas</h2>
