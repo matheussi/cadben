@@ -145,7 +145,7 @@
             txtContratoAdmDental.Text = "";
             chkContratoAdmAtivo.Checked = true;
             this.setaVisibilidadePaineis(true, false);
-            this.exibeModalContratoAdm();
+            //this.exibeModalContratoAdm();
         }
 
         void carregarContratosAdm()
@@ -162,7 +162,7 @@
         protected void cmdContratoAdmCancelar_Click(object sender, EventArgs e)
         {
             this.setaVisibilidadePaineis(false, true);
-            this.exibeModalContratoAdm();
+            //this.exibeModalContratoAdm();
         }
 
         protected void cmdContratoAdmSalvar_Click(object sender, EventArgs e)
@@ -171,12 +171,12 @@
 
             if(cboContratoAdmEstipulante.Items.Count <= 1 || cboContratoAdmEstipulante.SelectedIndex <= 0)
             {
-                this.exibeModalContratoAdm("Estipulante não informado.");
+                Util.Geral.Alerta(this, "Estipulante não informado."); //this.exibeModalContratoAdm("");
                 return;
             }
-            if(txtContratoAdmDescricao.Text.Trim().Length <= 3)
+            if(txtContratoAdmDescricao.Text.Trim().Length <= 2)
             {
-                this.exibeModalContratoAdm("Nome do contrato não informado.");
+                Util.Geral.Alerta(this, "Nome do contrato não informado."); //this.exibeModalContratoAdm("Nome do contrato não informado.");
                 return;
             }
 
@@ -212,7 +212,7 @@
 
             this.setaVisibilidadePaineis(false, true);
             this.carregarContratosAdm();
-            this.exibeModalContratoAdm("Contrato administrativo salvo com sucesso.");
+            Util.Geral.Alerta(this, "Contrato administrativo salvo com sucesso."); //this.exibeModalContratoAdm("Contrato administrativo salvo com sucesso.");
         }
 
         protected void gridContratoAdm_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -236,7 +236,7 @@
                 txtContratoAdmId.Text = c.ID.ToString();
                 this.setaVisibilidadePaineis(true, false);
 
-                this.exibeModalContratoAdm();
+                //this.exibeModalContratoAdm();
             }
             else if (e.CommandName.Equals("Excluir"))
             {
@@ -246,11 +246,11 @@
                 {
                     OperadoraFacade.Instancia.ExcluirContratoAdm(id);
                     this.carregarContratosAdm();
-                    this.exibeModalContratoAdm("Contrado excluído com sucesso.");
+                    Util.Geral.Alerta(this, "Contrado excluído com sucesso."); //this.exibeModalContratoAdm("Contrado excluído com sucesso.");
                 }
                 catch
                 {
-                    this.exibeModalContratoAdm("Não foi possível excluir o contrato pois ele está sendo usado.");
+                    Util.Geral.Alerta(this, "Não foi possível excluir o contrato pois ele está sendo usado."); //this.exibeModalContratoAdm("Não foi possível excluir o contrato pois ele está sendo usado.");
                 }
             }
         }
@@ -308,12 +308,12 @@
                 gridAdicionais.HeaderRow.TableSection = TableRowSection.TableHeader;
         }
 
-        void exibeModalAdicional(string alert = null)
+        void exibeModalAdicional()
         {
-            if (string.IsNullOrEmpty(alert))
+            //if (string.IsNullOrEmpty(alert))
                 Util.Geral.JSScript(this, "showmodalAdicional();");
-            else
-                Util.Geral.JSScript(this, string.Concat("showmodalAdicional();alert('", alert, "');"));
+            //else
+            //    Util.Geral.JSScript(this, string.Concat("showmodalAdicional();alert('", alert, "');"));
         }
         void adicionalSetaVisibilidadePaineis(bool detalhe, bool lista)
         {
@@ -333,13 +333,13 @@
             this.exibirFaixas();
 
             this.adicionalSetaVisibilidadePaineis(true, false);
-            this.exibeModalAdicional();
+            //this.exibeModalAdicional();
         }
 
         protected void cmdAdicionalCancelar_Click(object sender, EventArgs e)
         {
             this.adicionalSetaVisibilidadePaineis(false, true);
-            this.exibeModalAdicional();
+            //this.exibeModalAdicional();
         }
 
         protected void cmdAdicionalSalvar_Click(object sender, EventArgs e)
@@ -348,7 +348,7 @@
 
             if (txtAdicionalDescricao.Text.Trim().Length <= 3)
             {
-                this.exibeModalAdicional("Descrição do adicional não informada.");
+                Util.Geral.Alerta(this, "Descrição do adicional não informada.");
                 return;
             }
 
@@ -438,7 +438,7 @@
 
             this.adicionalSetaVisibilidadePaineis(false, true);
             this.carregarAdicionais();
-            this.exibeModalAdicional("Adicional salvo com sucesso.");
+            Util.Geral.Alerta(this, "Adicional salvo com sucesso.");
         }
 
         protected void cmdAdicionalAddItem_Click(object sender, EventArgs e)
@@ -476,7 +476,7 @@
                 txtAdicionalId.Text = a.ID.ToString();
                 this.adicionalSetaVisibilidadePaineis(true, false);
 
-                //this.exibeModalContratoAdm();
+                //this.exibeModalAdicional();
             }
             else if (e.CommandName.Equals("Excluir"))
             {
@@ -486,11 +486,11 @@
                 {
                     OperadoraFacade.Instancia.ExcluirAdicional(id);
                     this.carregarAdicionais();
-                    this.exibeModalAdicional("Adicional excluído com sucesso.");
+                    Util.Geral.Alerta(this, "Adicional excluído com sucesso.");
                 }
                 catch
                 {
-                    this.exibeModalAdicional("Não foi possível excluir o adicional.\nVerifique se ele possui itens vigentes e exclua-os.");
+                    Util.Geral.Alerta(this, "Não foi possível excluir o adicional.\nVerifique se ele possui itens vigentes e exclua-os.");
                 }
             }
         }
@@ -539,7 +539,7 @@
                 }
                 catch
                 {
-                    this.exibeModalAdicional("Não foi possível excluir a faixa adicional.");
+                    Util.Geral.Alerta(this, "Não foi possível excluir a faixa adicional.");
                 }
             }
         }
@@ -730,7 +730,7 @@
                 }
                 catch
                 {
-                    this.exibeModalContratoAdm("Não foi possível excluir o plano pois ele está sendo usado.");
+                    this.exibeModalPlanos("Não foi possível excluir o plano pois ele está sendo usado.");
                 }
             }
         }
@@ -924,7 +924,7 @@
                 }
                 catch
                 {
-                    this.exibeModalContratoAdm("Não foi possível excluir a tabela pois ela está em uso.");
+                    this.exibeModalTabela("Não foi possível excluir a tabela pois ela está em uso.");
                 }
             }
         }

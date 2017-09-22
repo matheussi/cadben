@@ -17,6 +17,13 @@ namespace cadben.www
             }
         }
 
+        protected override void OnInit(EventArgs e)
+        {
+            base.OnInit(e);
+
+            if (Session["logado"] == null) Response.Redirect("~/login2.aspx");
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
         }

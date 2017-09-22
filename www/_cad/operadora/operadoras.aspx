@@ -1,15 +1,17 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/layout.Master" AutoEventWireup="true" CodeBehind="operadoras.aspx.cs" Inherits="cadben.www._cad.operadora.operadoras" %>
+﻿<%@ Page Language="C#" Theme="metronic1" MasterPageFile="~/layout2.Master" AutoEventWireup="true" CodeBehind="operadoras.aspx.cs" Inherits="cadben.www._cad.operadora.operadoras" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="title" runat="server">
     Operadoras
+    <a id="popModalContratoAdm" data-target="#modalContratoAdm" data-toggle="modal" style="display:none">modalContrAdm</a>
+    <a id="popModalAdicional" data-target="#modalAdicional" data-toggle="modal" style="display:none">modalAdi</a>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="content" runat="server">
     <asp:UpdatePanel ID="up" runat="server">
         <ContentTemplate>
             <div class="panel panel-default">
                 <div class="panel-heading text-right" style="position:relative;">
-                    <div style="position:absolute; right:0; top:-70px;"><asp:Button ID="lnkNovo" Text="Novo associado" runat="server" EnableViewState="false" SkinID="botaoPadrao1" OnClick="lnkNovo_Click" /></div>
+                    <div style="position:absolute; right:0; top:-50px;"><asp:Button ID="lnkNovo" Text="Nova operadora" runat="server" EnableViewState="false" SkinID="botaoPadrao1" OnClick="lnkNovo_Click" /></div>
                     <div class="col-md-12">
                         <div class="row">
                             <label class="col-md-12 text-left">Filtro:</label>
@@ -78,236 +80,228 @@
     </asp:UpdatePanel>
 
     <!--Modal Contrato Adm-->
-    <div class="modal" id="modalContratoAdm" tabindex="-1" role="dialog" aria-labelledby="myModalLabelContratoAdm" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header text-left">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h2 class="modal-title">Contratos Administrativos</h2>
-                    <span style="padding-left:15px;">
-                        <asp:UpdatePanel ID="upContratoAdmTopo" runat="server" RenderMode="Inline">
-                            <ContentTemplate>
-                                <asp:Button ID="cmdContratoAdmNovo" Text="Novo Contrato Administrativo" runat="server" SkinID="botaoPadraoWarning_Small" OnClick="cmdContratoAdmNovo_Click" />
-                            </ContentTemplate>
-                        </asp:UpdatePanel>
-                    </span>
-                </div>
-                <div class="modal-body text-center">
-                    <asp:UpdatePanel ID="upContratoAdm" runat="server">
-                        <ContentTemplate>
-                            <asp:TextBox ID="txtContratoAdmId" Visible="false" runat="server" />
-                            <asp:TextBox ID="txtContratoAdmOperadoraId" Visible="false" runat="server" />
-                            <asp:Panel ID="pnlContratosAdmDetalhe" runat="server" Visible="false">
-                                <div class="alert alert-warning">
-                                    <div class="row">
-                                        <div class="col-md-3 text-left">
-                                            Estipulante<br />
-                                            <asp:DropDownList ID="cboContratoAdmEstipulante" runat="server" Width="100%" SkinID="comboPadrao1"/>
-                                        </div>
-                                        <div class="col-md-3 text-left">
-                                            Descrição do contrato<br />
-                                            <asp:TextBox ID="txtContratoAdmDescricao" runat="server" Width="100%" MaxLength="250" SkinID="txtPadrao" />
-                                        </div>
-                                        <div class="col-md-3 text-left">
-                                            Número do contrato<br />
-                                            <asp:TextBox ID="txtContratoAdmNumero" runat="server" Width="50%" MaxLength="60" SkinID="txtPadrao" />
-                                        </div>
-                                    </div><!---->
-                                    <div class="row" style="margin-top:20px">
-                                        <div class="col-md-3 text-left">
-                                            Código da Filial<br />
-                                            <asp:TextBox ID="txtContratoAdmCodFilial" runat="server" Width="100%" MaxLength="50" SkinID="txtPadrao" />
-                                        </div>
-                                        <div class="col-md-3 text-left">
-                                            Código da Unidade<br />
-                                            <asp:TextBox ID="txtContratoAdmCodUnidade" runat="server" Width="100%" MaxLength="50" SkinID="txtPadrao" />
-                                        </div>
-                                        <div class="col-md-3 text-left">
-                                            Código da Administradora<br />
-                                            <asp:TextBox ID="txtContratoAdmCodAdministradora" runat="server" Width="100%" MaxLength="50" SkinID="txtPadrao" />
-                                        </div>
-                                    </div><!---->
-                                    <div class="row" style="margin-top:20px">
-                                        <div class="col-md-3 text-left">
-                                            Contrato saúde<br />
-                                            <asp:TextBox ID="txtContratoAdmSaude" runat="server" Width="100%" MaxLength="50" SkinID="txtPadrao" />
-                                        </div>
-                                        <div class="col-md-3 text-left">
-                                            Contrato dental<br />
-                                            <asp:TextBox ID="txtContratoAdmDental" runat="server" Width="100%" MaxLength="50" SkinID="txtPadrao" />
-                                        </div>
-                                        <div class="col-md-3 text-left">
-                                            Status<br />
-                                            <asp:CheckBox ID="chkContratoAdmAtivo" Checked="true" runat="server" style="font-weight:normal" Text="Este contrato está ativo" />
-                                        </div>
-                                        <div class="col-md-3 text-center">
-                                            <asp:Button style="margin-bottom:-40px" ID="cmdContratoAdmCancelar" Text="Cancelar" runat="server" SkinID="botaoPadraoWarning_Small" OnClick="cmdContratoAdmCancelar_Click" />
-                                            &nbsp;
-                                            <asp:Button style="margin-bottom:-40px" ID="cmdContratoAdmSalvar" Text="Gravar" runat="server" SkinID="botaoPadraoWarning_Small" OnClick="cmdContratoAdmSalvar_Click" />
-                                        </div>
-                                    </div>
+    <div class="modal container fade" id="modalContratoAdm">
+        <div class="modal-header text-left">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h2 class="modal-title">Contratos Administrativos</h2>
+            <span style="float:left;position:absolute;top:21px;padding-left:355px">
+                <asp:UpdatePanel ID="upContratoAdmTopo" runat="server" RenderMode="Inline">
+                    <ContentTemplate>
+                        <asp:Button ID="cmdContratoAdmNovo" Text="Novo Contrato Administrativo" runat="server" SkinID="botaoPadraoWarning_Small" OnClick="cmdContratoAdmNovo_Click" />
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+            </span>
+        </div>
+        <div class="modal-body text-center">
+            <asp:UpdatePanel ID="upContratoAdm" runat="server">
+                <ContentTemplate>
+                    <asp:TextBox ID="txtContratoAdmId" Visible="false" runat="server" />
+                    <asp:TextBox ID="txtContratoAdmOperadoraId" Visible="false" runat="server" />
+                    <asp:Panel ID="pnlContratosAdmDetalhe" runat="server" Visible="false">
+                        <div class="alert alert-warning">
+                            <div class="row">
+                                <div class="col-md-3 text-left">
+                                    Estipulante<br />
+                                    <asp:DropDownList ID="cboContratoAdmEstipulante" runat="server" Width="100%" SkinID="comboPadrao1"/>
                                 </div>
-                            </asp:Panel>
-                            <asp:Panel ID="pnlContratosLista" runat="server" Visible="true">
-                                <div class="col-md-12">
-                                    <asp:GridView ID="GridContratoAdm" runat="server" SkinID="gridStrib" Width="100%" 
-                                        AutoGenerateColumns="False" AllowPaging="true" PageSize="100" DataKeyNames="ID" 
-                                        OnRowCommand="gridContratoAdm_RowCommand" OnRowDataBound="gridContratoAdm_RowDataBound">
-                                        <Columns>
-                                            <asp:BoundField DataField="Numero" HeaderText="Número"  />
-                                            <asp:BoundField DataField="Descricao" HeaderText="Contrato" />
-                                            <asp:TemplateField HeaderText="Estipulante">
-                                                <itemtemplate>
-                                                    <%#DataBinder.Eval(Container.DataItem, "AssociadoPJ.Nome")%>
-                                                </itemtemplate>
-                                            </asp:TemplateField>
-                                            <asp:BoundField DataField="DataCadastro" HeaderText="Data" DataFormatString="{0:dd/MM/yyyy}" />
-                                            <asp:ButtonField ButtonType="Link" Text="" CommandName="Excluir">
-                                                <ItemStyle Width="1%" />
-                                                <ControlStyle Width="1%" />
-                                                <ControlStyle CssClass="glyphicon glyphicon-remove" />
-                                            </asp:ButtonField>
-                                            <asp:ButtonField ButtonType="Link" Text="" CommandName="Editar">
-                                                <ItemStyle Width="1%" />
-                                                <ControlStyle Width="1%" />
-                                                <ControlStyle CssClass="glyphicon glyphicon-pencil" />
-                                            </asp:ButtonField>
-                                        </Columns>
-                                        <RowStyle HorizontalAlign="Left" />
-                                    </asp:GridView>
-                                    <div class="clearfix"></div>
+                                <div class="col-md-3 text-left">
+                                    Descrição do contrato<br />
+                                    <asp:TextBox ID="txtContratoAdmDescricao" runat="server" Width="100%" MaxLength="250" SkinID="txtPadrao" />
                                 </div>
-                                <div class="clearfix"></div>
-                            </asp:Panel>
-                        </ContentTemplate>
-                    </asp:UpdatePanel>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-info" data-dismiss="modal" id="cmdFecharModalContratoAdm">Fechar</button>
-                </div>
-            </div>
+                                <div class="col-md-3 text-left">
+                                    Número do contrato<br />
+                                    <asp:TextBox ID="txtContratoAdmNumero" runat="server" Width="50%" MaxLength="60" SkinID="txtPadrao" />
+                                </div>
+                            </div><!---->
+                            <div class="row" style="margin-top:20px">
+                                <div class="col-md-3 text-left">
+                                    Código da Filial<br />
+                                    <asp:TextBox ID="txtContratoAdmCodFilial" runat="server" Width="100%" MaxLength="50" SkinID="txtPadrao" />
+                                </div>
+                                <div class="col-md-3 text-left">
+                                    Código da Unidade<br />
+                                    <asp:TextBox ID="txtContratoAdmCodUnidade" runat="server" Width="100%" MaxLength="50" SkinID="txtPadrao" />
+                                </div>
+                                <div class="col-md-3 text-left">
+                                    Código da Administradora<br />
+                                    <asp:TextBox ID="txtContratoAdmCodAdministradora" runat="server" Width="100%" MaxLength="50" SkinID="txtPadrao" />
+                                </div>
+                            </div><!---->
+                            <div class="row" style="margin-top:20px">
+                                <div class="col-md-3 text-left">
+                                    Contrato saúde<br />
+                                    <asp:TextBox ID="txtContratoAdmSaude" runat="server" Width="100%" MaxLength="50" SkinID="txtPadrao" />
+                                </div>
+                                <div class="col-md-3 text-left">
+                                    Contrato dental<br />
+                                    <asp:TextBox ID="txtContratoAdmDental" runat="server" Width="100%" MaxLength="50" SkinID="txtPadrao" />
+                                </div>
+                                <div class="col-md-3 text-left">
+                                    Status<br />
+                                    <asp:CheckBox ID="chkContratoAdmAtivo" Checked="true" runat="server" style="font-weight:normal" Text="Este contrato está ativo" />
+                                </div>
+                                <div class="col-md-3 text-center">
+                                    <asp:Button style="margin-bottom:-40px" ID="cmdContratoAdmCancelar" Text="Cancelar" runat="server" SkinID="botaoPadraoWarning_Small" OnClick="cmdContratoAdmCancelar_Click" />
+                                    &nbsp;
+                                    <asp:Button style="margin-bottom:-40px" ID="cmdContratoAdmSalvar" Text="Gravar" runat="server" SkinID="botaoPadraoWarning_Small" OnClick="cmdContratoAdmSalvar_Click" />
+                                </div>
+                            </div>
+                        </div>
+                    </asp:Panel>
+                    <asp:Panel ID="pnlContratosLista" runat="server" Visible="true">
+                        <div class="col-md-12">
+                            <asp:GridView ID="GridContratoAdm" runat="server" SkinID="gridStrib" Width="100%" 
+                                AutoGenerateColumns="False" AllowPaging="true" PageSize="100" DataKeyNames="ID" 
+                                OnRowCommand="gridContratoAdm_RowCommand" OnRowDataBound="gridContratoAdm_RowDataBound">
+                                <Columns>
+                                    <asp:BoundField DataField="Numero" HeaderText="Número"  />
+                                    <asp:BoundField DataField="Descricao" HeaderText="Contrato" />
+                                    <asp:TemplateField HeaderText="Estipulante">
+                                        <itemtemplate>
+                                            <%#DataBinder.Eval(Container.DataItem, "AssociadoPJ.Nome")%>
+                                        </itemtemplate>
+                                    </asp:TemplateField>
+                                    <asp:BoundField DataField="DataCadastro" HeaderText="Data" DataFormatString="{0:dd/MM/yyyy}" />
+                                    <asp:ButtonField ButtonType="Link" Text="" CommandName="Excluir">
+                                        <ItemStyle Width="1%" />
+                                        <ControlStyle Width="1%" />
+                                        <ControlStyle CssClass="glyphicon glyphicon-remove" />
+                                    </asp:ButtonField>
+                                    <asp:ButtonField ButtonType="Link" Text="" CommandName="Editar">
+                                        <ItemStyle Width="1%" />
+                                        <ControlStyle Width="1%" />
+                                        <ControlStyle CssClass="glyphicon glyphicon-pencil" />
+                                    </asp:ButtonField>
+                                </Columns>
+                                <RowStyle HorizontalAlign="Left" />
+                            </asp:GridView>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </asp:Panel>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-info" data-dismiss="modal" id="cmdFecharModalContratoAdm">Fechar</button>
         </div>
     </div>
     <!---------------------------------------------------------------------------------------------------->
     <!--Modal Adicionais-->
-    <div class="modal" id="modalAdicional" tabindex="-1" role="dialog" aria-labelledby="myModalLabelAdicional" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header text-left">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h2 class="modal-title">Adicionais</h2>
-                    <span style="padding-left:15px;">
-                        <asp:UpdatePanel ID="UpdatePanel1" runat="server" RenderMode="Inline">
-                            <ContentTemplate>
-                                <asp:Button ID="cmdAdicional" Text="Novo Adicional" runat="server" SkinID="botaoPadraoWarning_Small" OnClick="cmdAdicionalNovo_Click" />
-                            </ContentTemplate>
-                        </asp:UpdatePanel>
-                    </span>
-                </div>
-                <div class="modal-body text-center">
-                    <asp:UpdatePanel ID="upAdicional" runat="server">
-                        <ContentTemplate>
-                            <asp:TextBox ID="txtAdicionalId" Visible="false" runat="server" />
-                            <asp:TextBox ID="txtAdicionalOperadoraId" Visible="false" runat="server" />
-                            <asp:Panel ID="pnlAdicionalDetalhe" runat="server" Visible="false">
-                                <div class="alert alert-warning">
-                                    <div class="row">
-                                        <div class="col-md-2 text-left">
-                                            Descrição do adicional<br />
-                                            <asp:TextBox ID="txtAdicionalDescricao" runat="server" Width="100%" MaxLength="250" SkinID="txtPadrao" />
-                                        </div>
-                                        <div class="col-md-2 text-left">
-                                            Código do adicional<br />
-                                            <asp:TextBox ID="txtAdicionalCodigo" runat="server" Width="100%" MaxLength="60" SkinID="txtPadrao" />
-                                        </div>
-                                        <div class="col-md-2 text-left">
-                                            Status<br />
-                                            <asp:CheckBox ID="chkAdicionalAtivo" Checked="true" runat="server" Text="Adicional ativo" />
-                                        </div>
-                                        <div class="col-md-6 text-left">
-                                            Individual<br />
-                                            <asp:CheckBox ID="chkAdicionalIndividual" runat="server" Text="Esta opção permite escolher qual beneficiário terá o benefício" />
-                                        </div>
-                                    </div><!---->
-                                    <div class="row" style="margin-top:20px">
-                                        <div class="col-md-12 text-left">
-                                            <asp:GridView ID="gridItemAdicional" runat="server" SkinID="gridStrib" Width="100%" 
-                                                AutoGenerateColumns="False" AllowPaging="true" PageSize="100" DataKeyNames="ID" 
-                                                OnRowCommand="gridItemAdicional_RowCommand" OnRowDataBound="gridItemAdicional_RowDataBound">
-                                                <Columns>
-                                                    <asp:TemplateField HeaderText="Vigência">
-                                                        <ItemTemplate>
-                                                            <asp:TextBox ID="txtAdicionalItemVigencia" Text='<%# Convert.ToDateTime(DataBinder.Eval(Container.DataItem, "Vigencia")).ToString("dd/MM/yyyy") %>' onkeypress="filtro_SoNumeros(event); mascara_DATA(this, event);" SkinID="txtPadrao" Width="90px" runat="server" MaxLength="10" />
-                                                        </ItemTemplate>
-                                                    </asp:TemplateField>
-                                                    <asp:TemplateField HeaderText="Idade início">
-                                                        <ItemTemplate>
-                                                            <asp:TextBox ID="txtAdicionalItemIdadeInicio" Text='<%# Convert.ToString(DataBinder.Eval(Container.DataItem, "IdadeInicio")) %>' onkeypress="filtro_SoNumeros(event);" SkinID="txtPadrao" runat="server" MaxLength="3" Width="45px" />
-                                                        </ItemTemplate>
-                                                    </asp:TemplateField>
-                                                    <asp:TemplateField HeaderText="Idade fim">
-                                                        <ItemTemplate>
-                                                            <asp:TextBox ID="txtAdicionalItemIdadeFim" Text='<%# Convert.ToString(DataBinder.Eval(Container.DataItem, "IdadeFim")) %>' onkeypress="filtro_SoNumeros(event);" SkinID="txtPadrao" runat="server" MaxLength="3" Width="45px" />
-                                                        </ItemTemplate>
-                                                    </asp:TemplateField>
-                                                    <asp:TemplateField HeaderText="Valor">
-                                                        <ItemTemplate>
-                                                            <asp:TextBox ID="txtAdicionalItemValor" Text='<%# Convert.ToDecimal(DataBinder.Eval(Container.DataItem, "Valor")).ToString("N2") %>' onkeypress="filtro_SoNumeros(event);" SkinID="txtPadrao" runat="server" MaxLength="14" Width="65px" />
-                                                        </ItemTemplate>
-                                                    </asp:TemplateField>
-
-                                                    <asp:ButtonField ButtonType="Link" Text="" CommandName="Excluir">
-                                                        <ItemStyle Width="1%" />
-                                                        <ControlStyle Width="1%" />
-                                                        <ControlStyle CssClass="glyphicon glyphicon-remove" />
-                                                    </asp:ButtonField>
-                                                </Columns>
-                                                <RowStyle HorizontalAlign="Left" />
-                                            </asp:GridView>
-                                            <asp:Button ID="cmdAdicionalAddItem" Text="Adicionar item à tabela" runat="server" SkinID="botaoPadraoWarning_Small" OnClick="cmdAdicionalAddItem_Click" />
-                                        </div>
-                                    </div>
-                                    <div class="row" style="margin-top:20px">
-                                        <%--<div class="col-md-12 text-center">--%>
-                                            <asp:Button ID="cmdAdicionalCancelar" Text="Cancelar" runat="server" SkinID="botaoPadraoWarning_Small" OnClick="cmdAdicionalCancelar_Click" />
-                                            &nbsp;
-                                            <asp:Button ID="cmdAdicionalSalvar" Text="Gravar" runat="server" SkinID="botaoPadraoWarning_Small" OnClick="cmdAdicionalSalvar_Click" />
-                                        <%--</div>--%>
-                                    </div>
+    <div class="modal container fade" id="modalAdicional" tabindex="-1" role="dialog" aria-labelledby="myModalLabelAdicional" aria-hidden="true">
+        <div class="modal-header text-left">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h2 class="modal-title">Adicionais</h2>
+            <span style="float:left;position:absolute;top:21px;padding-left:150px"><%--<span style="padding-left:15px;">--%>
+                <asp:UpdatePanel ID="UpdatePanel1" runat="server" RenderMode="Inline">
+                    <ContentTemplate>
+                        <asp:Button ID="cmdAdicional" Text="Novo Adicional" runat="server" SkinID="botaoPadraoWarning_Small" OnClick="cmdAdicionalNovo_Click" />
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+            </span>
+        </div>
+        <div class="modal-body text-center">
+            <asp:UpdatePanel ID="upAdicional" runat="server">
+                <ContentTemplate>
+                    <asp:TextBox ID="txtAdicionalId" Visible="false" runat="server" />
+                    <asp:TextBox ID="txtAdicionalOperadoraId" Visible="false" runat="server" />
+                    <asp:Panel ID="pnlAdicionalDetalhe" runat="server" Visible="false">
+                        <div class="alert alert-warning">
+                            <div class="row">
+                                <div class="col-md-2 text-left">
+                                    Descrição do adicional<br />
+                                    <asp:TextBox ID="txtAdicionalDescricao" runat="server" Width="100%" MaxLength="250" SkinID="txtPadrao" />
                                 </div>
-                            </asp:Panel>
-                            <asp:Panel ID="pnlAdicionalLista" runat="server" Visible="true">
-                                <div class="col-md-12">
-                                    <asp:GridView ID="gridAdicionais" runat="server" SkinID="gridStrib" Width="100%" 
+                                <div class="col-md-2 text-left">
+                                    Código do adicional<br />
+                                    <asp:TextBox ID="txtAdicionalCodigo" runat="server" Width="100%" MaxLength="60" SkinID="txtPadrao" />
+                                </div>
+                                <div class="col-md-2 text-left">
+                                    Status<br />
+                                    <asp:CheckBox ID="chkAdicionalAtivo" Checked="true" runat="server" Text="Adicional ativo" />
+                                </div>
+                                <div class="col-md-6 text-left">
+                                    Individual<br />
+                                    <asp:CheckBox ID="chkAdicionalIndividual" runat="server" Text="Esta opção permite escolher qual beneficiário terá o benefício" />
+                                </div>
+                            </div><!---->
+                            <div class="row" style="margin-top:20px">
+                                <div class="col-md-12 text-left">
+                                    <asp:GridView ID="gridItemAdicional" runat="server" SkinID="gridStrib" Width="100%" 
                                         AutoGenerateColumns="False" AllowPaging="true" PageSize="100" DataKeyNames="ID" 
-                                        OnRowCommand="gridAdicionais_RowCommand" OnRowDataBound="gridAdicionais_RowDataBound">
+                                        OnRowCommand="gridItemAdicional_RowCommand" OnRowDataBound="gridItemAdicional_RowDataBound">
                                         <Columns>
-                                            <asp:BoundField DataField="Descricao" HeaderText="Adicional"  />
-                                            <asp:BoundField DataField="DataCadastro" HeaderText="Data" DataFormatString="{0:dd/MM/yyyy}" />
+                                            <asp:TemplateField HeaderText="Vigência">
+                                                <ItemTemplate>
+                                                    <asp:TextBox ID="txtAdicionalItemVigencia" Text='<%# Convert.ToDateTime(DataBinder.Eval(Container.DataItem, "Vigencia")).ToString("dd/MM/yyyy") %>' onkeypress="filtro_SoNumeros(event); mascara_DATA(this, event);" SkinID="txtPadrao" Width="105px" runat="server" MaxLength="10" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Idade início">
+                                                <ItemTemplate>
+                                                    <asp:TextBox ID="txtAdicionalItemIdadeInicio" Text='<%# Convert.ToString(DataBinder.Eval(Container.DataItem, "IdadeInicio")) %>' onkeypress="filtro_SoNumeros(event);" SkinID="txtPadrao" runat="server" MaxLength="3" Width="55px" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Idade fim">
+                                                <ItemTemplate>
+                                                    <asp:TextBox ID="txtAdicionalItemIdadeFim" Text='<%# Convert.ToString(DataBinder.Eval(Container.DataItem, "IdadeFim")) %>' onkeypress="filtro_SoNumeros(event);" SkinID="txtPadrao" runat="server" MaxLength="3" Width="55px" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Valor">
+                                                <ItemTemplate>
+                                                    <asp:TextBox ID="txtAdicionalItemValor" Text='<%# Convert.ToDecimal(DataBinder.Eval(Container.DataItem, "Valor")).ToString("N2") %>' onkeypress="filtro_SoNumeros(event);" SkinID="txtPadrao" runat="server" MaxLength="14" Width="80px" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+
                                             <asp:ButtonField ButtonType="Link" Text="" CommandName="Excluir">
                                                 <ItemStyle Width="1%" />
                                                 <ControlStyle Width="1%" />
                                                 <ControlStyle CssClass="glyphicon glyphicon-remove" />
                                             </asp:ButtonField>
-                                            <asp:ButtonField ButtonType="Link" Text="" CommandName="Editar">
-                                                <ItemStyle Width="1%" />
-                                                <ControlStyle Width="1%" />
-                                                <ControlStyle CssClass="glyphicon glyphicon-pencil" />
-                                            </asp:ButtonField>
                                         </Columns>
                                         <RowStyle HorizontalAlign="Left" />
                                     </asp:GridView>
-                                    <div class="clearfix"></div>
+                                    <asp:Button ID="cmdAdicionalAddItem" Text="Adicionar item à tabela" runat="server" SkinID="botaoPadraoWarning_Small" OnClick="cmdAdicionalAddItem_Click" />
                                 </div>
-                                <div class="clearfix"></div>
-                            </asp:Panel>
-                        </ContentTemplate>
-                    </asp:UpdatePanel>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-info" data-dismiss="modal" id="cmdFecharModalAdicional">Fechar</button>
-                </div>
-            </div>
+                            </div>
+                            <div class="row" style="margin-top:20px">
+                                <%--<div class="col-md-12 text-center">--%>
+                                    <asp:Button ID="cmdAdicionalCancelar" Text="Cancelar" runat="server" SkinID="botaoPadraoWarning_Small" OnClick="cmdAdicionalCancelar_Click" />
+                                    &nbsp;
+                                    <asp:Button ID="cmdAdicionalSalvar" Text="Gravar" runat="server" SkinID="botaoPadraoWarning_Small" OnClick="cmdAdicionalSalvar_Click" />
+                                <%--</div>--%>
+                            </div>
+                        </div>
+                    </asp:Panel>
+                    <asp:Panel ID="pnlAdicionalLista" runat="server" Visible="true">
+                        <div class="col-md-12">
+                            <asp:GridView ID="gridAdicionais" runat="server" SkinID="gridStrib" Width="100%" 
+                                AutoGenerateColumns="False" AllowPaging="true" PageSize="100" DataKeyNames="ID" 
+                                OnRowCommand="gridAdicionais_RowCommand" OnRowDataBound="gridAdicionais_RowDataBound">
+                                <Columns>
+                                    <asp:BoundField DataField="Descricao" HeaderText="Adicional"  />
+                                    <asp:BoundField DataField="DataCadastro" HeaderText="Data" DataFormatString="{0:dd/MM/yyyy}" />
+                                    <asp:ButtonField ButtonType="Link" Text="" CommandName="Excluir">
+                                        <ItemStyle Width="1%" />
+                                        <ControlStyle Width="1%" />
+                                        <ControlStyle CssClass="glyphicon glyphicon-remove" />
+                                    </asp:ButtonField>
+                                    <asp:ButtonField ButtonType="Link" Text="" CommandName="Editar">
+                                        <ItemStyle Width="1%" />
+                                        <ControlStyle Width="1%" />
+                                        <ControlStyle CssClass="glyphicon glyphicon-pencil" />
+                                    </asp:ButtonField>
+                                </Columns>
+                                <RowStyle HorizontalAlign="Left" />
+                            </asp:GridView>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </asp:Panel>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-info" data-dismiss="modal" id="cmdFecharModalAdicional">Fechar</button>
         </div>
     </div>
     <!---------------------------------------------------------------------------------------------------->
@@ -559,11 +553,13 @@
     <script>
         function showmodalContratoAdm()
         {
-            $('#modalContratoAdm').modal(true);
+            //$('#modalContratoAdm').modal(true);
+            document.getElementById("popModalContratoAdm").click();
         }
         function showmodalAdicional()
         {
-            $('#modalAdicional').modal(true);
+            //$('#modalAdicional').modal(true);
+            document.getElementById("popModalAdicional").click();
         }
         function showmodalPlano()
         {

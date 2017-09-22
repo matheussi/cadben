@@ -16,12 +16,12 @@ namespace cadben.www
 
         protected void cmdteste_Click(object sender, EventArgs e)
         {
-            temp.Text = DateTime.Now.ToLongTimeString();
+            //temp.Text = DateTime.Now.ToLongTimeString();
         }
 
         protected void cmdteste2_Click(object sender, EventArgs e)
         {
-            litteste.Text = temp.Text + "<hr>";
+            //litteste.Text = temp.Text + "<hr>";
         }
     }
 }
